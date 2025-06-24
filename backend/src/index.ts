@@ -14,14 +14,17 @@ app.get("/api/status", (_req: Request, res: Response) => {
   res.send("Server is live");
 });
 
-const connect = async () => {
-    await connectDb();
-}
-
-connect();
-
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDb();
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to connect to DB:",err);
+  }
+};
+
+startServer();
