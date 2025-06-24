@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import "dotenv/config";
 import cors from "cors";
 import http from "http";
+import { connectDb } from './lib/db';
 
 const app = express();
 const server = http.createServer(app);
@@ -12,6 +13,12 @@ app.use(cors());
 app.get("/api/status", (_req: Request, res: Response) => {
   res.send("Server is live");
 });
+
+const connect = async () => {
+    await connectDb();
+}
+
+connect();
 
 const PORT = process.env.PORT || 3000;
 
