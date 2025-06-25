@@ -40,3 +40,33 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+//Login a user
+export const login = async (req: Request, res: Response) => {
+    try {
+        const {email, password} = req.body;
+        const userData = await User.findOne({email});
+
+        if (!userData) {
+          return res.status(404).json({ success: false, message: "Account not found!" });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, userData.password);
+
+        if(!isPasswordCorrect){
+            return res.status(401).json({ success: false, message: "Invalid credentials!" });
+        }
+
+        const token = generateToken(userData._id.toString());
+
+        return res.status(200).json({
+          success: true,
+          userData,
+          token,
+          message: "Login successful!",
+        });
+    } catch (error: any) {
+        console.error("Login error:", error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
