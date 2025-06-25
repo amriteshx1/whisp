@@ -3,6 +3,10 @@ import { generateToken } from "../lib/utils";
 import User, { IUser } from "../models/user";
 import bcrypt from "bcryptjs";
 
+interface AuthRequest extends Request {
+  user?: IUser;
+}
+
 // Register a new user
 export const signup = async (req: Request, res: Response) => {
   const { fullName, email, password, bio } = req.body;
@@ -70,3 +74,8 @@ export const login = async (req: Request, res: Response) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 }
+
+//controller to check if user is authenticated
+export const checkAuth = (req: AuthRequest, res: Response) => {
+  res.json({ success: true, user: req.user });
+};
