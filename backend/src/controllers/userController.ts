@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { generateToken } from "../lib/utils";
 import User, { IUser } from "../models/user";
 import bcrypt from "bcryptjs";
+import cloudinary from "../lib/cloudinary";
 
 interface AuthRequest extends Request {
   user?: IUser;
@@ -78,4 +79,34 @@ export const login = async (req: Request, res: Response) => {
 //controller to check if user is authenticated
 export const checkAuth = (req: AuthRequest, res: Response) => {
   res.json({ success: true, user: req.user });
+};
+
+// Controller to update user profile details
+export const updateProfile = async (req: AuthRequest, res: Response) => {
+  try {
+    const { profilePic, bio, fullName } = req.body;
+    const userId = req.user?._id;
+    let updatedUser;
+
+    if (!profilePic) {
+      updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { bio, fullName },
+        { new: true }
+      );
+    } else {
+      const upload = await cloudinary.uploader.upload(profilePic);
+
+      updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { profilePic: upload.secure_url, bio, fullName },
+        { new: true }
+      );
+    }
+
+    res.json({ success: true, user: updatedUser });
+  } catch (error: any) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
