@@ -14,12 +14,14 @@ export const signup = async (req: Request, res: Response) => {
 
   try {
     if (!fullName || !email || !password || !bio) {
-      return res.status(400).json({ success: false, message: "Missing details!" });
+      res.status(400).json({ success: false, message: "Missing details!" });
+      return;
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ success: false, message: "Account already exists!" });
+      res.status(409).json({ success: false, message: "Account already exists!" });
+      return;
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -34,7 +36,7 @@ export const signup = async (req: Request, res: Response) => {
 
     const token = generateToken(newUser._id.toString());
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       userData: newUser,
       token,
@@ -42,7 +44,7 @@ export const signup = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     console.error("Signup error:", error.message);
-    return res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -53,18 +55,20 @@ export const login = async (req: Request, res: Response) => {
         const userData = await User.findOne({email});
 
         if (!userData) {
-          return res.status(404).json({ success: false, message: "Account not found!" });
+          res.status(404).json({ success: false, message: "Account not found!" });
+          return;
         }
 
         const isPasswordCorrect = await bcrypt.compare(password, userData.password);
 
         if(!isPasswordCorrect){
-            return res.status(401).json({ success: false, message: "Invalid credentials!" });
+            res.status(401).json({ success: false, message: "Invalid credentials!" });
+            return;
         }
 
         const token = generateToken(userData._id.toString());
 
-        return res.status(200).json({
+        res.status(200).json({
           success: true,
           userData,
           token,
@@ -72,7 +76,7 @@ export const login = async (req: Request, res: Response) => {
         });
     } catch (error: any) {
         console.error("Login error:", error.message);
-        return res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 }
 
