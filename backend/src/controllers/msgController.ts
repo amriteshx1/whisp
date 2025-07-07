@@ -65,3 +65,15 @@ export const getMsg = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+//mark messages as seen
+export const markSeen = async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params;
+        await Message.findByIdAndUpdate(id, {seen: true})
+        res.json({success: true})  
+    } catch (error: any) {
+        console.log(error.message);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
