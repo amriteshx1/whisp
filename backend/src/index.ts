@@ -4,6 +4,7 @@ import cors from "cors";
 import http from "http";
 import { connectDb } from './lib/db';
 import userRouter from './routes/userRoutes';
+import msgRouter from './routes/msgRoutes';
 
 const app = express();
 const server = http.createServer(app);
@@ -12,6 +13,7 @@ app.use(express.json({ limit: "4mb" }));
 app.use(cors());
 
 app.use("/api/auth", userRouter);
+app.use("/api/msgs", msgRouter)
 app.get("/api/status", (_req: Request, res: Response) => {
   res.send("Server is live");
 });
