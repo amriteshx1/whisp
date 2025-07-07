@@ -36,3 +36,32 @@ export const getUsers = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+//get all messages from selected user
+export const getMsg = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id: selectedUserId } = req.params;
+    const myId = req.user?._id;
+
+    if (!myId) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const msgs = await Message.find({
+      $or: [
+        { senderId: myId, receiverId: selectedUserId },
+        { senderId: selectedUserId, receiverId: myId },
+      ],
+    });
+
+    await Message.updateMany(
+      { senderId: selectedUserId, receiverId: myId },
+      { seen: true }
+    );
+
+    res.json({ success: true, msgs });
+  } catch (error: any) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
