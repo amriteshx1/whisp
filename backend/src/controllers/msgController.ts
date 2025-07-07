@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user";
 import Message from "../models/message";
 import { IUser } from "../models/user";
+import cloudinary from "../lib/cloudinary";
 
 interface AuthRequest extends Request {
   user?: IUser;
@@ -73,6 +74,33 @@ export const markSeen = async (req: Request, res: Response) => {
         const {id} = req.params;
         await Message.findByIdAndUpdate(id, {seen: true})
         res.json({success: true})  
+    } catch (error: any) {
+        console.log(error.message);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+//send message to user
+export const sendMsg = async (req: AuthRequest, res: Response) => {
+    try {
+        const {text, image} = req.body;
+        const receiverId = req.params.id;
+        const senderId = req.user?._id;
+
+        let imgUrl;
+        if(image){
+            const uploadResponse = await cloudinary.uploader.upload(image);
+            imgUrl = uploadResponse.secure_url;
+        }
+
+        const newMsg = await Message.create({
+            senderId,
+            receiverId,
+            text,
+            image: imgUrl
+        })
+
+        res.json({success: true, newMsg});
     } catch (error: any) {
         console.log(error.message);
         res.status(500).json({ success: false, message: error.message });
