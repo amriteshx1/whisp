@@ -3,6 +3,7 @@ import User from "../models/user";
 import Message from "../models/message";
 import { IUser } from "../models/user";
 import cloudinary from "../lib/cloudinary";
+import { io, userSocketMap } from "..";
 
 interface AuthRequest extends Request {
   user?: IUser;
@@ -99,6 +100,12 @@ export const sendMsg = async (req: AuthRequest, res: Response) => {
             text,
             image: imgUrl
         })
+
+        //emit new msg to receiver's socket
+        const receiverSocketId = userSocketMap[receiverId];
+        if(receiverSocketId){
+            io.to(receiverSocketId).emit("newMessage", newMsg);
+        }
 
         res.json({success: true, newMsg});
     } catch (error: any) {
