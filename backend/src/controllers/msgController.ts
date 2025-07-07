@@ -44,7 +44,8 @@ export const getMsg = async (req: AuthRequest, res: Response) => {
     const myId = req.user?._id;
 
     if (!myId) {
-      return res.status(401).json({ success: false, message: "Unauthorized" });
+      res.status(401).json({ success: false, message: "Unauthorized" });
+      return;
     }
 
     const msgs = await Message.find({
