@@ -49,15 +49,15 @@ const LandingPage = () => {
                 <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
                 <div className="flex justify-around items-center mt-[7vh] text-center">
 
-                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl">
+                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl intersect-once intersect:motion-preset-slide-up motion-delay-200">
                         <p className="text-[1.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">🔐 Private by Design</p>
                         <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Messages are end-to-end protected. Your convos stay yours.</p>
                     </div>
-                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl">
+                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl intersect-once intersect:motion-preset-slide-up motion-delay-300">
                         <p className="text-[1.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">⚡ Real-time, Always</p>
                         <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Send, receive, seen — all in a blink. Zero lag, no reloads.</p>
                     </div>
-                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl">
+                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl intersect-once intersect:motion-preset-slide-up motion-delay-500">
                         <p className="text-[1.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">☁️ Share Moments</p>
                         <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Effortlessly upload and view images. Cloudinary-powered.</p>
                     </div>
@@ -75,14 +75,14 @@ const LandingPage = () => {
               >
               
               <div className="flex flex-col justify-center items-center mt-[20vh] w-full">
-                <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Let your conversations begin.</h2>
-                <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 px-[7vh] py-[1vh] rounded-xl cursor-pointer text-zinc-100 mt-[5vh] motion-preset-oscillate">Get Started</button>
+                <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent intersect-once intersect:motion-preset-slide-up motion-delay-200">Let your conversations begin.</h2>
+                <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 px-[7vh] py-[1vh] rounded-xl cursor-pointer text-zinc-100 mt-[5vh] intersect-once intersect:motion-preset-slide-up motion-delay-200">Get Started</button>
               </div>
 
               <div className="flex flex-col w-full mt-[15vh]">
 
                 <div className=" w-full flex justify-around items-center">
-                    <div className="w-[30%] flex flex-col justify-start items-center">
+                    <div className="w-[30%] flex flex-col justify-start items-center intersect-once intersect:motion-preset-slide-up motion-delay-200">
                         <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Company</p>
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">About Us</p>
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Our Services</p>
@@ -90,7 +90,7 @@ const LandingPage = () => {
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Affiliate Program</p>
                     </div>
 
-                    <div className="w-[30%] flex flex-col justify-start items-center">
+                    <div className="w-[30%] flex flex-col justify-start items-center intersect-once intersect:motion-preset-slide-up motion-delay-300">
                         <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Product</p>
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Web</p>
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Mobile</p>
@@ -98,7 +98,7 @@ const LandingPage = () => {
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Starter Kit</p>
                     </div>
 
-                    <div className="w-[30%] flex flex-col justify-start items-center">
+                    <div className="w-[30%] flex flex-col justify-start items-center intersect-once intersect:motion-preset-slide-up motion-delay-500">
                         <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Support</p>
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">FAQ</p>
                         <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Feedback</p>
@@ -107,7 +107,7 @@ const LandingPage = () => {
                     </div>
                 </div>
 
-                <div className="w-full flex flex-col justify-center items-center mt-[10vh]">
+                <div className="w-full flex flex-col justify-center items-center mt-[10vh] intersect-once intersect:motion-preset-slide-up motion-delay-500">
                     <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Follow Us</p>
                     <div className="flex justify-center items-center gap-[4vh] mt-[1vh]">
                         <img src={instagram} alt="insta-logo" className="h-[3vh] object-cover" />
