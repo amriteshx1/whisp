@@ -66,7 +66,25 @@ const LandingPage = () => {
 
             </div>
 
-            
+            <div className="min-h-screen w-full relative">
+              <div
+                className="absolute inset-0 z-0 h-screen w-full flex flex-col"
+                style={{
+                  background: "radial-gradient(125% 125% at 50% 10%, #fff 40%, #90caff 100%)",
+                }}
+              >
+              
+              <div className="flex flex-col justify-center items-center mt-[20vh] w-full">
+                <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Let your conversations begin.</h2>
+                <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 px-[7vh] py-[1vh] rounded-xl cursor-pointer text-zinc-100 mt-[5vh]">Get Started</button>
+              </div>
+
+              
+
+              </div>
+
+              </div>
+            </div>
 
 
         </div>
