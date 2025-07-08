@@ -31,7 +31,22 @@ const LandingPage = () => {
             </div>
         </div>
 
-        
+        <div className="min-h-[85vh] flex flex-col justify-start items-center p-[1vh]">
+            <div className="flex flex-col justify-center items-center mt-[5vh] text-zinc-700">
+                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Conversations That Feel Close</p>
+                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Even From Afar</p>
+                <p className="text-[1.5vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Stay connected — softly, silently, seamlessly.</p>
+                <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-zinc-100 mt-[2.5vh]">Step into Whisp</button>
+            </div>
+
+            <div className="flex justify-center items-center h-[75vh] mt-[2vh]">
+                <img src={landing} alt="landingPage-image" className="h-full object-cover" />
+            </div>
+
+            
+
+
+        </div>
 
 
 
