@@ -1,14 +1,17 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landingPage";
+import ObserverProvider from "./components/ObserverProvider";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ObserverProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ObserverProvider>
   );
 };
 
