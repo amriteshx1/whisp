@@ -79,7 +79,35 @@ const LandingPage = () => {
                 <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 px-[7vh] py-[1vh] rounded-xl cursor-pointer text-zinc-100 mt-[5vh]">Get Started</button>
               </div>
 
-              
+              <div className="flex flex-col w-full mt-[15vh]">
+
+                <div className=" w-full flex justify-around items-center">
+                    <div className="w-[30%] flex flex-col justify-start items-center">
+                        <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Company</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">About Us</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Our Services</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Privacy Policy</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Affiliate Program</p>
+                    </div>
+
+                    <div className="w-[30%] flex flex-col justify-start items-center">
+                        <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Product</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Web</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Mobile</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Premium</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Starter Kit</p>
+                    </div>
+
+                    <div className="w-[30%] flex flex-col justify-start items-center">
+                        <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Support</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">FAQ</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Feedback</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Terms of Use</p>
+                        <p className="text-[0.9vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Contact</p>
+                    </div>
+                </div>
+
+                
 
               </div>
 
