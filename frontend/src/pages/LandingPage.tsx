@@ -43,6 +43,29 @@ const LandingPage = () => {
                 <img src={landing} alt="landingPage-image" className="h-full object-cover" />
             </div>
 
+            <FeatureMarquee />
+
+            <div className="flex flex-col justify-center items-center mt-[20vh] w-full mx-[15vh]">
+                <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
+                <div className="flex justify-around items-center mt-[7vh] text-center">
+
+                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl">
+                        <p className="text-[1.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">🔐 Private by Design</p>
+                        <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Messages are end-to-end protected. Your convos stay yours.</p>
+                    </div>
+                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl">
+                        <p className="text-[1.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">⚡ Real-time, Always</p>
+                        <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Send, receive, seen — all in a blink. Zero lag, no reloads.</p>
+                    </div>
+                    <div className="flex h-[30vh] bg-sky-100 w-[25%] flex-col justify-around items-center p-[4vh] rounded-3xl">
+                        <p className="text-[1.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">☁️ Share Moments</p>
+                        <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent">Effortlessly upload and view images. Cloudinary-powered.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
             
 
 
