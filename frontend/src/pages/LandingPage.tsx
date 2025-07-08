@@ -107,7 +107,17 @@ const LandingPage = () => {
                     </div>
                 </div>
 
-                
+                <div className="w-full flex flex-col justify-center items-center mt-[10vh]">
+                    <p className="text-[1.2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent mb-[2vh]">Follow Us</p>
+                    <div className="flex justify-center items-center gap-[4vh] mt-[1vh]">
+                        <img src={instagram} alt="insta-logo" className="h-[3vh] object-cover" />
+                        <img src={discord} alt="discord-logo" className="h-[3vh] object-cover" />
+                        <img src={github} alt="github-logo" className="h-[3vh] object-cover" />
+                        <img src={twitter} alt="twitter-logo" className="h-[3vh] object-cover" />
+
+                    </div>
+
+                </div>
 
               </div>
 
