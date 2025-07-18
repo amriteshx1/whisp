@@ -3,8 +3,16 @@ import { useNavigate } from "react-router-dom";
 import applogo from "../assets/appLogo.png";
 import menuIcon from "../assets/menuIcon.png";
 import searchIcon from "../assets/searchIcon.png";
+import assets, { userDummyData } from "../assets/chat-app-assets/assets";
+import type { User } from "../assets/chat-app-assets/assets";
 
-const Sidebar = ({selectedUser, setSelectedUser}) => {
+type SidebarProps = {
+  selectedUser: User | false;
+  setSelectedUser: (val: User | false) => void;
+};
+
+
+const Sidebar = ({selectedUser, setSelectedUser}: SidebarProps) => {
 
     const navigate = useNavigate();
   return (
@@ -28,8 +36,28 @@ const Sidebar = ({selectedUser, setSelectedUser}) => {
         </div>
 
       </div>
+
+      <div className="flex flex-col gap-3">
+        {userDummyData.map((user, index) => (
+          <div onClick={() => {setSelectedUser(user)}}
+          key={index} className={`relative flex items-center gap-4 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${selectedUser && selectedUser._id === user._id && 'bg-[#282142]/50'}`}>
+            <img src={user?.profilePic || assets.avatar_icon} alt={user.fullName} className="w-[40px] aspect-[1/1] rounded-full" />
+            <div className="flex flex-col leading-5">
+              <p className="text-base text-zinc-600">{user.fullName}</p>
+              {
+                index < 3
+                ? <span className="text-green-400 text-xs">Online</span>
+                : <span className="text-neutral-400 text-xs">Offline</span>
+              }
+            </div>
+            {index > 2 && <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-sky-300">
+            {index}</p> }
+          </div>
+        ))}
+
+      </div>
     </div>
   )
 }
 
-export default Sidebar
+export default Sidebar;
