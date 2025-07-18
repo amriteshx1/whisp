@@ -3,12 +3,11 @@ import { useState } from "react";
 import ChatBox from "../components/ChatBox";
 import Sidebar from "../components/Sidebar";
 import UserBox from "../components/UserBox";
+import type { User } from "../assets/chat-app-assets/assets";
 
 const HomePage = () => {
 
-    const [selectedUser, setSelectedUser] = useState(false);
-
-
+    const [selectedUser, setSelectedUser] = useState<User | false>(false);
 
   return (
     <div className="min-h-screen w-full relative overflow-auto">
@@ -19,9 +18,9 @@ const HomePage = () => {
           }}
         >
             <div className={`h-full grid grid-cols-1 relative ${selectedUser ? 'grid-cols-[1fr_2fr_1fr]' : 'grid-cols-2' }`}>
-                <Sidebar />
-                <ChatBox />
-                <UserBox />
+                <Sidebar selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+                <ChatBox selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+                <UserBox selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
 
             </div>
     
