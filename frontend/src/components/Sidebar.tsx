@@ -40,10 +40,10 @@ const Sidebar = ({selectedUser, setSelectedUser}: SidebarProps) => {
       <div className="flex flex-col gap-3">
         {userDummyData.map((user, index) => (
           <div onClick={() => {setSelectedUser(user)}}
-          key={index} className={`relative flex items-center gap-4 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${selectedUser && selectedUser._id === user._id && 'bg-[#282142]/50'}`}>
+          key={index} className={`relative flex items-center gap-4 p-2 pl-4 rounded cursor-pointer max-sm:text-sm hover:bg-sky-100 hover:rounded-xl ${selectedUser && selectedUser._id === user._id && 'bg-[#282142]/50'}`}>
             <img src={user?.profilePic || assets.avatar_icon} alt={user.fullName} className="w-[40px] aspect-[1/1] rounded-full" />
             <div className="flex flex-col leading-5">
-              <p className="text-base text-zinc-600">{user.fullName}</p>
+              <p className="text-sm font-medium text-zinc-600">{user.fullName}</p>
               {
                 index < 3
                 ? <span className="text-green-400 text-xs">Online</span>
