@@ -1,5 +1,12 @@
 
-const UserBox = () => {
+import type { User } from "../assets/chat-app-assets/assets";
+
+type SidebarProps = {
+  selectedUser: User | false;
+  setSelectedUser: (val: User | false) => void;
+};
+
+const UserBox = ({selectedUser, setSelectedUser}: SidebarProps) => {
   return (
     <div>
       <h1>Userbox</h1>
@@ -7,4 +14,4 @@ const UserBox = () => {
   )
 }
 
-export default UserBox
+export default UserBox;
