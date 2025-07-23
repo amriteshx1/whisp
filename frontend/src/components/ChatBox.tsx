@@ -58,7 +58,18 @@ const ChatBox = ({selectedUser, setSelectedUser}: ChatBoxProps) => {
         <div ref={scrollEnd}></div>
       </div>
 
-      
+      {/*  bottom stuffs */}
+      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
+        <div className="flex-1 flex items-center bg-sky-200 px-3 rounded-full">
+          <input type="text" placeholder="Send a message"
+          className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-600 placeholder-gray-400" />
+          <input type="file" id="image" accept="image/png, image/jpeg" hidden />
+          <label htmlFor="image">
+            <img src={assets.gallery_icon} alt="" className="w-5 mr-2 cursor-pointer"/>
+          </label>
+        </div>
+        <img src={assets.send_button} alt="" className="w-7 cursor-pointer" />
+      </div>
     </div>
   ) : (
     <div className="flex flex-col items-center justify-center gap-10 text-gray-500 max-md:hidden">
