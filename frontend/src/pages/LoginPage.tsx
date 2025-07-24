@@ -59,7 +59,12 @@ const LoginPage = () => {
                         </>
                     )}
 
-                    
+                    {currentState === "Sign up" && isDataSubmitted && (
+                      <textarea onChange={(e)=>setBio(e.target.value)} value={bio}
+                       rows={4} className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1 focus:ring-sky-400"
+                      placeholder="Provide a short bio..." required></textarea>
+                      )
+                    }
 
                     <button type="submit" className="py-3 bg-gradient-to-r from-sky-400 to-sky-600 text-white rounded-md cursor-pointer">
                       {currentState === "Sign up" ? "Create Account" : "Login Now"}
