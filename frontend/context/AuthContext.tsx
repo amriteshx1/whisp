@@ -47,6 +47,17 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    //logout function
+    const logout = async () => {
+        localStorage.removeItem("token");
+        setToken(null);
+        setAuthUser(null);
+        setOnlineUsers([]);
+        axios.defaults.headers.common["token"] = null;
+        toast.success("Logged out successfully");
+        socket.disconnect();
+    }
+
     
 
     useEffect(()=>{
