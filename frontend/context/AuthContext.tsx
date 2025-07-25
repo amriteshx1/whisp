@@ -28,6 +28,25 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    //login function
+    const login = async(state, credentials)=>{
+        try {
+            const { data } = await axios.post(`/api/auth/${state}`, credentials);
+            if(data.success){
+                setAuthUser(data.userData);
+                connectSocket(data.userData);
+                axios.defaults.headers.common["token"] = data.token;
+                setToken(data.token);
+                localStorage.setItem("token", data.token);
+                toast.success(data.message);
+            }else{
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
     
 
     useEffect(()=>{
@@ -43,7 +62,9 @@ export const AuthProvider = ({ children }) => {
         authUser,
         socket,
         onlineUsers,
-        
+        login,
+        logout,
+        updateProfile
     }
 
     return(
