@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import io, { Socket } from "socket.io-client";
+import { useLocation } from "react-router-dom";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = backendUrl;
@@ -10,6 +11,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
+    const location = useLocation();
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [authUser, setAuthUser] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }) => {
             if(data.success){
                 setAuthUser(data.userData);
                 connectSocket(data.userData);
-                axios.defaults.headers.common["token"] = data.token;
+                axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
                 setToken(data.token);
                 localStorage.setItem("token", data.token);
                 toast.success(data.message);
@@ -53,7 +55,7 @@ export const AuthProvider = ({ children }) => {
         setToken(null);
         setAuthUser(null);
         setOnlineUsers([]);
-        axios.defaults.headers.common["token"] = null;
+        axios.defaults.headers.common["Authorization"] = null;
         toast.success("Logged out successfully");
         socket.disconnect();
     }
@@ -61,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     //update profile
     const updateProfile = async (body)=>{
         try {
-            const { data } = await axios.put("/api/auth/update-profile", body);
+            const { data } = await axios.put("/api/auth/updateProfile", body);
             if(data.success){
                 setAuthUser(data.user);
                 toast.success("Profile updated successfully")
@@ -90,9 +92,14 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(()=>{
         if(token){
-            axios.defaults.headers.common["token"] = token;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
-        checkAuth();
+        
+        const publicRoutes = ["/", "/login"];
+        if (!publicRoutes.includes(location.pathname)) {
+          checkAuth();
+        }
+
     }, [])
 
 
