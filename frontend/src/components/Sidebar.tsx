@@ -5,6 +5,8 @@ import menuIcon from "../assets/menuIcon.png";
 import searchIcon from "../assets/searchIcon.png";
 import assets, { userDummyData } from "../assets/chat-app-assets/assets";
 import type { User } from "../assets/chat-app-assets/assets";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 type SidebarProps = {
   selectedUser: User | false;
@@ -13,6 +15,8 @@ type SidebarProps = {
 
 
 const Sidebar = ({selectedUser, setSelectedUser}: SidebarProps) => {
+
+   const { logout } = useContext(AuthContext);
 
     const navigate = useNavigate();
   return (
@@ -25,7 +29,7 @@ const Sidebar = ({selectedUser, setSelectedUser}: SidebarProps) => {
                 <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-sky-300 border border-gray-300 text-gray-700 hidden group-hover:block">
                     <p onClick={() => navigate('/profile')} className="cursor-pointer text-sm">Edit Profile</p>
                     <hr className="my-2 border-t border-gray-700" />
-                    <p className="cursor-pointer text-sm">Logout</p>
+                    <p onClick={() => logout()} className="cursor-pointer text-sm">Logout</p>
                 </div>
             </div>
         </div>
