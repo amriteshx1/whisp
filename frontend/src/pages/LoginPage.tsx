@@ -1,7 +1,8 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import loginAppLogo from "../assets/loginAppLogo.png";
 import assets from "../assets/chat-app-assets/assets";
+import { AuthContext } from "../../context/AuthContext";
 
 const LoginPage = () => {
 
@@ -12,6 +13,8 @@ const LoginPage = () => {
   const [bio, setBio] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
+  const { login } = useContext(AuthContext);
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -19,6 +22,8 @@ const LoginPage = () => {
       setIsDataSubmitted(true)
       return;
     }
+
+    login(currentState === "Sign up" ? 'signup' : 'login', {fullName, email, password, bio});
   }
 
   return (
