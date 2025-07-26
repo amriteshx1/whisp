@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ObserverProvider from "./components/ObserverProvider";
 import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
@@ -15,15 +15,13 @@ const App = () => {
 
   return (
     <ObserverProvider>
-      <BrowserRouter>
       <Toaster />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/home" element={authUser ? <HomePage /> : <Navigate to={"/"} />} />
-          <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
+          <Route path="/home" element={authUser ? <HomePage /> : <Navigate to={"/login"} />} />
+          <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/home"} />} />
           <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to={"/"} />} />
         </Routes>
-      </BrowserRouter>
     </ObserverProvider>
   );
 };
