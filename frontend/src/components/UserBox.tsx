@@ -8,12 +8,14 @@ const UserBox = () => {
 
   const {selectedUser, messages} = useContext(ChatContext);
   const {logout, onlineUsers} = useContext(AuthContext);
-  const [msgImages, setMsgImages] = useState([]);
+  const [msgImages, setMsgImages] = useState<string[]>([]);
 
   //get images from msg
   useEffect(()=>{
     setMsgImages(
-      messages.filter(msg => msg.image).map(msg=>msg.image)
+      messages
+        .map(msg => msg.image)
+        .filter((url): url is string => typeof url === "string")
     )
   }, [messages])
 
