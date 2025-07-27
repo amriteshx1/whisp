@@ -15,7 +15,7 @@ const Sidebar = () => {
 
    const { logout, onlineUsers } = useContext(AuthContext);
 
-   const [input, setInput] = useState(false);
+   const [input, setInput] = useState<string>("");
 
     const navigate = useNavigate();
 
