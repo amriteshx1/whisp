@@ -8,12 +8,12 @@ const ProfilePage = () => {
 
     const {authUser, updateProfile} = useContext(AuthContext);
 
-    const [selectedImg, setSelectedImg] = useState(null);
+    const [selectedImg, setSelectedImg] = useState<File | null>(null);
     const navigate = useNavigate();
-    const [name, setName] = useState(authUser.fullName);
-    const [bio, setBio] = useState(authUser.bio);
+    const [name, setName] = useState(authUser?.fullName || "");
+    const [bio, setBio] = useState(authUser?.bio || "");
 
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         if(!selectedImg){
           await updateProfile({fullName: name, bio});
@@ -25,8 +25,10 @@ const ProfilePage = () => {
         reader.readAsDataURL(selectedImg);
         reader.onload = async() => {
           const base64Image = reader.result;
-          await updateProfile({profilePic: base64Image, fullName: name, bio});
-          navigate('/home');
+          if (typeof base64Image === "string") {
+            await updateProfile({ profilePic: base64Image, fullName: name, bio });
+            navigate('/home');
+          }
         }
     }
 
@@ -44,7 +46,11 @@ const ProfilePage = () => {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-10 flex-1">
                         <h3 className="text-lg text-zinc-700 font-medium">Profile details</h3>
                         <label htmlFor="avatar" className="flex items-center gap-3 cursor-pointer text-zinc-500">
-                            <input onChange={(e)=>setSelectedImg(e.target.files[0])} type="file" id="avatar" accept=".png, .jpg, .jpeg" hidden />
+                            <input onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) setSelectedImg(file);
+                            }} type="file" id="avatar" accept=".png, .jpg, .jpeg" hidden />
+
                             <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} alt="" className={`w-12 h-12 ${selectedImg && 'rounded-full'}`} />
                             Upload profile image
                         </label>
