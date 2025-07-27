@@ -32,7 +32,7 @@ export const getUsers = async (req: AuthRequest, res: Response) => {
 
     await Promise.all(promises);
 
-    res.json({ success: true, users: allUsers, unseenMsg });
+    res.json({ success: true, users: allUsers, unseenMessages: unseenMsg });
   } catch (error: any) {
     console.log(error.message);
     res.status(500).json({ success: false, message: error.message });
@@ -62,7 +62,7 @@ export const getMsg = async (req: AuthRequest, res: Response) => {
       { seen: true }
     );
 
-    res.json({ success: true, msgs });
+    res.json({ success: true, messages: msgs });
   } catch (error: any) {
     console.log(error.message);
     res.status(500).json({ success: false, message: error.message });
@@ -107,7 +107,7 @@ export const sendMsg = async (req: AuthRequest, res: Response) => {
             io.to(receiverSocketId).emit("newMessage", newMsg);
         }
 
-        res.json({success: true, newMsg});
+        res.json({success: true, newMessage: newMsg});
     } catch (error: any) {
         console.log(error.message);
         res.status(500).json({ success: false, message: error.message });

@@ -44,7 +44,7 @@ app.use(cors());
 
 //routes setup
 app.use("/api/auth", userRouter);
-app.use("/api/msgs", msgRouter)
+app.use("/api/messages", msgRouter)
 app.get("/api/status", (_req: Request, res: Response) => {
   res.send("Server is live");
 });
