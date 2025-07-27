@@ -2,17 +2,32 @@
 import type { User } from "../assets/chat-app-assets/assets";
 import assets, { messagesDummyData } from "../assets/chat-app-assets/assets";
 import applogo from "../assets/appLogo.png";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { formatMessageTime } from "../lib/utils";
+import { ChatContext } from "../../context/ChatContext";
+import { AuthContext } from "../../context/AuthContext";
 
 type ChatBoxProps = {
   selectedUser: User | false;
   setSelectedUser: (val: User | null) => void;
 };
 
-const ChatBox = ({selectedUser, setSelectedUser}: ChatBoxProps) => {
+const ChatBox = () => {
+
+  const { messages, selectedUser, setSelectedUser, sendMsg, getMsgs }  = useContext(ChatContext);
+  const { authUser, onlineUsers } = useContext(AuthContext);
 
   const scrollEnd = useRef<HTMLDivElement | null>(null);
+
+  const [input, setInput] = useState('');
+
+  //handle sending message
+  const handleSendMessage = async (e)=> {
+    e.preventDefault();
+    if(input.trim() === "") return null;
+    await sendMsg({text: input.trim()});
+    setInput("");
+  }
 
   useEffect(() => {
     if(scrollEnd.current){
@@ -61,14 +76,14 @@ const ChatBox = ({selectedUser, setSelectedUser}: ChatBoxProps) => {
       {/*  bottom stuffs */}
       <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
         <div className="flex-1 flex items-center bg-sky-200 px-3 rounded-full">
-          <input type="text" placeholder="Send a message"
+          <input onChange={(e)=>setInput(e.target.value)} value={input} onKeyDown={(e)=> e.key === "Enter" ? handleSendMessage(e) : null} type="text" placeholder="Send a message"
           className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-600 placeholder-gray-400" />
           <input type="file" id="image" accept="image/png, image/jpeg" hidden />
           <label htmlFor="image">
             <img src={assets.gallery_icon} alt="" className="w-5 mr-2 cursor-pointer"/>
           </label>
         </div>
-        <img src={assets.send_button} alt="" className="w-7 cursor-pointer" />
+        <img onClick={handleSendMessage} src={assets.send_button} alt="" className="w-7 cursor-pointer" />
       </div>
     </div>
   ) : (
