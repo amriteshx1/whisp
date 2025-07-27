@@ -1,17 +1,11 @@
 
-import type { User } from "../assets/chat-app-assets/assets";
-import assets, { messagesDummyData } from "../assets/chat-app-assets/assets";
+import assets from "../assets/chat-app-assets/assets";
 import applogo from "../assets/appLogo.png";
 import { useContext, useEffect, useRef, useState } from "react";
 import { formatMessageTime } from "../lib/utils";
 import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
-
-type ChatBoxProps = {
-  selectedUser: User | false;
-  setSelectedUser: (val: User | null) => void;
-};
 
 const ChatBox = () => {
 
@@ -66,7 +60,7 @@ const ChatBox = () => {
         <img src={selectedUser.profilePic || assets.avatar_icon} alt="" className="w-8 rounded-full"/>
         <p className="flex-1 text-lg text-zinc-700 flex items-center gap-2">
           {selectedUser.fullName}
-          {onlineUsers.includes(selectedUser._id)}<span className="w-2 h-2 rounded-full bg-green-500"></span>
+          {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7" />
         <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5" />

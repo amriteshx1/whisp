@@ -4,15 +4,9 @@ import applogo from "../assets/appLogo.png";
 import menuIcon from "../assets/menuIcon.png";
 import searchIcon from "../assets/searchIcon.png";
 import assets from "../assets/chat-app-assets/assets";
-import type { User } from "../assets/chat-app-assets/assets";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
-
-type SidebarProps = {
-  selectedUser: User | false;
-  setSelectedUser: (val: User | false) => void;
-};
 
 
 const Sidebar = () => {
@@ -55,7 +49,7 @@ const Sidebar = () => {
 
       <div className="flex flex-col gap-3">
         {filteredUsers.map((user, index) => (
-          <div onClick={() => {setSelectedUser(user)}}
+          <div onClick={() => {setSelectedUser(user); setUnseenMessages(prev => ({...prev, [user._id] : 0}))}}
           key={index} className={`relative flex items-center gap-4 p-2 pl-4 rounded cursor-pointer max-sm:text-sm hover:bg-sky-100 hover:rounded-xl ${selectedUser && selectedUser._id === user._id && 'bg-sky-200 rounded-xl'}`}>
             <img src={user?.profilePic || assets.avatar_icon} alt={user.fullName} className="w-[40px] aspect-[1/1] rounded-full" />
             <div className="flex flex-col leading-5">
