@@ -5,15 +5,18 @@ import App from './App.tsx'
 import { AuthProvider } from '../context/AuthContext.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ChatProvider } from '../context/ChatContext.tsx'
+import { CallProvider } from '../context/CallContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+    <CallProvider>
     <AuthProvider>
       <ChatProvider>
         <App />
       </ChatProvider>
     </AuthProvider>
+    </CallProvider>
     </BrowserRouter>
   </StrictMode>,
 )
