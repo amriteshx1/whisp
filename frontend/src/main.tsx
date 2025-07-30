@@ -9,14 +9,14 @@ import { CallProvider } from '../context/CallContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-    <CallProvider>
+  <BrowserRouter>
     <AuthProvider>
-      <ChatProvider>
-        <App />
-      </ChatProvider>
+      <CallProvider>
+        <ChatProvider>
+          <App />
+        </ChatProvider>
+      </CallProvider>
     </AuthProvider>
-    </CallProvider>
-    </BrowserRouter>
-  </StrictMode>,
+  </BrowserRouter>
+</StrictMode>,
 )
