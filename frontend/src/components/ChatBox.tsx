@@ -93,7 +93,14 @@ const startVideoCall = () => startCall(true);
     reader.readAsDataURL(file);
   }
 
-
+  //handle end call
+  const handleEndCallClick = () => {
+    console.log("Emitting call-ended to", otherUserSocketId.current);
+  if (socket && otherUserSocketId.current) {
+    socket.emit("call-ended", { to: otherUserSocketId.current });
+  }
+  endCall();
+  };
 
 
   useEffect(()=>{
