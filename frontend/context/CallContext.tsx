@@ -1,18 +1,36 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { AuthContext } from "./AuthContext";
+import type { Socket } from "socket.io-client";
 
-const CallContext = createContext(null);
+interface CallContextType {
+  localStream: MediaStream | null;
+  remoteStream: MediaStream | null;
+  callActive: boolean;
+  peerConnection: RefObject<RTCPeerConnection | null>;
+  setLocalStream: React.Dispatch<React.SetStateAction<MediaStream | null>>;
+  setRemoteStream: React.Dispatch<React.SetStateAction<MediaStream | null>>;
+  setCallActive: React.Dispatch<React.SetStateAction<boolean>>;
+  otherUserSocketId: RefObject<string | null>;
+  endCall: () => void;
+}
+
+const CallContext = createContext<CallContextType | null>(null);
 
 export const useCall = () => useContext(CallContext);
 
-export const CallProvider = ({ children }) => {
-  const { socket } = useContext(AuthContext);
+interface CallProviderProps {
+  children: ReactNode;
+}
 
-  const [localStream, setLocalStream] = useState(null);
-  const [remoteStream, setRemoteStream] = useState(null);
+export const CallProvider = ({ children }: CallProviderProps) => {
+  const { socket } = useContext(AuthContext) as { socket: Socket | null };
+
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   const [callActive, setCallActive] = useState(false);
-  const peerConnection = useRef(null);
-  const otherUserSocketId = useRef(null);
+
+  const peerConnection = useRef<RTCPeerConnection | null>(null);
+  const otherUserSocketId = useRef<string | null>(null);
 
   //for ending the call
   const endCall = () => {
@@ -36,7 +54,8 @@ export const CallProvider = ({ children }) => {
       if (!socket) return;
       console.log("Socket available in CallProvider");
 
-    socket.on("incoming-call", async ({ from, offer, isVideo }) => {
+      // handle incoming call
+      socket.on("incoming-call", async ({ from, offer, isVideo }) => {
       console.log("Incoming call from", from);
 
       const accept = window.confirm(`${from} is calling you. Accept?`);
@@ -82,14 +101,22 @@ export const CallProvider = ({ children }) => {
   });
 
   socket.on("call-answered", async ({ from, answer }) => {
-    await peerConnection.current.setRemoteDescription(
-      new RTCSessionDescription(answer)
-    );
+    console.log("Call answered by", from);
+    if (peerConnection.current) {
+      await peerConnection.current.setRemoteDescription(
+        new RTCSessionDescription(answer)
+      );
+    }
   });
 
   socket.on("ice-candidate", async ({ from, candidate }) => {
+    console.log("Received ICE candidate from", from);
     try {
-      await peerConnection.current.addIceCandidate(new RTCIceCandidate(candidate));
+      if (peerConnection.current) {
+        await peerConnection.current.addIceCandidate(
+          new RTCIceCandidate(candidate)
+        );
+      }
     } catch (err) {
       console.error("Error adding ICE candidate:", err);
     }
