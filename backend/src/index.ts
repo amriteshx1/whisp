@@ -59,7 +59,14 @@ io.on("connection", (socket) => {
     });
   });
 
-
+  //Handle call end
+  socket.on("call-ended", ({ to }) => {
+    const targetSocketId = userSocketMap[to];
+    if (targetSocketId) {
+      console.log("Forwarding call-ended to", targetSocketId);
+      io.to(targetSocketId).emit("call-ended");
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected", userId);
