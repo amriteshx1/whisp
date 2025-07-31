@@ -95,6 +95,7 @@ const startVideoCall = () => startCall(true);
 
 
 
+
   useEffect(()=>{
     if(selectedUser){
       getMsgs(selectedUser._id);
@@ -130,7 +131,21 @@ const startVideoCall = () => startCall(true);
 
       </div>
 
-      
+      {callActive && (
+        <div className="flex justify-center items-center p-2 bg-black mt-[20vh]">
+          <video
+            ref={(el) => el && (el.srcObject = localStream)}
+            autoPlay
+            muted
+            className="w-1/2 h-40 object-cover rounded-lg border-2 border-white mr-2"
+          />
+          <video
+            ref={(el) => el && (el.srcObject = remoteStream)}
+            autoPlay
+            className="w-1/2 h-40 object-cover rounded-lg border-2 border-white"
+          />
+        </div>
+      )}
 
       {/* main chat arena */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
