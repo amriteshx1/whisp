@@ -14,6 +14,23 @@ export const CallProvider = ({ children }) => {
   const peerConnection = useRef(null);
   const otherUserSocketId = useRef(null);
 
+  //for ending the call
+  const endCall = () => {
+    if (peerConnection.current) {
+      peerConnection.current.close();
+      peerConnection.current = null;
+    }
+    if (localStream) {
+      localStream.getTracks().forEach((t) => t.stop());
+      setLocalStream(null);
+    }
+    if (remoteStream) {
+      remoteStream.getTracks().forEach((t) => t.stop());
+      setRemoteStream(null);
+    }
+    setCallActive(false);
+    otherUserSocketId.current = null;
+  };
 
   useEffect(()=>{
       if (!socket) return;
@@ -78,6 +95,10 @@ export const CallProvider = ({ children }) => {
     }
   });
 
+  socket.on("call-ended", () => {
+      console.log("Call ended by other user.");
+      endCall();
+  });
 
   return () => {
     socket.off("incoming-call");
