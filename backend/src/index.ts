@@ -43,7 +43,13 @@ io.on("connection", (socket) => {
     });
   });
 
-  
+  // Handle answer from callee
+  socket.on("answer-call", ({ to, answer }) => {
+    io.to(to).emit("call-answered", {
+      from: socket.id,
+      answer,
+    });
+  });
 
   // Handle ICE candidate exchange
   socket.on("ice-candidate", ({ to, candidate }) => {
@@ -53,7 +59,7 @@ io.on("connection", (socket) => {
     });
   });
 
- 
+
 
   socket.on("disconnect", () => {
     console.log("User disconnected", userId);
