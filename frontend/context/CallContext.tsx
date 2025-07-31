@@ -15,7 +15,6 @@ export const CallProvider = ({ children }) => {
   const otherUserSocketId = useRef(null);
 
 
-
   useEffect(()=>{
       if (!socket) return;
       console.log("Socket available in CallProvider");
@@ -65,6 +64,20 @@ export const CallProvider = ({ children }) => {
   socket.emit("answer-call", { to: from, answer });
   });
 
+  socket.on("call-answered", async ({ from, answer }) => {
+    await peerConnection.current.setRemoteDescription(
+      new RTCSessionDescription(answer)
+    );
+  });
+
+  socket.on("ice-candidate", async ({ from, candidate }) => {
+    try {
+      await peerConnection.current.addIceCandidate(new RTCIceCandidate(candidate));
+    } catch (err) {
+      console.error("Error adding ICE candidate:", err);
+    }
+  });
+
 
   return () => {
     socket.off("incoming-call");
@@ -86,6 +99,7 @@ export const CallProvider = ({ children }) => {
         setRemoteStream,
         setCallActive,
         otherUserSocketId,
+        endCall,
       }}
     >
       {children}
