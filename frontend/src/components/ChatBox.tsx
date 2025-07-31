@@ -6,6 +6,7 @@ import { formatMessageTime } from "../lib/utils";
 import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import { useCall } from "../../context/CallContext";
 
 const ChatBox = () => {
 
@@ -15,6 +16,58 @@ const ChatBox = () => {
   const scrollEnd = useRef<HTMLDivElement | null>(null);
 
   const [input, setInput] = useState('');
+
+  const {socket} = useContext(AuthContext);
+
+  const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, localStream, remoteStream, callActive, endCall } = useCall();
+
+  const startCall = async (isVideo: boolean) => {
+    const mediaConstraints = isVideo
+      ? { video: true, audio: true }
+      : { audio: true };
+  
+    const stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+    setLocalStream(stream);
+  
+    const pc = new RTCPeerConnection({
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+    });
+  
+    stream.getTracks().forEach((track) => {
+      pc.addTrack(track, stream);
+    });
+  
+    pc.ontrack = (event) => {
+      setRemoteStream(event.streams[0]);
+    };
+
+    pc.onicecandidate = (event) => {
+      if (event.candidate) {
+        socket?.emit("ice-candidate", {
+          to: selectedUser?._id,
+          candidate: event.candidate,
+        });
+      }
+  };
+
+  const offer = await pc.createOffer();
+  await pc.setLocalDescription(offer);
+
+  peerConnection.current = pc;
+  otherUserSocketId.current = selectedUser?._id;
+
+  console.log("Emitting call-user to", selectedUser?._id);
+  socket?.emit("call-user", {
+    to: selectedUser?._id,
+    offer,
+    isVideo,
+  });
+
+  setCallActive(true);
+};
+
+const startVoiceCall = () => startCall(false);
+const startVideoCall = () => startCall(true);
 
   //handle sending message
   const handleSendMessage = async (e: React.FormEvent)=> {
@@ -40,6 +93,8 @@ const ChatBox = () => {
     reader.readAsDataURL(file);
   }
 
+
+
   useEffect(()=>{
     if(selectedUser){
       getMsgs(selectedUser._id);
@@ -63,9 +118,19 @@ const ChatBox = () => {
           {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7" />
+        {!callActive ? (
+          <>
+            <button onClick={startVoiceCall} className="p-1 cursor-pointer hover:bg-sky-300 hover:rounded-lg">🎧</button>
+            <button onClick={startVideoCall} className="p-1 cursor-pointer hover:bg-sky-300 hover:rounded-lg">📽️</button>
+          </>
+        ) : (
+          <button onClick={handleEndCallClick} className="p-1 cursor-pointer bg-red-500 text-white rounded-lg hover:bg-red-600">End Call</button>
+        )}
         <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5" />
 
       </div>
+
+      
 
       {/* main chat arena */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
