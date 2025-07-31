@@ -31,6 +31,30 @@ io.on("connection", (socket) => {
   //emit online users to all connected clients
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
+  // Handle incoming call offer
+  socket.on("call-user", ({ to, offer, isVideo }) => {
+    const socketId = userSocketMap[to];
+    if (!socketId) return;
+    console.log("Relaying call-user to", socketId);
+    io.to(socketId).emit("incoming-call", {
+      from: socket.id,
+      offer,
+      isVideo,
+    });
+  });
+
+  
+
+  // Handle ICE candidate exchange
+  socket.on("ice-candidate", ({ to, candidate }) => {
+    io.to(to).emit("ice-candidate", {
+      from: socket.id,
+      candidate,
+    });
+  });
+
+ 
+
   socket.on("disconnect", () => {
     console.log("User disconnected", userId);
     delete userSocketMap[userId];
