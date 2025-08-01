@@ -16,7 +16,14 @@ interface CallContextType {
 
 const CallContext = createContext<CallContextType | null>(null);
 
-export const useCall = () => useContext(CallContext);
+export const useCall = (): CallContextType => {
+  const context = useContext(CallContext);
+  if (!context) {
+    throw new Error("useCall must be used within CallProvider");
+  }
+  return context;
+};
+
 
 interface CallProviderProps {
   children: ReactNode;
