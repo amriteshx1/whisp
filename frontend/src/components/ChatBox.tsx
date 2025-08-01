@@ -54,7 +54,7 @@ const ChatBox = () => {
   await pc.setLocalDescription(offer);
 
   peerConnection.current = pc;
-  otherUserSocketId.current = selectedUser?._id;
+  otherUserSocketId.current = selectedUser?._id ?? null;
 
   console.log("Emitting call-user to", selectedUser?._id);
   socket?.emit("call-user", {
@@ -141,13 +141,13 @@ const startVideoCall = () => startCall(true);
       {callActive && (
         <div className="flex justify-center items-center p-2 bg-black mt-[20vh]">
           <video
-            ref={(el) => el && (el.srcObject = localStream)}
+            ref={(el) => { if (el) el.srcObject = localStream;}}
             autoPlay
             muted
             className="w-1/2 h-40 object-cover rounded-lg border-2 border-white mr-2"
           />
           <video
-            ref={(el) => el && (el.srcObject = remoteStream)}
+            ref={(el) => { if (el) el.srcObject = remoteStream;}}
             autoPlay
             className="w-1/2 h-40 object-cover rounded-lg border-2 border-white"
           />
