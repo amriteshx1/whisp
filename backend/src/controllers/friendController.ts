@@ -123,3 +123,27 @@ export const respondToFriendRequest = async (req: AuthRequest, res: Response) =>
     res.status(500).json({ message: "server error" });
   }
 };
+
+//view pending requests
+export const getPendingFriendRequests = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user!._id;
+
+    //you are receiver
+    const incoming = await FriendRequest.find({
+      receiverId: userId,
+      status: "pending",
+    }).populate("senderId", "fullName profilePic friendCode");
+
+    //you are sender
+    const outgoing = await FriendRequest.find({
+      senderId: userId,
+      status: "pending",
+    }).populate("receiverId", "fullName profilePic friendCode");
+
+    res.json({ incoming, outgoing });
+  } catch (error) {
+    console.error("error fetching pending requests:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
