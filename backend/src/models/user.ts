@@ -26,5 +26,35 @@ const userSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
+// helper function to generate a random 6-character alphanumeric code
+function generateFriendCode(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+// pre-save hook to set friendCode if not already set
+userSchema.pre<IUser>("save", async function (next) {
+  if (!this.friendCode) {
+    let newCode;
+    let exists = true;
+
+    // ensuring the generated code is unique
+    while (exists) {
+      newCode = generateFriendCode();
+      const existingUser = await mongoose.model<IUser>("User").findOne({ friendCode: newCode });
+      if (!existingUser) {
+        exists = false;
+      }
+    }
+
+    this.friendCode = newCode!;
+  }
+  next();
+});
+
 const User = mongoose.model<IUser>("User", userSchema);
 export default User;
