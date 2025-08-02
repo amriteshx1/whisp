@@ -147,3 +147,33 @@ export const getPendingFriendRequests = async (req: AuthRequest, res: Response) 
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+//delete friend
+export const deleteFriend = async (req: AuthRequest, res: Response) => {
+  try {
+    const { friendId } = req.params;
+    const userId = req.user!._id;
+
+    //check if target user exists
+    const targetUser = await User.findById(friendId);
+    if (!targetUser) {
+      res.status(404).json({ message: "friend not found" });
+      return;
+    }
+
+    //remove each other from friends list
+    await User.findByIdAndUpdate(userId, {
+      $pull: { friends: friendId }
+    });
+
+    await User.findByIdAndUpdate(friendId, {
+      $pull: { friends: userId }
+    });
+
+    res.json({ message: "friend removed successfully" });
+  } catch (error) {
+    console.error("Error deleting friend:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
