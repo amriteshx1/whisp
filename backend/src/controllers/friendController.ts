@@ -66,3 +66,60 @@ export const sendFriendRequest = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+// accept or reject friend request
+export const respondToFriendRequest = async (req: AuthRequest, res: Response) => {
+  try {
+    const { requestId, action } = req.body; 
+    const userId = req.user!._id;
+
+    //find request
+    const friendRequest = await FriendRequest.findById(requestId);
+    if (!friendRequest) {
+      res.status(404).json({ message: "Friend request not found" });
+      return;
+    }
+
+    //ensuring this user is the receiver
+    if (String(friendRequest.receiverId) !== String(userId)) {
+      res.status(403).json({ message: "Not authorized to respond to this request" });
+      return;
+    }
+
+    if (friendRequest.status !== "pending") {
+      res.status(400).json({ message: "Request already processed" });
+      return;
+    }
+
+    if (action === "accept") {
+      // update both users' friends list
+      await User.findByIdAndUpdate(friendRequest.senderId, {
+        $addToSet: { friends: friendRequest.receiverId }
+      });
+
+      await User.findByIdAndUpdate(friendRequest.receiverId, {
+        $addToSet: { friends: friendRequest.senderId }
+      });
+
+      friendRequest.status = "accepted";
+      await friendRequest.save();
+
+      res.json({ message: "friend request accepted" });
+      return;
+    }
+
+    if (action === "reject") {
+      friendRequest.status = "rejected";
+      await friendRequest.save();
+      res.json({ message: "friend request rejected" });
+      return;
+    }
+
+    res.status(400).json({ message: "invalid action" });
+    return;
+  } catch (error) {
+    console.error("error responding to friend request:", error);
+    res.status(500).json({ message: "server error" });
+  }
+};
