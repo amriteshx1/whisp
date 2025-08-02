@@ -5,6 +5,7 @@ import http from "http";
 import { connectDb } from './lib/db';
 import userRouter from './routes/userRoutes';
 import msgRouter from './routes/msgRoutes';
+import friendRouter from './routes/friendRoutes';
 import { Server } from 'socket.io';
 
 //create express and http server
@@ -81,7 +82,8 @@ app.use(cors());
 
 //routes setup
 app.use("/api/auth", userRouter);
-app.use("/api/messages", msgRouter)
+app.use("/api/messages", msgRouter);
+app.use("/api/friends", friendRouter);
 app.get("/api/status", (_req: Request, res: Response) => {
   res.send("Server is live");
 });
