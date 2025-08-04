@@ -1,6 +1,6 @@
 
 import FeatureMarquee from "../components/Marquee";
-import landing from "../assets/landing.png";
+import landing from "../assets/landing.jpg";
 import instagram from "../assets/instagram.png";
 import discord from "../assets/discord.png";
 import github from "../assets/github.png";
@@ -8,39 +8,41 @@ import twitter from "../assets/twitter.png";
 
 const LandingPage = () => {
   return (
-      <div className="min-h-screen w-full relative overflow-auto">
-        <div
-          className="absolute inset-0 z-0 h-full w-full"
-          style={{
-            background: "radial-gradient(125% 125% at 50% 90%, #fff 40%, #90caff 100%)",
-          }}
-        >
-        
-        <div className="h-[9vh] flex justify-between items-center text-zinc-600 p-[1vh] mx-[15vh] mt-[2vh] rounded-2xl ">
-            <div className='w-[60%] flex justify-start items-center'>
-                <p className='text-[2vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent'>Whisp.</p>
+      
+<div className="min-h-screen w-full relative overflow-auto bg-black">
+    <div
+      className="absolute inset-0 z-0"
+    >
+        <div className="flex justify-between items-center text-neutral-500 py-[1.5vh] px-[3vh] mx-[15vh] rounded-[100px] border-b-2 border-b-neutral-800">
+            <div className='w-[40%] flex justify-start items-center'>
+                <p className='text-[1.6vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent'>Whisp.</p>
             </div>
 
-            <div className='w-[40%] flex gap-[4vh] justify-end items-center'>
-                <p className='text-[1.1vw] cursor-pointer font-medium hover:text-zinc-500'>About</p>
-                <p className='text-[1.1vw] font-medium cursor-pointer hover:text-zinc-500'>Features</p>
-                <p className='text-[1.1vw] font-medium cursor-pointer hover:text-zinc-500'>How it works</p>
-                <button className='block text-[1.1vw] font-medium cursor-pointer hover:text-zinc-500'>Sign in</button>
+            <div className='w-[50%] flex gap-[4vh] justify-end items-center'>
+                <p className='text-[1.05vw] cursor-pointer font-medium hover:text-neutral-400'>About</p>
+                <p className='text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>Features</p>
+                <p className='text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>How it works</p>
+                <button className='block text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>Sign in</button>
                 <button
-                className='text-[1vw] font-medium p-[1vh] px-[2vh] rounded-4xl bg-zinc-100 cursor-pointer hover:bg-sky-100'>Get Started</button>
+                className='text-[0.9vw] text-white/75 font-medium py-[0.5vh] px-[1.5vh] rounded-4xl bg-neutral-900 cursor-pointer hover:text-white/90'>Get Started</button>
             </div>
         </div>
 
         <div className="min-h-[85vh] flex flex-col justify-start items-center p-[1vh]">
-            <div className="flex flex-col justify-center items-center mt-[5vh] text-zinc-700">
-                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500">Conversations That Feel Close</p>
-                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500 motion-delay-100">Even From Afar</p>
-                <p className="text-[1.5vw] bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500 motion-delay-200">Stay connected — softly, silently, seamlessly.</p>
-                <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-zinc-500 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-zinc-100 mt-[2.5vh] motion-preset-slide-up motion-duration-500 motion-delay-300">Step into Whisp</button>
+            <div className="flex flex-col justify-center items-center mt-[6vh] pt-[1vh] text-zinc-700">
+              <div className="flex justify-center items-center gap-3 py-[1vh] px-[2vh] text-[0.8vw] border border-neutral-800 rounded-full text-white/75">
+                <p>✔ Instant Messaging</p>
+                <p>✔ End-to-End Encryption</p>
+                <p>✔ Crystal-Clear Calls</p>
+              </div>
+                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500">Conversations That Feel Close</p>
+                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500 motion-delay-100">Even From Afar</p>
+                <p className="text-[1.5vw] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500 motion-delay-200">Stay connected — softly, silently, seamlessly.</p>
+                <button className="text-[1.2vw] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-white/75 mt-[2.5vh] hover:text-white/90 motion-preset-slide-up motion-duration-500 motion-delay-300">Step into Whisp</button>
             </div>
 
-            <div className="flex justify-center items-center h-[75vh] mt-[2vh] motion-preset-slide-up motion-duration-500 motion-delay-300">
-                <img src={landing} alt="landingPage-image" className="h-full object-cover" />
+            <div className="flex justify-center items-center w-screen motion-preset-slide-up motion-duration-500 motion-delay-300">
+                <img src={landing} alt="landingPage-image" className="w-full object-cover" />
             </div>
 
             <FeatureMarquee />
