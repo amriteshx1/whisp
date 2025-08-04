@@ -7,6 +7,8 @@ import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import { useCall } from "../../context/CallContext";
+import audioCall from "../assets/audioCall.png";
+import videoCall from "../assets/videoCall.png";
 
 const ChatBox = () => {
 
@@ -119,22 +121,22 @@ const startVideoCall = () => startCall(true);
     <div className="h-full overflow-scroll relative">
 
       {/* upper navbar type stuff */}
-      <div className="flex items-center gap-3 py-3 mx-4 border-b border-gray-700">
+      <div className="flex items-center gap-3 py-3 mx-4 border-b-2 border-b-neutral-900">
         <img src={selectedUser.profilePic || assets.avatar_icon} alt="" className="w-8 rounded-full"/>
-        <p className="flex-1 text-lg text-zinc-700 flex items-center gap-2">
+        <p className="flex-1 text-lg font-medium text-white/80 flex items-center gap-2">
           {selectedUser.fullName}
           {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7" />
         {!callActive ? (
           <>
-            <button onClick={startVoiceCall} className="p-1 cursor-pointer hover:bg-sky-300 hover:rounded-lg">🎧</button>
-            <button onClick={startVideoCall} className="p-1 cursor-pointer hover:bg-sky-300 hover:rounded-lg">📽️</button>
+            <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
+            <img onClick={startVideoCall} src={videoCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
           </>
         ) : (
           <button onClick={handleEndCallClick} className="p-1 cursor-pointer bg-red-500 text-white rounded-lg hover:bg-red-600">End Call</button>
         )}
-        <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5" />
+        <img src={assets.help_icon} alt="" className="max-md:hidden max-w-6" />
 
       </div>
 
@@ -160,16 +162,16 @@ const startVideoCall = () => startCall(true);
           <div key={index} className={`flex items-end gap-2 justify-end ${msg.senderId !== authUser?._id 
             && 'flex-row-reverse' }`}>
               {msg.image ? (
-                <img src={msg.image} alt="" className="max-w-[230px] border border-gray-700 rounded-lg overflow-hidden mb-8" />
+                <img src={msg.image} alt="" className="max-w-[230px] border border-neutral-900 rounded-lg overflow-hidden mb-8" />
               ) : (
-                <p className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-sky-600 text-white ${msg.senderId
+                <p className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/80 ${msg.senderId
                   === authUser?._id ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
               )}
 
               <div className="text-center text-xs">
                 <img src={msg.senderId === authUser?._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="" 
                 className="w-7 rounded-full"/>
-                <p className="text-gray-500">{formatMessageTime(msg.createdAt || "")}</p>
+                <p className="text-neutral-500">{formatMessageTime(msg.createdAt || "")}</p>
               </div>
           </div>
         ))}
@@ -178,21 +180,21 @@ const startVideoCall = () => startCall(true);
 
       {/*  bottom stuffs */}
       <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
-        <div className="flex-1 flex items-center bg-sky-200 px-3 rounded-full">
+        <div className="flex-1 flex items-center bg-neutral-900 px-3 rounded-full">
           <input onChange={(e)=>setInput(e.target.value)} value={input} onKeyDown={(e)=> e.key === "Enter" ? handleSendMessage(e) : null} type="text" placeholder="Send a message"
-          className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-600 placeholder-gray-400" />
+          className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-400 placeholder-neutral-500" />
           <input onChange={handleSendImage} type="file" id="image" accept="image/png, image/jpeg" hidden />
           <label htmlFor="image">
             <img src={assets.gallery_icon} alt="" className="w-5 mr-2 cursor-pointer"/>
           </label>
         </div>
-        <img onClick={handleSendMessage} src={assets.send_button} alt="" className="w-7 cursor-pointer" />
+        <img onClick={handleSendMessage} src={assets.send_button} alt="" className="w-6 cursor-pointer" />
       </div>
     </div>
   ) : (
-    <div className="flex flex-col items-center justify-center gap-10 text-gray-500 max-md:hidden">
-      <img src={applogo} alt=""  className="h-[10vh]"/>
-      <p className="text-lg font-medium text-zinc-600">Stay connected - softly, silently, seamlessly.</p>
+    <div className="flex flex-col items-center justify-center gap-5 text-gray-500 max-md:hidden">
+      <img src={applogo} alt=""  className="h-[45vh]"/>
+      <p className="text-lg font-medium text-neutral-500">Stay connected - softly, silently, seamlessly.</p>
     </div>
   )
 }
