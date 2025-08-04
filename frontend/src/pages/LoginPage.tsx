@@ -1,6 +1,6 @@
 
 import { useContext, useState } from "react";
-import loginAppLogo from "../assets/loginAppLogo.png";
+import appLogo from "../assets/appLogo.jpg";
 import assets from "../assets/chat-app-assets/assets";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -27,20 +27,17 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen w-full relative overflow-auto">
+    <div className="min-h-screen w-full relative bg-black overflow-auto">
         <div
-          className="absolute inset-0 z-0 h-full w-full px-[5vh] py-[5vh]"
-          style={{
-            background: "radial-gradient(125% 125% at 50% 90%, #fff 40%, #90caff 100%)",
-          }}
+          className="absolute inset-0 z-0 h-full w-full py-[5vh]"
         >
-            <div className="h-full bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col">
+            <div className="h-full bg-cover bg-center flex items-center justify-center gap-32 sm:justify-evenly max-sm:flex-col">
                 {/* left-half */}
-                <img src={loginAppLogo} alt="" className="h-[50vh]" />
+                <img src={appLogo} alt="" className="h-[70vh]" />
         
                 {/* right-half */}
-                <form onSubmit={onSubmitHandler} className="border-2  text-zinc-700 ring-1 ring-sky-400 p-6 flex flex-col gap-6 rounded-lg">
-                    <h2 className="font-medium text-2xl flex justify-between items-center">
+                <form onSubmit={onSubmitHandler} className="border-t-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-6 rounded-4xl">
+                    <h2 className="font-medium text-3xl flex justify-between items-center">
                         {currentState}
                         {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" 
                         className="w-5 cursor-pointer" />}
@@ -49,42 +46,42 @@ const LoginPage = () => {
 
                     {currentState === "Sign up" && !isDataSubmitted && (
                         <input onChange={(e)=> setFullName(e.target.value)} value={fullName}
-                        type="text" className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1 focus:ring-sky-400" placeholder="Full Name" required />
+                        type="text" className="p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500" placeholder="Full Name" required />
                     )}
 
                     {!isDataSubmitted && (
                         <>
                         <input onChange={(e)=> setEmail(e.target.value)} value={email}
-                         type="email" placeholder="Email Address" required className="p-2 border border-gray-500
-                         rounded-md focus:outline-none focus:ring-1 focus:ring-sky-400"  />
+                         type="email" placeholder="Email Address" required className="p-2 border border-neutral-700
+                         rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"  />
 
                          <input onChange={(e)=> setPassword(e.target.value)} value={password}
-                         type="password" placeholder="Password" required className="p-2 border border-gray-500
-                         rounded-md focus:outline-none focus:ring-1 focus:ring-sky-400"  />
+                         type="password" placeholder="Password" required className="p-2 border border-neutral-700
+                         rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"  />
                         </>
                     )}
 
                     {currentState === "Sign up" && isDataSubmitted && (
                       <textarea onChange={(e)=>setBio(e.target.value)} value={bio}
-                       rows={4} className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1 focus:ring-sky-400"
+                       rows={4} className="p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400"
                       placeholder="Provide a short bio..." required></textarea>
                       )
                     }
 
-                    <button type="submit" className="py-3 bg-gradient-to-r from-sky-400 to-sky-600 text-white rounded-md cursor-pointer">
+                    <button type="submit" className="py-3 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer">
                       {currentState === "Sign up" ? "Create Account" : "Login Now"}
                     </button>
 
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <input type="checkbox" />
+                    <div className="flex items-center gap-2 text-sm text-neutral-600">
+                      <input type="checkbox" className="accent-neutral-700" />
                       <p>Agree to the terms of use & privacy policy. </p>
                     </div>
 
                     <div className="flex flex-col gap-2">
                       {currentState === "Sign up" ? (
-                        <p className="text-sm text-gray-600">Already have an account? <span onClick={()=>{setCurrentState("Login"); setIsDataSubmitted(false)}} className="font-medium text-sky-500 cursor-pointer">Login here</span></p>
+                        <p className="text-sm text-neutral-600">Already have an account? <span onClick={()=>{setCurrentState("Login"); setIsDataSubmitted(false)}} className="font-medium text-neutral-500 cursor-pointer hover:text-neutral-400">Login here</span></p>
                       ) : (
-                        <p className="text-sm text-gray-600">Create an account <span onClick={()=>{setCurrentState("Sign up")}} className="font-medium text-sky-500 cursor-pointer">Click here</span></p>
+                        <p className="text-sm text-neutral-600">Create an account <span onClick={()=>{setCurrentState("Sign up")}} className="font-medium text-neutral-500 cursor-pointer hover:text-neutral-400">Click here</span></p>
                       )}
 
                     </div>
