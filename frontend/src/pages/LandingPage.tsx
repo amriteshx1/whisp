@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import FeatureMarquee from "../components/Marquee";
 import landing from "../assets/landing.jpg";
 import instagram from "../assets/instagram.png";
@@ -7,6 +8,13 @@ import github from "../assets/github.png";
 import twitter from "../assets/twitter.png";
 
 const LandingPage = () => {
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/login");
+  }
+
   return (
       
 <div className="min-h-screen w-full relative overflow-auto bg-black">
@@ -22,8 +30,8 @@ const LandingPage = () => {
                 <p className='text-[1.05vw] cursor-pointer font-medium hover:text-neutral-400'>About</p>
                 <p className='text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>Features</p>
                 <p className='text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>How it works</p>
-                <button className='block text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>Sign in</button>
-                <button
+                <button onClick={handleClick} className='block text-[1.05vw] font-medium cursor-pointer hover:text-neutral-400'>Sign in</button>
+                <button onClick={handleClick}
                 className='text-[0.9vw] text-white/75 font-medium py-[0.5vh] px-[1.5vh] rounded-4xl bg-neutral-900 cursor-pointer hover:text-white/90'>Get Started</button>
             </div>
         </div>
@@ -38,7 +46,7 @@ const LandingPage = () => {
                 <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500">Conversations That Feel Close</p>
                 <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500 motion-delay-100">Even From Afar</p>
                 <p className="text-[1.5vw] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent motion-preset-slide-up motion-duration-500 motion-delay-200">Stay connected — softly, silently, seamlessly.</p>
-                <button className="text-[1.2vw] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-white/75 mt-[2.5vh] hover:text-white/90 motion-preset-slide-up motion-duration-500 motion-delay-300">Step into Whisp</button>
+                <button onClick={handleClick} className="text-[1.2vw] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-white/75 mt-[2.5vh] hover:text-white/90 motion-preset-slide-up motion-duration-500 motion-delay-300">Step into Whisp</button>
             </div>
 
             <div className="flex justify-center items-center w-screen motion-preset-slide-up motion-duration-500 motion-delay-300 relative">
@@ -76,7 +84,7 @@ const LandingPage = () => {
               
               <div className="flex flex-col justify-center items-center mt-[10vh] w-full">
                 <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent intersect-once intersect:motion-preset-slide-up motion-delay-200">Let your conversations begin.</h2>
-                <button className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[7vh] py-[1vh] rounded-xl cursor-pointer text-white/75 hover:text-white/90 mt-[5vh] intersect-once intersect:motion-preset-slide-up motion-delay-200">Get Started</button>
+                <button onClick={handleClick} className="text-[1.4vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[7vh] py-[1vh] rounded-xl cursor-pointer text-white/75 hover:text-white/90 mt-[5vh] intersect-once intersect:motion-preset-slide-up motion-delay-200">Get Started</button>
               </div>
 
               <div className="flex flex-col w-full mt-[20vh]">
