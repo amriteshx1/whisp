@@ -21,7 +21,7 @@ const UserBox = () => {
 
 
   return selectedUser && (
-    <div className={`text-zinc-700 w-full relative overflow-y-scroll ${selectedUser ? "max-md:hidden" : ""}`}>
+    <div className={`text-white/80 w-full relative overflow-y-scroll ${selectedUser ? "max-md:hidden" : ""}`}>
 
       <div className="pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto">
         <img src={selectedUser?.profilePic || assets.avatar_icon} alt="" 
@@ -33,7 +33,7 @@ const UserBox = () => {
         <p className="px-10 mx-auto text-xs">{selectedUser.bio}</p>
       </div>
 
-      <hr className="w-[80%] mx-auto border-gray-700 my-4" />
+      <hr className="w-[80%] mx-auto border border-neutral-900 my-4" />
 
       <div className="px-5 text-xs">
         <p>Media</p>
@@ -48,8 +48,8 @@ const UserBox = () => {
         </div>
       </div>
 
-      <button onClick={()=>logout()} className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-sky-400 to-sky-600 text-white border-none
-      text-sm font-light py-2 px-20 rounded-full cursor-pointer">
+      <button onClick={()=>logout()} className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 border-none
+      text-sm font-light py-2 px-20 rounded-full cursor-pointer hover:text-white/90">
         Logout
       </button>
     </div>
