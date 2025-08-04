@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/chat-app-assets/assets";
-import appLogo from "../assets/appLogo.png";
+import appLogo from "../assets/appLogo.jpg";
 import { AuthContext } from "../../context/AuthContext";
 
 const ProfilePage = () => {

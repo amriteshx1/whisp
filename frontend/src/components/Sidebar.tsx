@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import applogo from "../assets/appLogo.png";
+import applogo from "../assets/appLogo.jpg";
 import menuIcon from "../assets/menuIcon.png";
 import searchIcon from "../assets/searchIcon.png";
 import assets from "../assets/chat-app-assets/assets";

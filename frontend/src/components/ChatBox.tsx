@@ -1,6 +1,6 @@
 
 import assets from "../assets/chat-app-assets/assets";
-import applogo from "../assets/appLogo.png";
+import applogo from "../assets/appLogo.jpg";
 import { useContext, useEffect, useRef, useState } from "react";
 import { formatMessageTime } from "../lib/utils";
 import { ChatContext } from "../../context/ChatContext";
