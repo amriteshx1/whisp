@@ -8,6 +8,25 @@ interface AuthRequest extends Request {
   user?: IUser;
 }
 
+// A helper function to generate a unique friend code
+const generateFriendCode = async (): Promise<string> => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  let exists = true;
+
+  while (exists) {
+    code = "";
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    const existingUser = await User.findOne({ friendCode: code });
+    if (!existingUser) {
+      exists = false;
+    }
+  }
+  return code;
+};
+
 // Register a new user
 export const signup = async (req: Request, res: Response) => {
   const { fullName, email, password, bio } = req.body;
@@ -26,12 +45,14 @@ export const signup = async (req: Request, res: Response) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+    const friendCode = await generateFriendCode();
 
     const newUser: IUser = await User.create({
       fullName,
       email,
       password: hashedPassword,
       bio,
+      friendCode,
     });
 
     const token = generateToken(newUser._id.toString());
