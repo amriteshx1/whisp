@@ -177,3 +177,23 @@ export const deleteFriend = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Get list of friends
+export const getFriendsList = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user!._id;
+
+    const user = await User.findById(userId)
+      .populate("friends", "fullName profilePic friendCode");
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.json({ friends: user.friends });
+  } catch (error) {
+    console.error("Error fetching friends list:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
