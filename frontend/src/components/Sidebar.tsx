@@ -33,6 +33,8 @@ const Sidebar = () => {
             <div className="relative py-2 group">
                 <img src={menuIcon} alt="menu" className="max-h-6 cursor-pointer" />
                 <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-neutral-900 text-white/80 hidden group-hover:block">
+                    <p onClick={() => navigate('/friends')} className="cursor-pointer text-sm">Add Friends</p>
+                    <hr className="my-2 border-t border-white/80" />
                     <p onClick={() => navigate('/profile')} className="cursor-pointer text-sm">Edit Profile</p>
                     <hr className="my-2 border-t border-white/80" />
                     <p onClick={() => logout()} className="cursor-pointer text-sm">Logout</p>
