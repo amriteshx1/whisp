@@ -178,7 +178,7 @@ export const deleteFriend = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Get list of friends
+// get list of friends
 export const getFriendsList = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user!._id;
@@ -187,13 +187,39 @@ export const getFriendsList = async (req: AuthRequest, res: Response) => {
       .populate("friends", "fullName profilePic friendCode");
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: "user not found" });
       return;
     }
 
     res.json({ friends: user.friends });
   } catch (error) {
-    console.error("Error fetching friends list:", error);
+    console.error("error fetching friends list:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// search user by friend code
+export const searchByFriendCode = async (req: Request, res: Response) => {
+  try {
+    const { code } = req.body;
+
+    if (!code || typeof code !== "string") {
+      res.status(400).json({ message: "friend code is required" });
+      return;
+    }
+
+    const user = await User.findOne({ friendCode: code.toUpperCase() }).select(
+      "fullName profilePic friendCode"
+    );
+
+    if (!user) {
+      res.status(404).json({ message: "no user found with this code" });
+      return;
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error("error searching by friend code:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
