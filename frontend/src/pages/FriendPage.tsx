@@ -77,7 +77,58 @@ export default function FriendPage() {
     <div className="p-4 text-white/80">
       <h1 className="text-xl font-semibold mb-4 text-black/80">Add Friends</h1>
 
-      
+      {/* Search bar */}
+      <form onSubmit={handleSearch} className="flex gap-2 mb-4">
+        <input
+          type="text"
+          placeholder="Enter friend code..."
+          value={searchCode}
+          onChange={(e) => setSearchCode(e.target.value)}
+          className="flex-1 p-2 rounded-md bg-neutral-800 text-white outline-none"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition"
+        >
+          Search
+        </button>
+      </form>
+
+      {/* Users list */}
+      {loading ? (
+        <p>Loading...</p>
+      ) : users.length > 0 ? (
+        <div className="space-y-3">
+          {users.map((u) => (
+            <div
+              key={u._id}
+              className="flex items-center justify-between p-3 rounded-md bg-neutral-800"
+            >
+              <div className="flex items-center gap-3">
+                <img
+                  src={u.profilePic || assets.avatar_icon}
+                  alt={u.fullName}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-medium">{u.fullName}</p>
+                  <p className="text-xs text-gray-400">
+                    Code: {u.friendCode}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => handleSendRequest(u._id)}
+                className="px-3 py-1 bg-green-500 rounded hover:bg-green-600 transition"
+              >
+                Add Friend
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No users found.</p>
+      )}
     </div>
   );
 }
