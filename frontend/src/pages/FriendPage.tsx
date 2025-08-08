@@ -31,11 +31,39 @@ export default function FriendPage() {
     fetchUsers();
   }, []);
 
+  // search by friend code
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchCode.trim()) {
+      fetchUsers();
+      return;
+    }
 
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        "/api/friends/search",
+        { code: searchCode }
+      );
+      if (res.data?.user) {
+        setUsers([res.data.user]);
+        console.log(res.data.user);
+      } else {
+        setUsers([]);
+      }
+    } catch (err) {
+      console.error("error searching user:", err);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
 
   return (
-    <div className="p-4 text-black/80">
-      <h1 className="text-xl font-semibold mb-4">Add Friends</h1>
+    <div className="p-4 text-white/80">
+      <h1 className="text-xl font-semibold mb-4 text-black/80">Add Friends</h1>
 
       
     </div>
