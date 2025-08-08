@@ -59,7 +59,19 @@ export default function FriendPage() {
     }
   };
 
-  
+  // Send friend request
+  const handleSendRequest = async (userIdOrCode: string) => {
+    try {
+      await axios.post(
+        "/api/friends/request",
+        { to: userIdOrCode }
+      );
+      alert("Friend request sent!");
+    } catch (err) {
+      console.error("Error sending friend request:", err);
+      alert("Failed to send friend request.");
+    }
+  };
 
   return (
     <div className="p-4 text-white/80">
