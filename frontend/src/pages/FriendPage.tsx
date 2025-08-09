@@ -133,7 +133,16 @@ export default function FriendPage() {
     }
   };
 
-  
+  // reject friend request
+  const handleRejectRequest = async (requestId: string) => {
+    try {
+      await axios.post("/api/friends/respond", { requestId, action: "reject" });
+      alert("Friend request rejected.");
+      fetchPendingRequests();
+    } catch (err) {
+      console.error("Error rejecting request:", err);
+    }
+  };
 
   return (
     <div className="p-4 bg-black h-screen overflow-auto text-white/80">
