@@ -4,6 +4,10 @@ import help_icon from './help_icon.png';
 import send_button from './send_button.png';
 import arrow_icon from './arrow_icon.png';
 import code from './code.svg';
+import addFriend from "./addFriend.png";
+import sentFriend from "./sentFriend.png";
+import tick from "./tick.png";
+import cross from './cross.png';
 
 // optional but useful type for asset object
 const assets: Record<string, string> = {
@@ -13,6 +17,10 @@ const assets: Record<string, string> = {
   send_button,
   arrow_icon,
   code,
+  addFriend,
+  sentFriend,
+  tick,
+  cross,
 };
 
 export default assets;
