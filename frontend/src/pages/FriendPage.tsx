@@ -151,6 +151,51 @@ export default function FriendPage() {
         <hr className="border-2 border-white/80 w-[15%]" />
       </div>
 
+      {/* pending (incoming) requests */}
+      <div className="mb-[10vh] flex flex-col justify-start items-center">
+        <h2 className="text-xl font-medium mt-5 mb-2">Pending Requests</h2>
+        {pendingRequests.length > 0 ? (
+          <div className="space-y-3 flex flex-col justify-start items-center w-full">
+            {pendingRequests.map((req) => (
+              <div
+                key={req._id}
+                className="w-[30%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={req.from.profilePic || assets.avatar_icon}
+                    alt={req.from.fullName}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-medium text-white/80">{req.from.fullName}</p>
+                    <p className="text-xs text-neutral-500">
+                      Code: {req.from.friendCode}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleAcceptRequest(req._id)}
+                    className="px-2 py-1 rounded-xl cursor-pointer"
+                  >
+                    <img src={assets.tick} alt="" className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => handleRejectRequest(req._id)}
+                    className="px-2 py-1 rounded-xl cursor-pointer"
+                  >
+                    <img src={assets.cross} alt="" className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-neutral-500">No pending requests</p>
+        )}
+      </div>
+
       
     </div>
   );
