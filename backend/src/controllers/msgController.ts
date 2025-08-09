@@ -113,3 +113,27 @@ export const sendMsg = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ success: false, message: error.message });
     }
 }
+
+export const getNonFriends = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user!._id;
+
+    // get the logged-in user for finding friends
+    const currentUser = await User.findById(userId).select("friends");
+    if (!currentUser) {
+      res.status(404).json({ success: false, message: "User not found" });
+      return;
+    }
+
+    // users who are neither me nor in my friends list
+    const nonFriends = await User.find({
+      _id: { $ne: userId, $nin: currentUser.friends },
+    }).select("-password")
+      .sort({ fullName: 1 });
+
+    res.json({ success: true, users: nonFriends });
+  } catch (error) {
+    console.error("Error in getNonFriends:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
