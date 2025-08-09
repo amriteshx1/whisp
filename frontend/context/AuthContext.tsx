@@ -15,6 +15,7 @@ interface AuthUser {
   email: string;
   profilePic?: string;
   bio?: string;
+  friendCode: string;
 }
 
 interface Credentials {
