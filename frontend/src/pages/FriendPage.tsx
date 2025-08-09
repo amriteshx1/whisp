@@ -9,15 +9,22 @@ interface User {
   friendCode: string;
 }
 
+interface FriendRequest {
+  _id: string;
+  from: User;
+}
+
 export default function FriendPage() {
   const [users, setUsers] = useState<User[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<FriendRequest[]>([]);
+  const [outgoingIds, setOutgoingIds] = useState<Set<string>>(new Set());
   const [searchCode, setSearchCode] = useState("");
   const [loading, setLoading] = useState(false);
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("/api/messages/users");
+      const res = await axios.get("/api/messages/nonFriends");
       setUsers(res.data.users || []);
       console.log(res.data.users);
     } catch (err) {
@@ -27,8 +34,35 @@ export default function FriendPage() {
     }
   };
 
+  // fetch incoming + outgoing pending requests
+  const fetchPendingRequests = async () => {
+    try {
+      const res = await axios.get("/api/friends/requests");
+      const data = res.data || {};
+      
+      const incoming = data.incoming || [];
+      const outgoing = data.outgoing || [];
+
+      
+      const mappedIncoming: FriendRequest[] = incoming.map((r: any) => ({
+        _id: String(r._id),
+        from: r.senderId,
+      }));
+
+      const outgoingSet = new Set<string>(
+        outgoing.map((r: any) => String(r.receiverId?._id ?? r.receiverId))
+      );
+
+      setPendingRequests(mappedIncoming);
+      setOutgoingIds(outgoingSet);
+    } catch (err) {
+      console.error("error fetching pending requests:", err);
+    }
+  };
+
   useEffect(() => {
     fetchUsers();
+    fetchPendingRequests();
   }, []);
 
   // search by friend code
@@ -52,7 +86,7 @@ export default function FriendPage() {
         setUsers([]);
       }
     } catch (err) {
-      console.error("error searching user:", err);
+      console.error("Error searching user:", err);
       setUsers([]);
     } finally {
       setLoading(false);
@@ -61,11 +95,24 @@ export default function FriendPage() {
 
   // Send friend request
   const handleSendRequest = async (userIdOrCode: string) => {
+  
+    if (outgoingIds.has(userIdOrCode)) {
+      alert("Friend request already sent.");
+      return;
+    }
+
     try {
       await axios.post(
         "/api/friends/request",
         { to: userIdOrCode }
       );
+      
+      setOutgoingIds((prev) => {
+        const n = new Set(prev);
+        n.add(userIdOrCode);
+        return n;
+      });
+
       alert("Friend request sent!");
     } catch (err) {
       console.error("Error sending friend request:", err);
@@ -73,62 +120,16 @@ export default function FriendPage() {
     }
   };
 
+  
+
   return (
-    <div className="p-4 text-white/80">
-      <h1 className="text-xl font-semibold mb-4 text-black/80">Add Friends</h1>
+    <div className="p-4 bg-black h-screen overflow-auto text-white/80">
+      <div className="flex flex-col justify-center items-center mt-[1vh] mb-[5vh] gap-2 p-2">
+        <h1 className="text-3xl text-center font-semibold text-white/80">Friends</h1>
+        <hr className="border-2 border-white/80 w-[15%]" />
+      </div>
 
-      {/* Search bar */}
-      <form onSubmit={handleSearch} className="flex gap-2 mb-4">
-        <input
-          type="text"
-          placeholder="Enter friend code..."
-          value={searchCode}
-          onChange={(e) => setSearchCode(e.target.value)}
-          className="flex-1 p-2 rounded-md bg-neutral-800 text-white outline-none"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition"
-        >
-          Search
-        </button>
-      </form>
-
-      {/* Users list */}
-      {loading ? (
-        <p>Loading...</p>
-      ) : users.length > 0 ? (
-        <div className="space-y-3">
-          {users.map((u) => (
-            <div
-              key={u._id}
-              className="flex items-center justify-between p-3 rounded-md bg-neutral-800"
-            >
-              <div className="flex items-center gap-3">
-                <img
-                  src={u.profilePic || assets.avatar_icon}
-                  alt={u.fullName}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-medium">{u.fullName}</p>
-                  <p className="text-xs text-gray-400">
-                    Code: {u.friendCode}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleSendRequest(u._id)}
-                className="px-3 py-1 bg-green-500 rounded hover:bg-green-600 transition"
-              >
-                Add Friend
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No users found.</p>
-      )}
+      
     </div>
   );
 }
