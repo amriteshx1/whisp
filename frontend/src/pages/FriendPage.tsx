@@ -120,6 +120,19 @@ export default function FriendPage() {
     }
   };
 
+  // accept friend request
+  const handleAcceptRequest = async (requestId: string) => {
+    try {
+      await axios.post("/api/friends/respond", { requestId, action: "accept" });
+      alert("Friend request accepted!");
+      
+      fetchPendingRequests();
+      fetchUsers();
+    } catch (err) {
+      console.error("Error accepting request:", err);
+    }
+  };
+
   
 
   return (
