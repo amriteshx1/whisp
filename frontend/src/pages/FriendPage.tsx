@@ -196,7 +196,65 @@ export default function FriendPage() {
         )}
       </div>
 
-      
+      {/* search bar */}
+      <form onSubmit={handleSearch} className="w-full flex gap-2 mb-5 mt-4 items-center justify-center">
+        <input
+          type="text"
+          placeholder="Enter friend code..."
+          value={searchCode}
+          onChange={(e) => setSearchCode(e.target.value)}
+          className="w-[35%] p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"
+        />
+        <button
+          type="submit"
+          className="bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl py-2 px-4 cursor-pointer"
+        >
+          Search
+        </button>
+      </form>
+
+      {/* users list */}
+      {loading ? (
+        <p className="text-center text-white/80">Loading...</p>
+      ) : users.length > 0 ? (
+        <div className="space-y-3 flex flex-col justify-start items-center">
+          {users.map((u) => {
+            const alreadySent = outgoingIds.has(u._id);
+            return (
+              <div
+                key={u._id}
+                className="w-[50%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={u.profilePic || assets.avatar_icon}
+                    alt={u.fullName}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-medium text-white/80">{u.fullName}</p>
+                    <p className="text-xs text-neutral-500">Code: {u.friendCode}</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => handleSendRequest(u._id)}
+                  disabled={alreadySent}
+                  className={`px-2 py-1 rounded-xl transition ${
+                    alreadySent
+                      ? " cursor-not-allowed bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 opacity-50"
+                      : " cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700"
+                  }`}
+                >
+                  {alreadySent ? <img src={assets.sentFriend} alt="" className="h-6 w-6" /> : <img src={assets.addFriend} alt="" className="h-6 w-6" />}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <p>No users found.</p>
+      )}
     </div>
   );
 }
