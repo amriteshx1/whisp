@@ -31,6 +31,7 @@ interface CallProviderProps {
 
 export const CallProvider = ({ children }: CallProviderProps) => {
   const { socket } = useContext(AuthContext) as { socket: Socket | null };
+  const {authUser} = useContext(AuthContext);
 
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
@@ -65,7 +66,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
       socket.on("incoming-call", async ({ from, offer, isVideo }) => {
       console.log("Incoming call from", from);
 
-      const accept = window.confirm(`${from} is calling you. Accept?`);
+      const accept = true;
       if (!accept) return;
 
 
@@ -78,33 +79,35 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     const pc = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
-  
-    stream.getTracks().forEach((track) => {
-      pc.addTrack(track, stream);
-    });
-  
-    pc.ontrack = (event) => {
-      setRemoteStream(event.streams[0]);
-    };
-  
+
+    peerConnection.current = pc;
+    otherUserSocketId.current = from;
+
     pc.onicecandidate = (event) => {
       if (event.candidate) {
         socket.emit("ice-candidate", {
           to: from,
+          from: authUser?._id,
           candidate: event.candidate,
         });
       }
-  };
+    };
+
+    pc.ontrack = (event) => {
+      setRemoteStream(event.streams[0]);
+    };
+  
+    stream.getTracks().forEach((track) => {
+      pc.addTrack(track, stream);
+    });
 
   await pc.setRemoteDescription(new RTCSessionDescription(offer));
   const answer = await pc.createAnswer();
   await pc.setLocalDescription(answer);
 
-  peerConnection.current = pc;
-  otherUserSocketId.current = from;
   setCallActive(true);
 
-  socket.emit("answer-call", { to: from, answer });
+  socket.emit("answer-call", { to: from, from: authUser?._id, answer });
   });
 
   socket.on("call-answered", async ({ from, answer }) => {
@@ -116,8 +119,8 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     }
   });
 
-  socket.on("ice-candidate", async ({ from, candidate }) => {
-    console.log("Received ICE candidate from", from);
+  socket.on("ice-candidate", async ({to, from, candidate }) => {
+    console.log("Received ICE candidate from", from, "to", to);
     try {
       if (peerConnection.current) {
         await peerConnection.current.addIceCandidate(

@@ -34,33 +34,35 @@ const ChatBox = () => {
     const pc = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
-  
-    stream.getTracks().forEach((track) => {
-      pc.addTrack(track, stream);
-    });
-  
-    pc.ontrack = (event) => {
-      setRemoteStream(event.streams[0]);
-    };
+
+    peerConnection.current = pc;
+    otherUserSocketId.current = selectedUser?._id ?? null;
 
     pc.onicecandidate = (event) => {
       if (event.candidate) {
         socket?.emit("ice-candidate", {
           to: selectedUser?._id,
+          from: authUser?._id,
           candidate: event.candidate,
         });
       }
-  };
+    };
+
+    pc.ontrack = (event) => {
+      setRemoteStream(event.streams[0]);
+    };
+  
+    stream.getTracks().forEach((track) => {
+      pc.addTrack(track, stream);
+    });
 
   const offer = await pc.createOffer();
   await pc.setLocalDescription(offer);
 
-  peerConnection.current = pc;
-  otherUserSocketId.current = selectedUser?._id ?? null;
-
   console.log("Emitting call-user to", selectedUser?._id);
   socket?.emit("call-user", {
     to: selectedUser?._id,
+    from: authUser?._id,
     offer,
     isVideo,
   });
