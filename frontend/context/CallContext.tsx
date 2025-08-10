@@ -69,12 +69,17 @@ export const CallProvider = ({ children }: CallProviderProps) => {
       const accept = true;
       if (!accept) return;
 
-
-
-    const stream = await navigator.mediaDevices.getUserMedia(
-      isVideo ? { video: true, audio: true } : { audio: true }
-    );
-    setLocalStream(stream);
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia(
+        isVideo ? { video: true, audio: true } : { audio: true }
+      );
+      setLocalStream(stream);
+    } catch (err) {
+      console.error("Permission denied");
+      endCall();
+      return;
+    }
   
     const pc = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
