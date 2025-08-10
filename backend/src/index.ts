@@ -33,29 +33,34 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   // Handle incoming call offer
-  socket.on("call-user", ({ to, offer, isVideo }) => {
+  socket.on("call-user", ({ to, from, offer, isVideo }) => {
     const socketId = userSocketMap[to];
     if (!socketId) return;
     console.log("Relaying call-user to", socketId);
     io.to(socketId).emit("incoming-call", {
-      from: socket.id,
+      from: from,
       offer,
       isVideo,
     });
   });
 
   // Handle answer from callee
-  socket.on("answer-call", ({ to, answer }) => {
-    io.to(to).emit("call-answered", {
-      from: socket.id,
+  socket.on("answer-call", ({ to, from, answer }) => {
+    const socketId = userSocketMap[to];
+    if (!socketId) return;
+    io.to(socketId).emit("call-answered", {
+      from: from,
       answer,
     });
   });
 
   // Handle ICE candidate exchange
-  socket.on("ice-candidate", ({ to, candidate }) => {
-    io.to(to).emit("ice-candidate", {
-      from: socket.id,
+  socket.on("ice-candidate", ({ to, from, candidate }) => {
+    const socketId = userSocketMap[to];
+    if (!socketId) return;
+    io.to(socketId).emit("ice-candidate", {
+      to: to,
+      from: from,
       candidate,
     });
   });
