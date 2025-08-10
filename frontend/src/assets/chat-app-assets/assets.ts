@@ -8,6 +8,7 @@ import addFriend from "./addFriend.png";
 import sentFriend from "./sentFriend.png";
 import tick from "./tick.png";
 import cross from './cross.png';
+import lock from './lock.png';
 
 // optional but useful type for asset object
 const assets: Record<string, string> = {
@@ -21,6 +22,7 @@ const assets: Record<string, string> = {
   sentFriend,
   tick,
   cross,
+  lock,
 };
 
 export default assets;
