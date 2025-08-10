@@ -24,13 +24,31 @@ const ChatBox = () => {
   const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, localStream, remoteStream, callActive, endCall } = useCall();
 
   const startCall = async (isVideo: boolean) => {
+
+    if (!selectedUser) {
+      toast.error("Please select a user to call.");
+      return;
+    }
+
+    if (!onlineUsers.includes(selectedUser._id)) {
+      toast.error("User is offline");
+      return;
+    }
+
     const mediaConstraints = isVideo
       ? { video: true, audio: true }
       : { audio: true };
   
-    const stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
-    setLocalStream(stream);
-  
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+      setLocalStream(stream);
+    } catch (err) {
+      toast.error("Permission denied");
+      endCall();
+      return;
+    }
+
     const pc = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
