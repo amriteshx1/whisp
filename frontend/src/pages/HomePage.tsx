@@ -4,6 +4,7 @@ import ChatBox from "../components/ChatBox";
 import Sidebar from "../components/Sidebar";
 import UserBox from "../components/UserBox";
 import { ChatContext } from "../../context/ChatContext";
+import CallLayout from "../components/CallLayout";
 
 const HomePage = () => {
 
@@ -11,6 +12,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen w-full relative bg-black overflow-auto">
+        <CallLayout />
         <div
           className="absolute inset-0 z-0 h-full w-full px-[5vh] py-[5vh]"
         >
