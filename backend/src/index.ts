@@ -74,6 +74,15 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Handle call rejection
+  socket.on("call-rejected", ({ to, from }) => {
+    const socketId = userSocketMap[to];
+    if (!socketId) return;
+    io.to(socketId).emit("call-rejected", { from });
+  });
+
+
+
   socket.on("disconnect", () => {
     console.log("User disconnected", userId);
     delete userSocketMap[userId];
