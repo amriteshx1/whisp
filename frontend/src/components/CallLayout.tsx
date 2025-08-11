@@ -55,7 +55,86 @@ const CallLayout: React.FC = () => {
   );
 }
 
+if (callActive) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* intentionally did this to block interaction with the app */}
+      <div className="absolute inset-0 bg-black/60" />
 
+      {/* centered call window */}
+      <div className="relative z-60 w-[640px] max-w-[90%] bg-neutral-900/95 rounded-xl shadow-lg p-4 flex flex-col items-center">
+        {/* Top area: ringing or status */}
+        <div className="w-full mb-3 text-center">
+          {!remoteStream ? (
+            <div className="text-md font-medium text-gray-300">Ringing…</div>
+          ) : (
+            <div className="text-md font-medium text-gray-300">Connected</div>
+          )}
+        </div>
+
+        {/* video area */}
+        <div className="w-full flex gap-3">
+          <div className="flex-1 bg-black rounded-lg overflow-hidden flex items-center justify-center">
+            {/* Remote video - main */}
+            <video
+              ref={(el) => { if (el) el.srcObject = remoteStream;}}
+              autoPlay
+              playsInline
+              className="w-full h-64 object-cover bg-black"
+            />
+            {/* If remote not available, show placeholder */}
+            {!remoteStream && (
+              <div className="absolute text-gray-400">Waiting for other user...</div>
+            )}
+          </div>
+
+          {/* local preview */}
+          <div className="w-40 h-32 bg-black rounded-lg overflow-hidden relative">
+            <video
+              ref={(el) => { if (el) el.srcObject = localStream;}}
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+            {!localStream && (
+              <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                No camera
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* controls */}
+        <div className="mt-4 flex items-center gap-4">
+          <button
+            onClick={toggleMute}
+            className={`px-3 py-2 rounded-full ${muted ? "bg-neutral-700" : "bg-neutral-800"} text-white cursor-pointer`}
+            aria-label="Toggle mute"
+          >
+            {muted ? <img src={assets.mute} alt="" className="h-5 w-5" /> : <img src={assets.unmute} alt="" className="h-5 w-5" />}
+          </button>
+
+          <button
+            onClick={toggleCamera}
+            className={`px-3 py-2 rounded-full ${cameraOff ? "bg-neutral-700" : "bg-neutral-800"} text-white cursor-pointer`}
+            aria-label="Toggle camera"
+          >
+            {cameraOff ? <img src={assets.noVideo} alt="" className="h-5 w-5" /> : <img src={videoCall} alt="" className="h-5 w-5" />}
+          </button>
+
+          <button
+            onClick={handleEnd}
+            className="px-4 py-2 rounded-full bg-gradient-to-tl from-neutral-950 via-red-500/50 to-red-600 cursor-pointer hover:bg-red-950 text-white"
+            aria-label="End call"
+          >
+            <img src={assets.endCall} alt="" className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 return null;
 };
 
