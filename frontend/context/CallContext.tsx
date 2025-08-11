@@ -180,7 +180,10 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     endCall();
   });
 
-
+  socket.on("call-cancelled", () => {
+    toast.error("Caller cancelled the call");
+    endCall(); 
+  });
 
   socket.on("call-ended", () => {
       console.log("Call ended by other user.");
