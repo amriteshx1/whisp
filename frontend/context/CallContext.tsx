@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { AuthContext } from "./AuthContext";
 import type { Socket } from "socket.io-client";
+import toast from "react-hot-toast";
 
 interface CallContextType {
   localStream: MediaStream | null;
@@ -12,6 +13,9 @@ interface CallContextType {
   setCallActive: React.Dispatch<React.SetStateAction<boolean>>;
   otherUserSocketId: RefObject<string | null>;
   endCall: () => void;
+  incomingCall: null | { from: string; offer: any; isVideo: boolean };
+  acceptCall: () => void;
+  rejectCall: () => void;
 }
 
 const CallContext = createContext<CallContextType | null>(null);
@@ -40,10 +44,18 @@ export const CallProvider = ({ children }: CallProviderProps) => {
   const peerConnection = useRef<RTCPeerConnection | null>(null);
   const otherUserSocketId = useRef<string | null>(null);
 
+  const [incomingCall, setIncomingCall] = useState<null | { from: string; offer: any; isVideo: boolean }>(null);
+
   //for ending the call
   const endCall = () => {
     if (socket && otherUserSocketId.current) {
-      socket.emit("call-ended", { to: otherUserSocketId.current });
+      if (!remoteStream) {
+        // caller hangs up before callee answers
+        socket?.emit("cancel-call", { to: otherUserSocketId.current });
+      } else {
+        // normal end call
+        socket.emit("call-ended", { to: otherUserSocketId.current });
+      }
     }
 
     if (peerConnection.current) {
@@ -59,43 +71,38 @@ export const CallProvider = ({ children }: CallProviderProps) => {
       setRemoteStream(null);
     }
     setCallActive(false);
+    setIncomingCall(null);
     otherUserSocketId.current = null;
   };
 
-  useEffect(()=>{
-      if (!socket) return;
-      console.log("Socket available in CallProvider");
-
-      // handle incoming call
-      socket.on("incoming-call", async ({ from, offer, isVideo }) => {
-      console.log("Incoming call from", from);
-
-      const accept = true;
-      if (!accept) return;
+  //for accepting call
+  const acceptCall = async () => {
+    if (!incomingCall) return;
 
     let stream;
     try {
       stream = await navigator.mediaDevices.getUserMedia(
-        isVideo ? { video: true, audio: true } : { audio: true }
+        incomingCall.isVideo ? { video: true, audio: true } : { audio: true }
       );
       setLocalStream(stream);
     } catch (err) {
       console.error("Permission denied");
       endCall();
+      setIncomingCall(null);
       return;
     }
-  
+
     const pc = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
 
     peerConnection.current = pc;
-    otherUserSocketId.current = from;
+    otherUserSocketId.current = incomingCall.from;
 
     pc.onicecandidate = (event) => {
       if (event.candidate) {
-        socket.emit("ice-candidate", {
-          to: from,
+        socket?.emit("ice-candidate", {
+          to: incomingCall.from,
           from: authUser?._id,
           candidate: event.candidate,
         });
@@ -105,19 +112,36 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     pc.ontrack = (event) => {
       setRemoteStream(event.streams[0]);
     };
-  
+
     stream.getTracks().forEach((track) => {
       pc.addTrack(track, stream);
     });
 
-  await pc.setRemoteDescription(new RTCSessionDescription(offer));
-  const answer = await pc.createAnswer();
-  await pc.setLocalDescription(answer);
+    await pc.setRemoteDescription(new RTCSessionDescription(incomingCall.offer));
+    const answer = await pc.createAnswer();
+    await pc.setLocalDescription(answer);
 
-  setCallActive(true);
+    setCallActive(true);
+    setIncomingCall(null);
 
-  socket.emit("answer-call", { to: from, from: authUser?._id, answer });
-  });
+    socket?.emit("answer-call", { to: incomingCall.from, from: authUser?._id, answer });
+  };
+
+
+
+  useEffect(()=>{
+    if (!socket) return;
+    console.log("Socket available in CallProvider");
+
+    // handle incoming call
+    socket.on("incoming-call", async ({ from, offer, isVideo }) => {
+      console.log("Incoming call from", from);
+      if (callActive) {
+        socket.emit("call-rejected", { to: from });
+      } else {
+        setIncomingCall({ from, offer, isVideo });
+      }
+    });
 
   socket.on("call-answered", async ({ from, answer }) => {
     console.log("Call answered by", from);
@@ -126,6 +150,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
         new RTCSessionDescription(answer)
       );
     }
+    toast.success("Call connected.");
   });
 
   socket.on("ice-candidate", async ({to, from, candidate }) => {
@@ -141,8 +166,11 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     }
   });
 
+
+
   socket.on("call-ended", () => {
       console.log("Call ended by other user.");
+      toast.error("Call ended.");
       endCall();
   });
 
@@ -151,9 +179,11 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     socket.off("call-answered");
     socket.off("ice-candidate");
     socket.off("call-ended");
+    socket.off("call-rejected");
+    socket.off("call-cancelled");
   };
 
-  }, [socket])
+  }, [socket, endCall])
 
   return (
     <CallContext.Provider
@@ -167,6 +197,9 @@ export const CallProvider = ({ children }: CallProviderProps) => {
         setCallActive,
         otherUserSocketId,
         endCall,
+        incomingCall,
+        acceptCall,
+        rejectCall,
       }}
     >
       {children}
