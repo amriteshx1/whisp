@@ -127,7 +127,15 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     socket?.emit("answer-call", { to: incomingCall.from, from: authUser?._id, answer });
   };
 
-
+  //for rejecting call
+  const rejectCall = () => {
+    if (incomingCall?.from) {
+      socket?.emit("call-rejected", { to: incomingCall.from, from: authUser?._id });
+    }
+    setIncomingCall(null);
+    endCall();
+    toast.error("Call rejected.");
+  };
 
   useEffect(()=>{
     if (!socket) return;
@@ -164,6 +172,12 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     } catch (err) {
       console.error("Error adding ICE candidate:", err);
     }
+  });
+
+  socket.on("call-rejected", ({from}) => {
+    console.log("Call rejected by", from);
+    toast.error(`Call rejected by ${from}.`);
+    endCall();
   });
 
 
