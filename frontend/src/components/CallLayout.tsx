@@ -27,7 +27,18 @@ const CallLayout: React.FC = () => {
     toast((muted ? "Unmuted" : "Muted"));
   };
 
+  // toggle camera on/off
+  const toggleCamera = () => {
+    if (!localStream) return;
+    localStream.getVideoTracks().forEach((t) => (t.enabled = cameraOff ? true : false));
+    setCameraOff((c) => !c);
+    toast((cameraOff ? "Camera enabled" : "Camera disabled"));
+  };
 
+  // end call
+  const handleEnd = () => {
+    endCall();
+  };
 
   
 return null;
