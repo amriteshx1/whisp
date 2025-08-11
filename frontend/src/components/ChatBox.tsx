@@ -21,7 +21,7 @@ const ChatBox = () => {
 
   const {socket} = useContext(AuthContext);
 
-  const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, localStream, remoteStream, callActive, endCall } = useCall();
+  const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, callActive, endCall } = useCall();
 
   const startCall = async (isVideo: boolean) => {
 
@@ -117,11 +117,7 @@ const startVideoCall = () => startCall(true);
 
   //handle end call
   const handleEndCallClick = () => {
-    console.log("Emitting call-ended to", otherUserSocketId.current);
-  if (socket && otherUserSocketId.current) {
-    socket.emit("call-ended", { to: otherUserSocketId.current });
-  }
-  endCall();
+    endCall();
   };
 
 
@@ -159,22 +155,6 @@ const startVideoCall = () => startCall(true);
         <img src={assets.help_icon} alt="" className="max-md:hidden max-w-6" />
 
       </div>
-
-      {callActive && (
-        <div className="flex justify-center items-center p-2 bg-black mt-[20vh]">
-          <video
-            ref={(el) => { if (el) el.srcObject = localStream;}}
-            autoPlay
-            muted
-            className="w-1/2 h-40 object-cover rounded-lg border-2 border-white mr-2"
-          />
-          <video
-            ref={(el) => { if (el) el.srcObject = remoteStream;}}
-            autoPlay
-            className="w-1/2 h-40 object-cover rounded-lg border-2 border-white"
-          />
-        </div>
-      )}
 
       {/* main chat arena */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">

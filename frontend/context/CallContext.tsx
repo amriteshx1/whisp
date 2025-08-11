@@ -42,6 +42,10 @@ export const CallProvider = ({ children }: CallProviderProps) => {
 
   //for ending the call
   const endCall = () => {
+    if (socket && otherUserSocketId.current) {
+      socket.emit("call-ended", { to: otherUserSocketId.current });
+    }
+
     if (peerConnection.current) {
       peerConnection.current.close();
       peerConnection.current = null;
