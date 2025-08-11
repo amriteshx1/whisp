@@ -9,6 +9,12 @@ import sentFriend from "./sentFriend.png";
 import tick from "./tick.png";
 import cross from './cross.png';
 import lock from './lock.png';
+import accept from './accept.png';
+import reject from './reject.png';
+import mute from './mute.png';
+import unmute from './unmute.png';
+import noVideo from './noVideo.png';
+import endCall from './endCall.png';
 
 // optional but useful type for asset object
 const assets: Record<string, string> = {
@@ -23,6 +29,12 @@ const assets: Record<string, string> = {
   tick,
   cross,
   lock,
+  accept,
+  reject,
+  mute,
+  unmute,
+  noVideo,
+  endCall,
 };
 
 export default assets;
