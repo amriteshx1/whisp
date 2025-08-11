@@ -81,7 +81,12 @@ io.on("connection", (socket) => {
     io.to(socketId).emit("call-rejected", { from });
   });
 
-
+  socket.on("cancel-call", ({ to }) => {
+    const targetSocketId = userSocketMap[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit("call-cancelled");
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected", userId);
