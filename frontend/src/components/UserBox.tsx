@@ -6,8 +6,8 @@ import { AuthContext } from "../../context/AuthContext";
 
 const UserBox = () => {
 
-  const {selectedUser, messages} = useContext(ChatContext);
-  const {logout, onlineUsers} = useContext(AuthContext);
+  const {selectedUser, messages, unfriend} = useContext(ChatContext);
+  const {onlineUsers} = useContext(AuthContext);
   const [msgImages, setMsgImages] = useState<string[]>([]);
 
   //get images from msg
@@ -48,9 +48,9 @@ const UserBox = () => {
         </div>
       </div>
 
-      <button onClick={()=>logout()} className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 border-none
-      text-sm font-light py-2 px-20 rounded-full cursor-pointer hover:text-white/90">
-        Logout
+      <button onClick={() => selectedUser && unfriend(selectedUser._id)} className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-tl from-neutral-950 via-red-500/20 to-red-600 text-white/75 border-none
+      text-sm font-light py-2 px-20 rounded-full cursor-pointer hover:bg-red-950">
+        Unfriend
       </button>
     </div>
   )
