@@ -21,7 +21,7 @@ const ChatBox = () => {
 
   const {socket} = useContext(AuthContext);
 
-  const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, callActive, endCall } = useCall();
+  const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, endCall } = useCall();
 
   const startCall = async (isVideo: boolean) => {
 
@@ -115,11 +115,6 @@ const startVideoCall = () => startCall(true);
     reader.readAsDataURL(file);
   }
 
-  //handle end call
-  const handleEndCallClick = () => {
-    endCall();
-  };
-
 
   useEffect(()=>{
     if(selectedUser){
@@ -144,14 +139,9 @@ const startVideoCall = () => startCall(true);
           {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7" />
-        {!callActive ? (
-          <>
-            <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
-            <img onClick={startVideoCall} src={videoCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
-          </>
-        ) : (
-          <button onClick={handleEndCallClick} className="p-1 cursor-pointer bg-red-500 text-white rounded-lg hover:bg-red-600">End Call</button>
-        )}
+        <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
+        <img onClick={startVideoCall} src={videoCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
+        
         <img src={assets.help_icon} alt="" className="max-md:hidden max-w-6" />
 
       </div>
