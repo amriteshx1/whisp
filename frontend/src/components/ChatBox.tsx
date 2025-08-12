@@ -2,6 +2,7 @@
 import assets from "../assets/chat-app-assets/assets";
 import applogo from "../assets/appLogo.jpg";
 import { useContext, useEffect, useRef, useState } from "react";
+import Picker from "@emoji-mart/react";
 import { formatMessageTime } from "../lib/utils";
 import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -18,6 +19,7 @@ const ChatBox = () => {
   const scrollEnd = useRef<HTMLDivElement | null>(null);
 
   const [input, setInput] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const {socket} = useContext(AuthContext);
 
@@ -171,7 +173,19 @@ const startVideoCall = () => startCall(true);
 
       {/*  bottom stuffs */}
       <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
-        <div className="flex-1 flex items-center bg-neutral-900 px-3 rounded-full">
+        <div className="flex-1 flex items-center bg-neutral-900 px-3 rounded-full relative">
+          <button type="button" onClick={() => setShowEmojiPicker((prev) => !prev)} className={`p-2 rounded-full ${showEmojiPicker ? 'bg-neutral-800' : 'hover:bg-neutral-800'} cursor-pointer`}><img src={assets.smile} alt="" className="h-5 w-5" /></button>
+          {showEmojiPicker && (
+            <div className="absolute bottom-14 left-0 z-50">
+              <Picker
+                onEmojiSelect={(emoji: any) => {
+                  setInput((prev) => prev + emoji.native);
+                }}
+                theme="dark"
+              />
+            </div>
+          )}
+          
           <input onChange={(e)=>setInput(e.target.value)} value={input} onKeyDown={(e)=> e.key === "Enter" ? handleSendMessage(e) : null} type="text" placeholder="Send a message"
           className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-400 placeholder-neutral-500" />
           <input onChange={handleSendImage} type="file" id="image" accept="image/png, image/jpeg" hidden />
