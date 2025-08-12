@@ -17,6 +17,7 @@ const ChatBox = () => {
   const { authUser, onlineUsers } = useContext(AuthContext);
 
   const scrollEnd = useRef<HTMLDivElement | null>(null);
+  const pickerRef = useRef<HTMLDivElement | null>(null);
 
   const [input, setInput] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -130,6 +131,21 @@ const startVideoCall = () => startCall(true);
     }
   }, [messages])
 
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
+        setShowEmojiPicker(false);
+      }
+    }
+  
+    if (showEmojiPicker) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showEmojiPicker]);
+
   return selectedUser ? (
     <div className="h-full overflow-scroll relative">
 
@@ -174,9 +190,14 @@ const startVideoCall = () => startCall(true);
       {/*  bottom stuffs */}
       <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
         <div className="flex-1 flex items-center bg-neutral-900 px-3 rounded-full relative">
-          <button type="button" onClick={() => setShowEmojiPicker((prev) => !prev)} className={`p-2 rounded-full ${showEmojiPicker ? 'bg-neutral-800' : 'hover:bg-neutral-800'} cursor-pointer`}><img src={assets.smile} alt="" className="h-5 w-5" /></button>
+          <button type="button" 
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={() => {
+              setShowEmojiPicker((prev) => !prev);
+            }} 
+            className={`p-2 rounded-full ${showEmojiPicker ? 'bg-neutral-800' : 'hover:bg-neutral-800'} cursor-pointer`}><img src={assets.smile} alt="" className="h-5 w-5" /></button>
           {showEmojiPicker && (
-            <div className="absolute bottom-14 left-0 z-50">
+            <div ref={pickerRef} className="absolute bottom-14 left-0 z-50">
               <Picker
                 onEmojiSelect={(emoji: any) => {
                   setInput((prev) => prev + emoji.native);
