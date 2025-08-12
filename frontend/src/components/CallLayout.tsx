@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCall } from "../../context/CallContext";
 import toast from "react-hot-toast";
 import assets from "../assets/chat-app-assets/assets";
@@ -18,6 +18,46 @@ const CallLayout: React.FC = () => {
 
   const [muted, setMuted] = useState(false);
   const [cameraOff, setCameraOff] = useState(false);
+
+  const [callingSound, setCallingSound] = useState<HTMLAudioElement | null>(null);
+  const [incomingSound, setIncomingSound] = useState<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const callerAudio = new Audio("/sounds/callerSide.mp3");
+    callerAudio.loop = true;
+    setCallingSound(callerAudio);    
+    const incomingAudio = new Audio("/sounds/receiverSide.mp3");
+    incomingAudio.loop = true;
+    setIncomingSound(incomingAudio);
+
+    //to stop audio on unmount
+    return () => {
+      callerAudio.pause();
+      incomingAudio.pause();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!callingSound || !incomingSound) {
+      return;
+    }
+
+    // you are the caller and the call is active but not connected yet
+    if (callActive && !remoteStream) {
+      incomingSound.pause();
+      callingSound.play().catch(e => console.error("Error playing calling sound:", e));
+    } 
+    // you are the receiver and there is an incoming call
+    else if (incomingCall) {
+      callingSound.pause();
+      incomingSound.play().catch(e => console.error("Error playing ringtone:", e));
+    } 
+    
+    else {
+      callingSound.pause();
+      incomingSound.pause();
+    }
+  }, [callActive, remoteStream, incomingCall, callingSound, incomingSound]);
 
   // toggle mute/unmute
   const toggleMute = () => {
