@@ -28,6 +28,7 @@ interface ChatContextType {
   selectedUser: ChatUser | null;
   getUsers: () => Promise<void>;
   getFriends: () => Promise<void>;
+  unfriend: (friendId: string) => Promise<void>;
   getMsgs: (userId: string) => Promise<void>;
   sendMsg: (messageData: { text?: string; image?: string }) => Promise<void>;
   setSelectedUser: (user: ChatUser | null) => void;
@@ -74,6 +75,21 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         } catch (error: any) {
           console.error("Error fetching friends:", error.message);
         }
+    };
+
+    //unfriend
+    const unfriend = async (friendId: string) => {
+      if (!confirm("Are you sure you want to remove this friend?")) return;
+    
+      try {
+        const { data } = await axios.delete(`/api/friends/${friendId}`);
+        toast.success(data.message || "Friend removed successfully");
+
+        await getFriends();
+        setSelectedUser(null);
+      } catch (err) {
+        console.error("Error unfriending:", err);
+      }
     };
 
     //get msgs for selected user
@@ -132,7 +148,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     }, [socket, selectedUser]);
 
     const value = {
-        messages, users, friends, selectedUser, getUsers, getFriends, getMsgs, sendMsg, setSelectedUser, unseenMessages, setUnseenMessages 
+        messages, users, friends, selectedUser, getUsers, getFriends, unfriend, getMsgs, sendMsg, setSelectedUser, unseenMessages, setUnseenMessages 
     }
 
     return (
