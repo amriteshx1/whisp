@@ -120,7 +120,7 @@ if (callActive) {
               ref={(el) => { if (el) el.srcObject = remoteStream;}}
               autoPlay
               playsInline
-              className="w-full h-64 object-cover bg-black"
+              className="w-full h-64 object-cover bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700"
             />
             {/* If remote not available, show placeholder */}
             {!remoteStream && (
@@ -135,7 +135,7 @@ if (callActive) {
               autoPlay
               muted
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-700"
             />
             {!localStream && (
               <div className="absolute inset-0 flex items-center justify-center text-gray-400">
