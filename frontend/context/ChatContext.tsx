@@ -24,8 +24,10 @@ export interface ChatUser {
 interface ChatContextType {
   messages: Message[];
   users: ChatUser[];
+  friends: ChatUser[];
   selectedUser: ChatUser | null;
   getUsers: () => Promise<void>;
+  getFriends: () => Promise<void>;
   getMsgs: (userId: string) => Promise<void>;
   sendMsg: (messageData: { text?: string; image?: string }) => Promise<void>;
   setSelectedUser: (user: ChatUser | null) => void;
@@ -43,6 +45,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [users, setUsers] = useState<ChatUser[]>([]);
+    const [friends, setFriends] = useState<ChatUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null);
     const [unseenMessages, setUnseenMessages] = useState<Record<string, number>>({});
 
@@ -60,6 +63,18 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
             toast.error(error.message);
         }
     }
+
+    //get all friends
+    const getFriends = async () => {
+        try {
+          const {data} = await axios.get('api/friends');
+          if(data?.friends){
+            setFriends(data.friends);
+          }
+        } catch (error: any) {
+          console.error("Error fetching friends:", error.message);
+        }
+    };
 
     //get msgs for selected user
     const getMsgs = async(userId: string) => {
@@ -117,7 +132,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     }, [socket, selectedUser]);
 
     const value = {
-        messages, users, selectedUser, getUsers, getMsgs, sendMsg, setSelectedUser, unseenMessages, setUnseenMessages 
+        messages, users, friends, selectedUser, getUsers, getFriends, getMsgs, sendMsg, setSelectedUser, unseenMessages, setUnseenMessages 
     }
 
     return (
