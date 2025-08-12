@@ -114,9 +114,9 @@ export default function FriendPage() {
       });
 
       alert("Friend request sent!");
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error sending friend request:", err);
-      alert("Failed to send friend request.");
+      alert(err.response?.data?.message || "Failed to send friend request.");
     }
   };
 
