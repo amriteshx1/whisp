@@ -59,6 +59,17 @@ const CallLayout: React.FC = () => {
     }
   }, [callActive, remoteStream, incomingCall, callingSound, incomingSound]);
 
+  useEffect(() => {
+    if (callActive && !remoteStream) {
+      const timer = setTimeout(() => {
+        toast("Call ended, the recipient didn't answer.");
+        endCall();
+      }, 20000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [callActive, remoteStream, endCall]);
+
   // toggle mute/unmute
   const toggleMute = () => {
     if (!localStream) return;
