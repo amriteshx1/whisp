@@ -21,6 +21,7 @@ const CallLayout: React.FC = () => {
 
   const [callingSound, setCallingSound] = useState<HTMLAudioElement | null>(null);
   const [incomingSound, setIncomingSound] = useState<HTMLAudioElement | null>(null);
+  const [callDuration, setCallDuration] = useState(0);
 
   useEffect(() => {
     const callerAudio = new Audio("/sounds/callerSide.mp3");
@@ -70,6 +71,28 @@ const CallLayout: React.FC = () => {
     }
   }, [callActive, remoteStream, endCall]);
 
+  useEffect(() => {
+    let interval = null;
+    if (remoteStream) {
+      setCallDuration(0);
+      interval = setInterval(() => {
+        setCallDuration((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setCallDuration(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [remoteStream]);
+
+  // format mm:ss
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const s = (seconds % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
+  };
+
   // toggle mute/unmute
   const toggleMute = () => {
     if (!localStream) return;
@@ -117,9 +140,9 @@ if (callActive) {
         {/* Top area: ringing or status */}
         <div className="w-full mb-3 text-center">
           {!remoteStream ? (
-            <div className="text-md font-medium text-gray-300">Ringing…</div>
+            <div className="text-md font-medium text-neutral-300">Ringing…</div>
           ) : (
-            <div className="text-md font-medium text-gray-300">Connected</div>
+            <div className="text-md font-medium text-neutral-300">{formatTime(callDuration)}</div>
           )}
         </div>
 
