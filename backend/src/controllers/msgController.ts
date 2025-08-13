@@ -58,9 +58,23 @@ export const getMsg = async (req: AuthRequest, res: Response) => {
     });
 
     await Message.updateMany(
-      { senderId: selectedUserId, receiverId: myId },
-      { seen: true }
+      { senderId: selectedUserId, receiverId: myId, status: { $ne: "seen"} },
+      { seen: true, status: "seen" }
     );
+
+    const updatedMessageIds = (await Message.find({
+        senderId: selectedUserId,
+        receiverId: myId,
+        status: "seen"
+    }).select('_id')).map(msg => msg._id);
+
+    const senderSocketId = userSocketMap[selectedUserId.toString()];
+    if (senderSocketId && updatedMessageIds.length > 0) {
+        io.to(senderSocketId).emit("messageStatusUpdateBulk", {
+            ids: updatedMessageIds,
+            status: "seen"
+        });
+    };
 
     res.json({ success: true, messages: msgs });
   } catch (error: any) {
@@ -73,8 +87,25 @@ export const getMsg = async (req: AuthRequest, res: Response) => {
 export const markSeen = async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        await Message.findByIdAndUpdate(id, {seen: true})
-        res.json({success: true})  
+        const updatedMessage = await Message.findByIdAndUpdate(
+            id,
+            { seen: true, status: "seen" },
+            { new: true } 
+        );
+
+        if (!updatedMessage) {
+            return res.status(404).json({ success: false, message: "Message not found" });
+        }
+
+        // notify the sender that their message was seen
+        const senderSocketId = userSocketMap[updatedMessage.senderId.toString()];
+        if (senderSocketId) {
+            io.to(senderSocketId).emit("messageStatusUpdate", {
+                id: updatedMessage._id,
+                status: "seen"
+            });
+        }
+        res.json({success: true, message: updatedMessage })  
     } catch (error: any) {
         console.log(error.message);
         res.status(500).json({ success: false, message: error.message });
@@ -98,13 +129,22 @@ export const sendMsg = async (req: AuthRequest, res: Response) => {
             senderId,
             receiverId,
             text,
-            image: imgUrl
+            image: imgUrl,
+            status: "delivered"
         })
 
         //emit new msg to receiver's socket
         const receiverSocketId = userSocketMap[receiverId];
         if(receiverSocketId){
             io.to(receiverSocketId).emit("newMessage", newMsg);
+        }
+
+        // to sender with current status
+        if (senderId) {
+            const senderSocketId = userSocketMap[senderId.toString()];
+            if (senderSocketId) {
+                io.to(senderSocketId).emit("messageStatusUpdate", { id: newMsg._id, status: newMsg.status });
+            }
         }
 
         res.json({success: true, newMessage: newMsg});
