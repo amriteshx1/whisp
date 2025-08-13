@@ -12,19 +12,24 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { login } = useContext(AuthContext);
 
-  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if(currentState == "Sign up" && !isDataSubmitted){
       setIsDataSubmitted(true)
       return;
     }
-
-    login(currentState === "Sign up" ? 'signup' : 'login', {fullName, email, password, bio});
-  }
+    try{
+      setLoading(true);
+      await login(currentState === "Sign up" ? 'signup' : 'login', {fullName, email, password, bio});
+    }finally{
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full relative bg-black overflow-auto">
@@ -68,8 +73,14 @@ const LoginPage = () => {
                       )
                     }
 
-                    <button type="submit" className="py-3 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer">
-                      {currentState === "Sign up" ? "Create Account" : "Login Now"}
+                    <button type="submit" disabled={loading} className="py-3 flex justify-center items-center bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed">
+                      {loading ? (
+                        <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                      ) : currentState === "Sign up" ? (
+                        "Create Account"
+                      ) : (
+                        "Login Now"
+                      )}
                     </button>
 
                     <div className="flex items-center gap-2 text-sm text-neutral-600">
