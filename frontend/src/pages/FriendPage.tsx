@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import assets from "../assets/chat-app-assets/assets";
+import toast from "react-hot-toast";
 
 interface User {
   _id: string;
@@ -26,9 +27,9 @@ export default function FriendPage() {
       setLoading(true);
       const res = await axios.get("/api/messages/nonFriends");
       setUsers(res.data.users || []);
-      console.log(res.data.users);
     } catch (err) {
-      console.error("Error fetching users:", err);
+      toast.error("Error fetching users:");
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -56,7 +57,8 @@ export default function FriendPage() {
       setPendingRequests(mappedIncoming);
       setOutgoingIds(outgoingSet);
     } catch (err) {
-      console.error("error fetching pending requests:", err);
+      toast.error("error fetching pending requests:");
+      console.log(err);
     }
   };
 
@@ -81,12 +83,12 @@ export default function FriendPage() {
       );
       if (res.data?.user) {
         setUsers([res.data.user]);
-        console.log(res.data.user);
       } else {
         setUsers([]);
       }
     } catch (err) {
-      console.error("Error searching user:", err);
+      toast.error("Error searching user:");
+      console.log(err);
       setUsers([]);
     } finally {
       setLoading(false);
@@ -97,7 +99,7 @@ export default function FriendPage() {
   const handleSendRequest = async (userIdOrCode: string) => {
   
     if (outgoingIds.has(userIdOrCode)) {
-      alert("Friend request already sent.");
+      toast("Friend request already sent.");
       return;
     }
 
@@ -113,10 +115,10 @@ export default function FriendPage() {
         return n;
       });
 
-      alert("Friend request sent!");
+      toast.success("Friend request sent!");
     } catch (err: any) {
       console.error("Error sending friend request:", err);
-      alert(err.response?.data?.message || "Failed to send friend request.");
+      toast(err.response?.data?.message || "Failed to send friend request.");
     }
   };
 
@@ -124,12 +126,13 @@ export default function FriendPage() {
   const handleAcceptRequest = async (requestId: string) => {
     try {
       await axios.post("/api/friends/respond", { requestId, action: "accept" });
-      alert("Friend request accepted!");
+      toast.success("Friend request accepted!");
       
       fetchPendingRequests();
       fetchUsers();
     } catch (err) {
-      console.error("Error accepting request:", err);
+      toast.error("Error accepting request:");
+      console.log(err);
     }
   };
 
@@ -137,10 +140,11 @@ export default function FriendPage() {
   const handleRejectRequest = async (requestId: string) => {
     try {
       await axios.post("/api/friends/respond", { requestId, action: "reject" });
-      alert("Friend request rejected.");
+      toast.success("Friend request rejected.");
       fetchPendingRequests();
     } catch (err) {
-      console.error("Error rejecting request:", err);
+      toast.error("Error rejecting request:");
+      console.log(err);
     }
   };
 

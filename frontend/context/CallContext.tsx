@@ -86,7 +86,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
       );
       setLocalStream(stream);
     } catch (err) {
-      console.error("Permission denied");
+      toast.error("Permission denied");
       endCall();
       setIncomingCall(null);
       return;
@@ -139,7 +139,6 @@ export const CallProvider = ({ children }: CallProviderProps) => {
 
   useEffect(()=>{
     if (!socket) return;
-    console.log("Socket available in CallProvider");
 
     // handle incoming call
     socket.on("incoming-call", async ({ from, offer, isVideo }) => {
@@ -158,7 +157,6 @@ export const CallProvider = ({ children }: CallProviderProps) => {
         new RTCSessionDescription(answer)
       );
     }
-    toast.success("Call connected.");
   });
 
   socket.on("ice-candidate", async ({to, from, candidate }) => {
@@ -176,18 +174,18 @@ export const CallProvider = ({ children }: CallProviderProps) => {
 
   socket.on("call-rejected", ({from}) => {
     console.log("Call rejected by", from);
-    toast.error(`Call rejected by ${from}.`);
+    toast("Call rejected!");
     endCall();
   });
 
   socket.on("call-cancelled", () => {
-    toast.error("Caller cancelled the call");
+    toast("Call missed!");
     endCall(); 
   });
 
   socket.on("call-ended", () => {
       console.log("Call ended by other user.");
-      toast.error("Call ended.");
+      toast("Call ended");
       endCall();
   });
 

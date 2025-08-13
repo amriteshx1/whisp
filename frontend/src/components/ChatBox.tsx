@@ -33,12 +33,12 @@ const ChatBox = () => {
   const startCall = async (isVideo: boolean) => {
 
     if (!selectedUser) {
-      toast.error("Please select a user to call.");
+      toast("Please select a user to call.");
       return;
     }
 
     if (!onlineUsers.includes(selectedUser._id)) {
-      toast.error("User is offline");
+      toast("Can't place a call, user is offline");
       return;
     }
 
@@ -51,7 +51,7 @@ const ChatBox = () => {
       stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
       setLocalStream(stream);
     } catch (err) {
-      toast.error("Permission denied");
+      toast("Call ended, permission denied");
       endCall();
       return;
     }
@@ -113,7 +113,7 @@ const startVideoCall = () => startCall(true);
   const handleSendImage = async(e : React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if(!file || !file.type.startsWith("image/")){
-      toast.error("Select an image file");
+      toast("Select an image file");
       return;
     }
 

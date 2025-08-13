@@ -89,7 +89,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         await getFriends();
         setSelectedUser(null);
       } catch (err) {
-        console.error("Error unfriending:", err);
+        toast.error("Error unfriending:");
+        console.log(err);
       }
     };
 
