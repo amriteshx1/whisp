@@ -16,6 +16,8 @@ import unmute from './unmute.png';
 import noVideo from './noVideo.png';
 import endCall from './endCall.png';
 import smile from './smile.png';
+import delivered from './delivered.png';
+import seen from './seen.png';
 
 // optional but useful type for asset object
 const assets: Record<string, string> = {
@@ -37,6 +39,8 @@ const assets: Record<string, string> = {
   noVideo,
   endCall,
   smile,
+  delivered,
+  seen,
 };
 
 export default assets;
