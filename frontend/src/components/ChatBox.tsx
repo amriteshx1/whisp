@@ -234,6 +234,12 @@ const startVideoCall = () => startCall(true);
                 <img src={msg.senderId === authUser?._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="" 
                 className="w-7 rounded-full"/>
                 <p className="text-neutral-500">{formatMessageTime(msg.createdAt || "")}</p>
+                  {msg.senderId === authUser?._id && msg.status === "delivered" && (
+                    <img src={assets.delivered} alt="delivered" className="w-4 h-4 text-gray-500" />
+                  )}
+                  {msg.senderId === authUser?._id && msg.status === "seen" && (
+                    <img src={assets.seen} alt="seen" className="w-4 h-4 text-blue-500" />
+                  )}
               </div>
           </div>
         ))}
