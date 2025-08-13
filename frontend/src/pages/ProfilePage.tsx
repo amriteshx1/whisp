@@ -12,25 +12,36 @@ const ProfilePage = () => {
     const navigate = useNavigate();
     const [name, setName] = useState(authUser?.fullName || "");
     const [bio, setBio] = useState(authUser?.bio || "");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
-        if(!selectedImg){
-          await updateProfile({fullName: name, bio});
-          navigate('/home');
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.readAsDataURL(selectedImg);
-        reader.onload = async() => {
-          const base64Image = reader.result;
-          if (typeof base64Image === "string") {
-            await updateProfile({ profilePic: base64Image, fullName: name, bio });
+        setIsSubmitting(true);
+        try{
+          if(!selectedImg){
+            await updateProfile({fullName: name, bio});
             navigate('/home');
+            return;
           }
+  
+          const reader = new FileReader();
+          reader.readAsDataURL(selectedImg);
+          reader.onload = async() => {
+            try {
+              const base64Image = reader.result;
+              if (typeof base64Image === "string") {
+                await updateProfile({ profilePic: base64Image, fullName: name, bio });
+                navigate("/home");
+              }
+            } finally {
+              setIsSubmitting(false);
+            }
+          };
+        }catch(err){
+          console.log(err);
+          setIsSubmitting(false);
         }
-    }
+    };
 
 
   return (
@@ -57,7 +68,13 @@ const ProfilePage = () => {
                         placeholder="Write profile bio" required className="p-2 border border-neutral-700 text-neutral-400 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600" rows={4}></textarea>
                         <p className="text-sm text-neutral-700">◾ Friend Code: <span className="text-neutral-600">{authUser?.friendCode}</span></p>
                         <p className="text-sm text-neutral-700">◾ Email: <span className="text-neutral-600">{authUser?.email}</span></p>
-                        <button type="submit" className="bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl  p-2 text-lg cursor-pointer" >Save</button>
+                        <button type="submit" disabled={isSubmitting} className="flex justify-center items-center bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl  p-2 text-lg cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" >
+                        {isSubmitting ? (
+                          <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                        ) : (
+                          "Save"
+                        )}
+                        </button>
                     </form>
                     <img src={authUser?.profilePic || appLogo} alt="user-profilePic" className={`max-w-48 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} />
                 </div>
