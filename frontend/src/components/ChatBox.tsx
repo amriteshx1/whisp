@@ -22,6 +22,7 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [sendingImage, setSendingImage] = useState(false);
+  const [loadingMsgs, setLoadingMsgs] = useState(false);
 
   const typingTimerRef = useRef<number | null>(null);
   const [peerTyping, setPeerTyping] = useState(false);
@@ -152,7 +153,10 @@ const startVideoCall = () => startCall(true);
 
   useEffect(()=>{
     if(selectedUser){
-      getMsgs(selectedUser._id);
+      setLoadingMsgs(true);
+      getMsgs(selectedUser._id).finally(() => {
+        setLoadingMsgs(false);
+      });
     }
   }, [selectedUser])
 
@@ -227,7 +231,12 @@ const startVideoCall = () => startCall(true);
       {/* main chat arena */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
         <p className="text-xs text-center text-neutral-500 flex justify-center items-center gap-1 mb-[2vh] mt-[1vh]"><img src={assets.lock} alt="locked" className="w-3 h-3" /> End-to-end encrypted</p>
-        {messages.map((msg, index) => (
+        {loadingMsgs ? (
+          <div className="flex justify-center items-center h-full">
+            <div className="w-7 h-7 border-3 border-gray-400 border-t-white rounded-full animate-spin"></div>
+          </div>
+        ) : (
+         messages.map((msg, index) => (
           <div key={index} className={`flex items-end gap-2 justify-end ${msg.senderId !== authUser?._id 
             && 'flex-row-reverse' }`}>
               {msg.image ? (
@@ -249,7 +258,8 @@ const startVideoCall = () => startCall(true);
                   )}
               </div>
           </div>
-        ))}
+        ))
+      )}
         <div ref={scrollEnd}></div>
       </div>
 
