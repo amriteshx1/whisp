@@ -88,6 +88,20 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("typing", ({ to, from, isTyping }) => {
+    const targetSocketId = userSocketMap[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit("typing", { from, to, isTyping });
+    }
+  });
+
+  socket.on("stop-typing", ({ to, from }) => {
+    const targetSocketId = userSocketMap[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit("stop-typing", { from, to });
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected", userId);
     delete userSocketMap[userId];
