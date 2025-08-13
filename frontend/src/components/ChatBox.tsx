@@ -21,6 +21,7 @@ const ChatBox = () => {
 
   const [input, setInput] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [sendingImage, setSendingImage] = useState(false);
 
   const typingTimerRef = useRef<number | null>(null);
   const [peerTyping, setPeerTyping] = useState(false);
@@ -117,13 +118,19 @@ const startVideoCall = () => startCall(true);
       return;
     }
 
+    setSendingImage(true);
+
     const reader = new FileReader();
     reader.onloadend = async ()=>{
-      await sendMsg({image:  reader.result as string });
-      e.target.value = "";
-    }
+      try {
+        await sendMsg({ image: reader.result as string });
+      } finally {
+        setSendingImage(false);
+        e.target.value = "";
+      }
+    };
     reader.readAsDataURL(file);
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -270,7 +277,11 @@ const startVideoCall = () => startCall(true);
           className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-400 placeholder-neutral-500" />
           <input onChange={handleSendImage} type="file" id="image" accept="image/png, image/jpeg" hidden />
           <label htmlFor="image">
-            <img src={assets.gallery_icon} alt="send-image" className="w-5 mr-2 cursor-pointer"/>
+            {sendingImage ? (
+              <div className="w-5 h-5 mr-2 border-2 border-gray-400 border-t-white rounded-full animate-spin"></div>
+            ) : (
+              <img src={assets.gallery_icon} alt="send-image" className="w-5 mr-2 cursor-pointer"/>
+            )}
           </label>
         </div>
         <img onClick={handleSendMessage} src={assets.send_button} alt="send-message" className="w-6 cursor-pointer" />
