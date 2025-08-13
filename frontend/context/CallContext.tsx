@@ -134,7 +134,6 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     }
     setIncomingCall(null);
     endCall();
-    toast.error("Call rejected.");
   };
 
   useEffect(()=>{

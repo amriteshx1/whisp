@@ -33,13 +33,13 @@ const LoginPage = () => {
         >
             <div className="h-full bg-cover bg-center flex items-center justify-center gap-32 sm:justify-evenly max-sm:flex-col">
                 {/* left-half */}
-                <img src={appLogo} alt="" className="h-[70vh]" />
+                <img src={appLogo} alt="whisp-logo" className="h-[70vh]" />
         
                 {/* right-half */}
                 <form onSubmit={onSubmitHandler} className="border-t-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-6 rounded-4xl">
                     <h2 className="font-medium text-3xl flex justify-between items-center">
                         {currentState}
-                        {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" 
+                        {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="back-arrow" 
                         className="w-5 cursor-pointer" />}
                         
                     </h2>

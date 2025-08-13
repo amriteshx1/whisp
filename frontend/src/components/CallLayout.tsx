@@ -121,8 +121,8 @@ const CallLayout: React.FC = () => {
         <p className="text-lg font-semibold">Incoming Call</p>
         <p className="text-sm text-gray-400">User {incomingCall.from} is calling…</p>
         <div className="flex gap-4 mt-4">
-          <button onClick={rejectCall} className="bg-gradient-to-tl from-neutral-950 via-red-500/50 to-red-600 px-4 py-2 rounded-full cursor-pointer hover:bg-red-950"><img src={assets.reject} alt="" className="h-5 w-5" /></button>
-          <button onClick={acceptCall} className="bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-500 px-4 py-2 rounded-full cursor-pointer hover:bg-green-950"><img src={assets.accept} alt="" className="h-5 w-5" /></button>
+          <button onClick={rejectCall} className="bg-gradient-to-tl from-neutral-950 via-red-500/50 to-red-600 px-4 py-2 rounded-full cursor-pointer hover:bg-red-950"><img src={assets.reject} alt="reject" className="h-5 w-5" /></button>
+          <button onClick={acceptCall} className="bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-500 px-4 py-2 rounded-full cursor-pointer hover:bg-green-950"><img src={assets.accept} alt="accept" className="h-5 w-5" /></button>
         </div>
       </div>
     </div>
@@ -186,7 +186,7 @@ if (callActive) {
             className={`px-3 py-2 rounded-full ${muted ? "bg-neutral-700" : "bg-neutral-800"} text-white cursor-pointer`}
             aria-label="Toggle mute"
           >
-            {muted ? <img src={assets.mute} alt="" className="h-5 w-5" /> : <img src={assets.unmute} alt="" className="h-5 w-5" />}
+            {muted ? <img src={assets.mute} alt="un-mute" className="h-5 w-5" /> : <img src={assets.unmute} alt="mute" className="h-5 w-5" />}
           </button>
 
           <button
@@ -194,7 +194,7 @@ if (callActive) {
             className={`px-3 py-2 rounded-full ${cameraOff ? "bg-neutral-700" : "bg-neutral-800"} text-white cursor-pointer`}
             aria-label="Toggle camera"
           >
-            {cameraOff ? <img src={assets.noVideo} alt="" className="h-5 w-5" /> : <img src={videoCall} alt="" className="h-5 w-5" />}
+            {cameraOff ? <img src={assets.noVideo} alt="video" className="h-5 w-5" /> : <img src={videoCall} alt="no-video" className="h-5 w-5" />}
           </button>
 
           <button
@@ -202,7 +202,7 @@ if (callActive) {
             className="px-4 py-2 rounded-full bg-gradient-to-tl from-neutral-950 via-red-500/50 to-red-600 cursor-pointer hover:bg-red-950 text-white"
             aria-label="End call"
           >
-            <img src={assets.endCall} alt="" className="h-5 w-5" />
+            <img src={assets.endCall} alt="end-call" className="h-5 w-5" />
           </button>
         </div>
       </div>

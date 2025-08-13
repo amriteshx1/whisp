@@ -24,7 +24,7 @@ const UserBox = () => {
     <div className={`text-white/80 w-full relative overflow-y-scroll ${selectedUser ? "max-md:hidden" : ""}`}>
 
       <div className="pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto">
-        <img src={selectedUser?.profilePic || assets.avatar_icon} alt="" 
+        <img src={selectedUser?.profilePic || assets.avatar_icon} alt="profile-pic" 
         className="w-20 aspect-[1/1] rounded-full"/>
         <h1 className="px-10 text-xl font-medium mx-auto flex items-center gap-2">
           {onlineUsers.includes(selectedUser._id) && <p className="w-2 h-2 rounded-full bg-green-500"></p>}
@@ -41,7 +41,7 @@ const UserBox = () => {
           {msgImages.map((url, index) => (
             <div key={index} onClick={() => window.open(url)}
             className="cursor-pointer rounded">
-              <img src={url} alt="" className="h-full rounded-md" />
+              <img src={url} alt="image" className="h-full rounded-md" />
             </div>
           ))}
 

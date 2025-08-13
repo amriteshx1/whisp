@@ -183,13 +183,13 @@ export default function FriendPage() {
                     onClick={() => handleAcceptRequest(req._id)}
                     className="px-2 py-1 rounded-xl cursor-pointer"
                   >
-                    <img src={assets.tick} alt="" className="h-5 w-5" />
+                    <img src={assets.tick} alt="accept" className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => handleRejectRequest(req._id)}
                     className="px-2 py-1 rounded-xl cursor-pointer"
                   >
-                    <img src={assets.cross} alt="" className="h-6 w-6" />
+                    <img src={assets.cross} alt="reject" className="h-6 w-6" />
                   </button>
                 </div>
               </div>
@@ -250,7 +250,7 @@ export default function FriendPage() {
                       : " cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700"
                   }`}
                 >
-                  {alreadySent ? <img src={assets.sentFriend} alt="" className="h-6 w-6" /> : <img src={assets.addFriend} alt="" className="h-6 w-6" />}
+                  {alreadySent ? <img src={assets.sentFriend} alt="request sent" className="h-6 w-6" /> : <img src={assets.addFriend} alt="add friend" className="h-6 w-6" />}
                 </button>
               </div>
             );

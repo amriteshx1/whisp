@@ -203,35 +203,35 @@ const startVideoCall = () => startCall(true);
 
       {/* upper navbar type stuff */}
       <div className="flex items-center gap-3 py-3 mx-4 border-b-2 border-b-neutral-900">
-        <img src={selectedUser.profilePic || assets.avatar_icon} alt="" className="w-8 rounded-full"/>
+        <img src={selectedUser.profilePic || assets.avatar_icon} alt="profile-pic" className="w-8 rounded-full"/>
         <p className="flex-1 text-lg font-medium text-white/80 flex items-center gap-2">
           {selectedUser.fullName}
           {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
           {peerTyping && <span className="text-xs text-neutral-400 animate-pulse">(typing…)</span>}
         </p>
-        <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7" />
+        <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="back-arrow" className="md:hidden max-w-7" />
         <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
         <img onClick={startVideoCall} src={videoCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
         
-        <img src={assets.help_icon} alt="" className="max-md:hidden max-w-6" />
+        <img src={assets.help_icon} alt="info" className="max-md:hidden max-w-6" />
 
       </div>
 
       {/* main chat arena */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
-        <p className="text-xs text-center text-neutral-500 flex justify-center items-center gap-1 mb-[2vh] mt-[1vh]"><img src={assets.lock} alt="" className="w-3 h-3" /> End-to-end encrypted</p>
+        <p className="text-xs text-center text-neutral-500 flex justify-center items-center gap-1 mb-[2vh] mt-[1vh]"><img src={assets.lock} alt="locked" className="w-3 h-3" /> End-to-end encrypted</p>
         {messages.map((msg, index) => (
           <div key={index} className={`flex items-end gap-2 justify-end ${msg.senderId !== authUser?._id 
             && 'flex-row-reverse' }`}>
               {msg.image ? (
-                <img src={msg.image} alt="" className="max-w-[230px] border border-neutral-900 rounded-lg overflow-hidden mb-8" />
+                <img src={msg.image} alt="message-image" className="max-w-[230px] border border-neutral-900 rounded-lg overflow-hidden mb-8" />
               ) : (
                 <p className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/80 ${msg.senderId
                   === authUser?._id ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
               )}
 
               <div className="text-center text-xs">
-                <img src={msg.senderId === authUser?._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="" 
+                <img src={msg.senderId === authUser?._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="profile-pic" 
                 className="w-7 rounded-full"/>
                 <p className="text-neutral-500">{formatMessageTime(msg.createdAt || "")}</p>
                   {msg.senderId === authUser?._id && msg.status === "delivered" && (
@@ -254,7 +254,7 @@ const startVideoCall = () => startCall(true);
             onClick={() => {
               setShowEmojiPicker((prev) => !prev);
             }} 
-            className={`p-2 rounded-full ${showEmojiPicker ? 'bg-neutral-800' : 'hover:bg-neutral-800'} cursor-pointer`}><img src={assets.smile} alt="" className="h-5 w-5" /></button>
+            className={`p-2 rounded-full ${showEmojiPicker ? 'bg-neutral-800' : 'hover:bg-neutral-800'} cursor-pointer`}><img src={assets.smile} alt="emoji" className="h-5 w-5" /></button>
           {showEmojiPicker && (
             <div ref={pickerRef} className="absolute bottom-14 left-0 z-50">
               <Picker
@@ -270,15 +270,15 @@ const startVideoCall = () => startCall(true);
           className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-400 placeholder-neutral-500" />
           <input onChange={handleSendImage} type="file" id="image" accept="image/png, image/jpeg" hidden />
           <label htmlFor="image">
-            <img src={assets.gallery_icon} alt="" className="w-5 mr-2 cursor-pointer"/>
+            <img src={assets.gallery_icon} alt="send-image" className="w-5 mr-2 cursor-pointer"/>
           </label>
         </div>
-        <img onClick={handleSendMessage} src={assets.send_button} alt="" className="w-6 cursor-pointer" />
+        <img onClick={handleSendMessage} src={assets.send_button} alt="send-message" className="w-6 cursor-pointer" />
       </div>
     </div>
   ) : (
     <div className="flex flex-col items-center justify-center gap-5 text-gray-500 max-md:hidden">
-      <img src={applogo} alt=""  className="h-[45vh]"/>
+      <img src={applogo} alt="whisp-logo"  className="h-[45vh]"/>
       <p className="text-lg font-medium text-neutral-500">Stay connected - softly, silently, seamlessly.</p>
     </div>
   )

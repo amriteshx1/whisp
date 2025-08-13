@@ -48,7 +48,7 @@ const ProfilePage = () => {
                               if (file) setSelectedImg(file);
                             }} type="file" id="avatar" accept=".png, .jpg, .jpeg" hidden />
 
-                            <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} alt="" className={`w-10 h-10 ${selectedImg && 'rounded-full'}`} />
+                            <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} alt="new-profilePic" className={`w-10 h-10 ${selectedImg && 'rounded-full'}`} />
                             Upload new profile image
                         </label>
                         <input onChange={(e)=>setName(e.target.value)} value={name}
@@ -59,7 +59,7 @@ const ProfilePage = () => {
                         <p className="text-sm text-neutral-700">◾ Email: <span className="text-neutral-600">{authUser?.email}</span></p>
                         <button type="submit" className="bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl  p-2 text-lg cursor-pointer" >Save</button>
                     </form>
-                    <img src={authUser?.profilePic || appLogo} alt="" className={`max-w-48 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} />
+                    <img src={authUser?.profilePic || appLogo} alt="user-profilePic" className={`max-w-48 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} />
                 </div>
             </div>
 
