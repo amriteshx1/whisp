@@ -9,6 +9,7 @@ export interface Message {
   text?: string;
   image?: string;
   seen: boolean;
+  status: "delivered" | "seen" | undefined;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -98,6 +99,12 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
             const { data } = await axios.get(`/api/messages/${userId}`);
             if(data.success){
                 setMessages(data.messages);
+
+                setUnseenMessages((prevUnseenMessages) => {
+                const newUnseenMessages = { ...prevUnseenMessages };
+                delete newUnseenMessages[userId];
+                return newUnseenMessages;
+            });
             }
         } catch (error: any) {
             toast.error(error.message);
@@ -131,10 +138,28 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
             }else{
                 setUnseenMessages((prevUnseenMessages) =>({
                     ...prevUnseenMessages, [newMessage.senderId] :
-                    prevUnseenMessages[newMessage.senderId] ? prevUnseenMessages[newMessage.senderId] + 1 : 1
-                }))
+                    (prevUnseenMessages[newMessage.senderId] || 0) + 1,
+                }));
             }
-        })
+        });
+
+        // handle real-time status updates (delivered, seen)
+        socket.on("messageStatusUpdate", ({ id, status }) => {
+            setMessages((prevMessages) =>
+                prevMessages.map((msg) =>
+                    msg._id === id ? { ...msg, status, seen: status === "seen" } : msg
+                )
+            );
+        });
+
+        // handle bulk status updates for multiple messages
+        socket.on("messageStatusUpdateBulk", ({ ids, status }) => {
+            setMessages((prevMessages) =>
+                prevMessages.map((msg) =>
+                    ids.includes(msg._id) ? { ...msg, status, seen: status === "seen" } : msg
+                )
+            );
+        });
     }
 
     //unsubscribe from msgs
