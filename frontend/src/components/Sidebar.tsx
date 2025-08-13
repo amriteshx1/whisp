@@ -17,14 +17,24 @@ const Sidebar = () => {
 
    const [input, setInput] = useState<string>("");
 
+   const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
     const filteredUsers = input ? friends.filter((user)=>user.fullName.toLowerCase().includes(input.toLowerCase())) : friends;
 
     useEffect(()=>{
-      getUsers();
-      getFriends();
-    }, [onlineUsers])
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          await getUsers();
+          await getFriends();
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }, [onlineUsers]);
 
   return (
     <div className={`h-full p-5 rounded-r-xl overflow-y-auto text-white/80 ${selectedUser ? "max-md:hidden" : ''}`}>
@@ -51,7 +61,24 @@ const Sidebar = () => {
       </div>
 
       <div className="flex flex-col gap-3">
-        {filteredUsers.map((user, index) => (
+        {loading
+          ? Array(5)
+              .fill(null)
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-4 p-2 pl-4 rounded-xl animate-pulse bg-neutral-900/40"
+                >
+                  <div className="w-[40px] h-[40px] bg-neutral-700 rounded-full flex items-center justify-center text-lg">
+                    👤
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <div className="w-3/5 h-3 bg-neutral-700 rounded"></div>
+                    <div className="w-2/5 h-2 bg-neutral-800 rounded"></div>
+                  </div>
+                </div>
+              ))
+        : filteredUsers.map((user, index) => (
           <div onClick={() => {setSelectedUser(user); setUnseenMessages(prev => ({...prev, [user._id] : 0}))}}
           key={index} className={`relative flex items-center gap-4 p-2 pl-4 rounded cursor-pointer max-sm:text-sm hover:bg-neutral-900/70 hover:rounded-xl ${selectedUser && selectedUser._id === user._id && 'bg-neutral-900/70 rounded-xl'}`}>
             <img src={user?.profilePic || assets.avatar_icon} alt={user.fullName} className="w-[40px] aspect-[1/1] rounded-full" />
