@@ -63,7 +63,7 @@ const Sidebar = () => {
                 : <span className="text-neutral-500 text-xs">Offline</span>
               }
             </div>
-            {unseenMessages[user._id] > 0 && <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full text-neutral-500 bg-white/80">
+            {unseenMessages[user._id] > 0 && <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">
               {unseenMessages[user._id]}</p> }
           </div>
         ))}
