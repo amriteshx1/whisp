@@ -22,6 +22,10 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
+  const typingTimerRef = useRef<number | null>(null);
+  const [peerTyping, setPeerTyping] = useState(false);
+
+
   const {socket} = useContext(AuthContext);
 
   const { peerConnection, setLocalStream, setRemoteStream, setCallActive, otherUserSocketId, endCall } = useCall();
@@ -100,6 +104,9 @@ const startVideoCall = () => startCall(true);
     if(input.trim() === "") return null;
     await sendMsg({text: input.trim()});
     setInput("");
+    if (socket && selectedUser && authUser) {
+      socket.emit("stop-typing", { to: selectedUser._id, from: authUser._id });
+    }
   }
 
   //handle sending image
@@ -117,6 +124,23 @@ const startVideoCall = () => startCall(true);
     }
     reader.readAsDataURL(file);
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setInput(val);
+  
+    if (!socket || !selectedUser || !authUser) return;
+  
+    // tell we’re typing
+    socket.emit("typing", { to: selectedUser._id, from: authUser._id, isTyping: true });
+  
+    // debounce a stop-typing
+    if (typingTimerRef.current) window.clearTimeout(typingTimerRef.current);
+    typingTimerRef.current = window.setTimeout(() => {
+      socket.emit("stop-typing", { to: selectedUser._id, from: authUser._id });
+    }, 1200);
+  };
+
 
 
   useEffect(()=>{
@@ -146,6 +170,34 @@ const startVideoCall = () => startCall(true);
     };
   }, [showEmojiPicker]);
 
+  useEffect(() => {
+    if (!socket) return;
+  
+    const handleTyping = (p: { from: string; to: string; isTyping?: boolean }) => {
+      if (selectedUser && p.from === selectedUser._id) setPeerTyping(p.isTyping ?? true);
+    };
+    const handleStopTyping = (p: { from: string; to: string }) => {
+      if (selectedUser && p.from === selectedUser._id) setPeerTyping(false);
+    };
+  
+    socket.on("typing", handleTyping);
+    socket.on("stop-typing", handleStopTyping);
+    return () => {
+      socket.off("typing", handleTyping);
+      socket.off("stop-typing", handleStopTyping);
+    };
+  }, [socket, selectedUser]);
+
+  useEffect(() => {
+    setPeerTyping(false);
+    if (typingTimerRef.current) {
+      clearTimeout(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
+  }, [selectedUser]);
+
+  
+
   return selectedUser ? (
     <div className="h-full overflow-scroll relative">
 
@@ -155,6 +207,7 @@ const startVideoCall = () => startCall(true);
         <p className="flex-1 text-lg font-medium text-white/80 flex items-center gap-2">
           {selectedUser.fullName}
           {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
+          {peerTyping && <span className="text-xs text-neutral-400 animate-pulse">(typing…)</span>}
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7" />
         <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
@@ -207,7 +260,7 @@ const startVideoCall = () => startCall(true);
             </div>
           )}
           
-          <input onChange={(e)=>setInput(e.target.value)} value={input} onKeyDown={(e)=> e.key === "Enter" ? handleSendMessage(e) : null} type="text" placeholder="Send a message"
+          <input onChange={handleInputChange} value={input} onKeyDown={(e)=> e.key === "Enter" ? handleSendMessage(e) : null} type="text" placeholder="Send a message"
           className="flex-1 text-sm p-3 border-none rounded-lg outline-none text-neutral-400 placeholder-neutral-500" />
           <input onChange={handleSendImage} type="file" id="image" accept="image/png, image/jpeg" hidden />
           <label htmlFor="image">
