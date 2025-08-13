@@ -6,6 +6,7 @@ export interface IMessage extends Document {
   text?: string;
   image?: string;
   seen: boolean;
+  status: "delivered" | "seen";
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -17,6 +18,11 @@ const messageSchema = new Schema<IMessage>(
     text: { type: String },
     image: { type: String },
     seen: { type: Boolean, default: false },
+    status: {
+      type: String,
+      enum: ["delivered", "seen"],
+      default: "delivered",
+    },
   },
   { timestamps: true }
 );
