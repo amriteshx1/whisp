@@ -10,6 +10,8 @@ const UserBox = () => {
   const {onlineUsers} = useContext(AuthContext);
   const [msgImages, setMsgImages] = useState<string[]>([]);
 
+  const [unfriending, setUnfriending] = useState(false);
+
   //get images from msg
   useEffect(()=>{
     setMsgImages(
@@ -18,6 +20,16 @@ const UserBox = () => {
         .filter((url): url is string => typeof url === "string")
     )
   }, [messages])
+
+  const handleUnfriend = async () => {
+    if (!selectedUser) return;
+    setUnfriending(true);
+    try {
+      await unfriend(selectedUser._id);
+    } finally {
+      setUnfriending(false);
+    }
+  };
 
 
   return selectedUser && (
@@ -48,9 +60,13 @@ const UserBox = () => {
         </div>
       </div>
 
-      <button onClick={() => selectedUser && unfriend(selectedUser._id)} className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-tl from-neutral-950 via-red-500/20 to-red-600 text-white/75 border-none
-      text-sm font-light py-2 px-20 rounded-full cursor-pointer hover:bg-red-950">
-        Unfriend
+      <button onClick={handleUnfriend} disabled={unfriending} className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-tl from-neutral-950 via-red-500/20 to-red-600 text-white/75 border-none
+      text-sm font-light py-2 px-20 rounded-full cursor-pointer hover:bg-red-950 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+        {unfriending ? (
+            <div className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin"></div>
+          ) : (
+            "Unfriend"
+        )}
       </button>
     </div>
   )
