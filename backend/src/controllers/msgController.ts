@@ -4,6 +4,7 @@ import Message from "../models/message";
 import { IUser } from "../models/user";
 import cloudinary from "../lib/cloudinary";
 import { io, userSocketMap } from "..";
+import { getGeminiReply } from "../lib/gemini";
 
 interface AuthRequest extends Request {
   user?: IUser;
@@ -94,7 +95,8 @@ export const markSeen = async (req: Request, res: Response) => {
         );
 
         if (!updatedMessage) {
-            return res.status(404).json({ success: false, message: "Message not found" });
+            res.status(404).json({ success: false, message: "Message not found" });
+            return;
         }
 
         // notify the sender that their message was seen
@@ -175,5 +177,23 @@ export const getNonFriends = async (req: AuthRequest, res: Response) => {
   } catch (error) {
     console.error("Error in getNonFriends:", error);
     res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+//chatbot
+export const talkToBot = async (req: Request, res: Response) => {
+  try {
+    const { prompt } = req.body;
+
+    if (!prompt || typeof prompt !== "string") {
+      res.status(400).json({ success: false, message: "Prompt is required" });
+      return;
+    }
+
+    const reply = await getGeminiReply(prompt);
+    res.json({ success: true, reply });
+  } catch (err: any) {
+    console.error("Bot error:", err);
+    res.status(500).json({ success: false, message: "Bot failed to respond" });
   }
 };
