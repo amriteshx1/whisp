@@ -3,11 +3,13 @@ import mongoose, { Document, Schema, Types } from "mongoose";
 export interface IUser extends Document {
   email: string;
   fullName: string;
-  password: string;
+  password?: string;
   profilePic?: string;
   bio?: string;
   friends: Types.ObjectId[];
   friendCode: string; 
+  googleId?: string;
+  authProvider?: "local" | "google";
   _id: Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
@@ -17,11 +19,19 @@ const userSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
-    password: { type: String, required: true, minlength: 6 },
+    password: {
+      type: String, 
+      minlength: 6,
+      required: function (this: any) {
+        return this.authProvider !== "google";
+      },
+    },
     profilePic: { type: String, default: "" },
     bio: { type: String },
     friends: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
     friendCode: { type: String, required: true, unique: true },
+    googleId: { type: String, unique: true, sparse: true },
+    authProvider: { type: String, enum: ["local", "google"], default: "local" },
   },
   { timestamps: true }
 );
