@@ -123,6 +123,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     useEffect(()=>{
+        const params = new URLSearchParams(location.search);
+        const oauthToken = params.get("token");
+
+        if (oauthToken) {
+            setToken(oauthToken);
+            localStorage.setItem("token", oauthToken);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${oauthToken}`;
+    
+            window.history.replaceState({}, document.title, location.pathname);
+    
+            checkAuth();
+            return;
+        }
         if(token){
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
