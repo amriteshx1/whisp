@@ -1,14 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/user";
-import { IUser } from "../models/user";
 
-interface AuthenticatedRequest extends Request {
-  user?: IUser;
-}
 
-// Middleware to protect routes
-export const protectRoute = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+// middleware to protect routes
+export const protectRoute = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
