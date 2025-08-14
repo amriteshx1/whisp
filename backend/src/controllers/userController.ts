@@ -80,6 +80,11 @@ export const login = async (req: Request, res: Response) => {
           return;
         }
 
+        if (!userData.password) {
+          res.status(500).json({ success: false, message: "User data is missing a password." });
+          return;
+        }
+
         const isPasswordCorrect = await bcrypt.compare(password, userData.password);
 
         if(!isPasswordCorrect){
