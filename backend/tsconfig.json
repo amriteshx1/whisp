@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                // modern JS features
-    "module": "commonjs",              // for Node.js
-    "rootDir": "src",                  // where your TS files live
-    "outDir": "dist",                  // where compiled JS goes
-    "esModuleInterop": true,           // allows `import express from 'express'`
+    "target": "ES2020",               
+    "module": "commonjs",               
+    "rootDir": "src",                   
+    "outDir": "dist",                    
+    "esModuleInterop": true,             
     "forceConsistentCasingInFileNames": true,
-    "strict": true,                    // for type-safety (keep on!)
-    "skipLibCheck": true               // faster compilation
+    "strict": true,                  
+    "skipLibCheck": true,          
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   }
 }
