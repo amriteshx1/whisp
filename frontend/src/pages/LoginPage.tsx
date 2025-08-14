@@ -41,7 +41,7 @@ const LoginPage = () => {
                 <img src={appLogo} alt="whisp-logo" className="h-[70vh]" />
         
                 {/* right-half */}
-                <form onSubmit={onSubmitHandler} className="border-t-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-6 rounded-4xl">
+                <form onSubmit={onSubmitHandler} className="border-t-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-4 rounded-4xl">
                     <h2 className="font-medium text-3xl flex justify-between items-center">
                         {currentState}
                         {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="back-arrow" 
@@ -73,7 +73,7 @@ const LoginPage = () => {
                       )
                     }
 
-                    <button type="submit" disabled={loading} className="py-3 flex justify-center items-center bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed">
+                    <button type="submit" disabled={loading} className="p-2 flex justify-center items-center bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed">
                       {loading ? (
                         <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                       ) : currentState === "Sign up" ? (
@@ -82,9 +82,18 @@ const LoginPage = () => {
                         "Login Now"
                       )}
                     </button>
+                    <p className="text-xs text-center font-semibold text-neutral-500 my-[-0.75rem]">Or</p>
+
+                    <button
+                      type="button"
+                      onClick={() => window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`}
+                      className="p-2 flex justify-center items-center gap-2 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer"
+                    >
+                      <img src={assets.google} alt="google" className="w-5 h-5" />Continue with Google
+                    </button>
 
                     <div className="flex items-center gap-2 text-sm text-neutral-600">
-                      <input type="checkbox" className="accent-neutral-700" />
+                      <input type="checkbox" className="accent-neutral-700" required />
                       <p>Agree to the terms of use & privacy policy. </p>
                     </div>
 
