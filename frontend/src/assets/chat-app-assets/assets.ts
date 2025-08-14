@@ -18,8 +18,8 @@ import endCall from './endCall.png';
 import smile from './smile.png';
 import delivered from './delivered.png';
 import seen from './seen.png';
+import google from './google.png';
 
-// optional but useful type for asset object
 const assets: Record<string, string> = {
   avatar_icon,
   gallery_icon,
@@ -41,6 +41,7 @@ const assets: Record<string, string> = {
   smile,
   delivered,
   seen,
+  google
 };
 
 export default assets;
