@@ -4,22 +4,27 @@ import applogo from "../assets/appLogo.jpg";
 import menuIcon from "../assets/menuIcon.png";
 import searchIcon from "../assets/searchIcon.png";
 import assets from "../assets/chat-app-assets/assets";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
 
 
 const Sidebar = () => {
 
-   const {friends, getFriends, getUsers, selectedUser, setSelectedUser, unseenMessages, setUnseenMessages} = useContext(ChatContext);
+   const {friends, getFriends, getUsers, talkToBot, selectedUser, setSelectedUser, unseenMessages, setUnseenMessages} = useContext(ChatContext);
 
    const { logout, onlineUsers } = useContext(AuthContext);
 
    const [input, setInput] = useState<string>("");
 
    const [loading, setLoading] = useState(true);
+   const [botOpen, setBotOpen] = useState(false);
+   const [botInput, setBotInput] = useState("");
+   const [botLoading, setBotLoading] = useState(false);
+   const [botMessages, setBotMessages] = useState<{ from: "user" | "bot"; text: string }[]>([]);
 
     const navigate = useNavigate();
+    const chatEndRef = useRef<HTMLDivElement>(null);
 
     const filteredUsers = input ? friends.filter((user)=>user.fullName.toLowerCase().includes(input.toLowerCase())) : friends;
 
@@ -35,6 +40,35 @@ const Sidebar = () => {
       };
       fetchData();
     }, [onlineUsers]);
+
+
+
+    const sendBotMessage = async () => {
+      if (!botInput.trim()) return;
+
+      const userMsg = { from: "user" as const, text: botInput };
+      setBotMessages((prev) => [...prev, userMsg]);
+      setBotInput("");
+      setBotLoading(true);
+      setBotMessages((prev) => [...prev, { from: "bot", text: "..." }]);
+
+      try {
+        const reply = await talkToBot(userMsg.text);
+        setBotMessages((prev) => {
+          const msgs = [...prev];
+          msgs[msgs.length - 1] = { from: "bot", text: reply || "No reply" }; // replace skeleton with real reply
+          return msgs;
+        });
+      } catch {
+        setBotMessages((prev) => {
+          const msgs = [...prev];
+          msgs[msgs.length - 1] = { from: "bot", text: "⚠️ Bot is unavailable" };
+          return msgs;
+        });
+      } finally {
+        setBotLoading(false);
+      }
+    };
 
   return (
     <div className={`h-full p-5 rounded-r-xl overflow-y-auto text-white/80 ${selectedUser ? "max-md:hidden" : ''}`}>
@@ -59,6 +93,8 @@ const Sidebar = () => {
         </div>
 
       </div>
+
+
 
       <div className="flex flex-col gap-3">
         {loading
@@ -96,6 +132,7 @@ const Sidebar = () => {
         ))}
 
       </div>
+
     </div>
   )
 }
