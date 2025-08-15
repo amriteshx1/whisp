@@ -32,6 +32,7 @@ interface ChatContextType {
   unfriend: (friendId: string) => Promise<void>;
   getMsgs: (userId: string) => Promise<void>;
   sendMsg: (messageData: { text?: string; image?: string }) => Promise<void>;
+  talkToBot: (prompt: string) => Promise<string>;
   setSelectedUser: (user: ChatUser | null) => void;
   unseenMessages: Record<string, number>;
   setUnseenMessages: React.Dispatch<React.SetStateAction<Record<string, number>>>;
@@ -168,13 +169,33 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         if(socket) socket.off("newMessage");
     }
 
+    //chat-bot
+    const talkToBot = async(prompt: string): Promise<string> => {
+        try {
+          const res = await axios.post("/api/messages/chat-bot", {
+            prompt
+          });
+        
+          const data = res.data;
+        
+          if (!data.success) {
+            return "Bot couldn't think of a reply 🤯";
+          }
+        
+          return (data.reply as string)?.trim() || "Hmm, no reply from me 😅";
+        } catch (err) {
+          console.error("Bot fetch error:", err);
+          return "Something went wrong while talking to the bot 😬";
+        }
+    }
+
     useEffect(()=>{
         subscribeToMessages();
         return ()=> unsubscribeFromMessages();
     }, [socket, selectedUser]);
 
     const value = {
-        messages, users, friends, selectedUser, getUsers, getFriends, unfriend, getMsgs, sendMsg, setSelectedUser, unseenMessages, setUnseenMessages 
+        messages, users, friends, selectedUser, getUsers, getFriends, unfriend, getMsgs, sendMsg, talkToBot, setSelectedUser, unseenMessages, setUnseenMessages 
     }
 
     return (
