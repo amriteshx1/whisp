@@ -41,7 +41,17 @@ const Sidebar = () => {
       fetchData();
     }, [onlineUsers]);
 
+    useEffect(() => {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [botMessages]);
 
+    useEffect(() => {
+      if (botOpen) {
+        setTimeout(() => {
+          chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, 0);
+      }
+    }, [botOpen]);
 
     const sendBotMessage = async () => {
       if (!botInput.trim()) return;
