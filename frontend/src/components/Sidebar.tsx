@@ -152,6 +152,55 @@ const Sidebar = () => {
 
       </div>
 
+      {/* BOT OVERLAY */}
+      {botOpen && (
+        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-neutral-900 rounded-xl p-5 w-[90%] max-w-2xl h-[70vh] flex flex-col">
+            <div className="flex justify-between items-center border-b border-neutral-700 pb-2">
+              <h2 className="text-lg font-semibold text-sky-200 flex gap-2 items-center"><img src={assets.bot} alt="chat bot" className="w-[40px] aspect-[1/1] p-1 rounded-full" />Whisp Bot<img src={assets.verified} alt="whisp bot" className="h-4 w-4" /></h2>
+              <button onClick={() => setBotOpen(false)} className="text-neutral-400 hover:text-white cursor-pointer">
+                ✕
+              </button>
+            </div>
+            <div className="flex-1  flex flex-col items-start overflow-y-auto mt-3 space-y-2">
+              {botMessages.map((m, i) => (
+                <div
+                  key={i}
+                  className={`p-2 rounded-lg max-w-[60%] ${
+                    m.from === "user"
+                        ? "bg-neutral-600 self-end text-white"
+                        : m.text === "..."
+                          ? "bg-neutral-800 text-neutral-500 animate-pulse self-start"
+                          : "bg-neutral-800 text-white/90 self-start"
+                    }`}
+                >
+                  {m.text === "..." ? "Typing..." : m.text}
+                </div>
+              ))}
+              <div ref={chatEndRef} />
+            </div>
+            <div className="flex gap-2 mt-3">
+              <input
+                value={botInput}
+                onChange={(e) => setBotInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendBotMessage()}
+                placeholder="Ask something..."
+                className="flex-1 bg-neutral-800 text-white p-2 rounded-xl outline-none text-sm"
+              />
+              <button 
+                onClick={sendBotMessage} 
+                className={`px-4 rounded-xl text-white text-sm flex justify-center items-center ${
+                  botLoading ? "opacity-70 cursor-not-allowed" : "bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 cursor-pointer"
+                }`}
+                disabled={botLoading} >
+                {botLoading ? (
+                  <div className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                ) : ( "Send" )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
