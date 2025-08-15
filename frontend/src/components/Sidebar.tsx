@@ -104,7 +104,16 @@ const Sidebar = () => {
 
       </div>
 
-
+      <div
+        onClick={() => setBotOpen(true)}
+        className="relative flex items-center gap-4 p-2 pl-4 rounded cursor-pointer hover:bg-neutral-900/70 hover:rounded-xl mb-3"
+      >
+        <img src={assets.bot || assets.avatar_icon} alt="Chat Bot" className="w-[40px] aspect-[1/1] p-1 rounded-full" />
+        <div className="flex flex-col leading-5">
+          <p className="text-sm font-medium text-sky-200 flex items-center gap-1">Whisp Bot <img src={assets.verified} alt="whisp bot" className="h-4 w-4" /></p>
+          <span className="text-neutral-500 text-xs">AI Assistant</span>
+        </div>
+      </div>
 
       <div className="flex flex-col gap-3">
         {loading
