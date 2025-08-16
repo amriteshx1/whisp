@@ -22,6 +22,8 @@ const Sidebar = () => {
    const [botInput, setBotInput] = useState("");
    const [botLoading, setBotLoading] = useState(false);
    const [botMessages, setBotMessages] = useState<{ from: "user" | "bot"; text: string }[]>([]);
+   const [isMenuOpen, setIsMenuOpen] = useState(false);
+   const menuRef = useRef<HTMLDivElement | null>(null);
 
     const navigate = useNavigate();
     const chatEndRef = useRef<HTMLDivElement>(null);
@@ -52,6 +54,19 @@ const Sidebar = () => {
         }, 0);
       }
     }, [botOpen]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const sendBotMessage = async () => {
       if (!botInput.trim()) return;
@@ -85,15 +100,17 @@ const Sidebar = () => {
       <div className="pb-5">
         <div className="flex justify-between items-center pl-[1vh]">
             <img src={applogo} alt="whispLogo" className="h-[5vh]" />
-            <div className="relative py-2 group">
-                <img src={menuIcon} alt="menu" className="max-h-6 cursor-pointer" />
-                <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-neutral-900 text-white/80 hidden group-hover:block">
-                    <p onClick={() => navigate('/friends')} className="cursor-pointer text-sm">Add Friends</p>
+            <div className="relative py-2" ref={menuRef}>
+                <img src={menuIcon} alt="menu" className="max-h-6 cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)} />
+                {isMenuOpen && (
+                <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-neutral-900 text-white/80 block">
+                    <p onClick={() => {navigate('/friends'); setIsMenuOpen(false); }} className="cursor-pointer text-sm">Add Friends</p>
                     <hr className="my-2 border-t border-white/80" />
-                    <p onClick={() => navigate('/profile')} className="cursor-pointer text-sm">Edit Profile</p>
+                    <p onClick={() => {navigate('/profile'); setIsMenuOpen(false);}} className="cursor-pointer text-sm">Edit Profile</p>
                     <hr className="my-2 border-t border-white/80" />
-                    <p onClick={() => logout()} className="cursor-pointer text-sm">Logout</p>
+                    <p onClick={() => {logout(); setIsMenuOpen(false);}} className="cursor-pointer text-sm">Logout</p>
                 </div>
+                )}
             </div>
         </div>
     
