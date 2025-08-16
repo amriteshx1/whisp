@@ -103,49 +103,52 @@ export default function FriendPage() {
       return;
     }
 
-    try {
-      await axios.post(
-        "/api/friends/request",
-        { to: userIdOrCode }
-      );
-      
-      setOutgoingIds((prev) => {
-        const n = new Set(prev);
-        n.add(userIdOrCode);
-        return n;
-      });
-
-      toast.success("Friend request sent!");
-    } catch (err: any) {
-      console.error("Error sending friend request:", err);
-      toast(err.response?.data?.message || "Failed to send friend request.");
-    }
+    toast.promise(
+      axios.post("/api/friends/request", { to: userIdOrCode }),
+      {
+        loading: 'Sending friend request...',
+        success: () => {
+          setOutgoingIds((prev) => {
+            const n = new Set(prev);
+            n.add(userIdOrCode);
+            return n;
+          });
+          return "Friend request sent!";
+        },
+        error: (err: any) => err.response?.data?.message || "Failed to send friend request.",
+      }
+    );
   };
 
   // accept friend request
   const handleAcceptRequest = async (requestId: string) => {
-    try {
-      await axios.post("/api/friends/respond", { requestId, action: "accept" });
-      toast.success("Friend request accepted!");
-      
-      fetchPendingRequests();
-      fetchUsers();
-    } catch (err) {
-      toast.error("Error accepting request:");
-      console.log(err);
-    }
+    toast.promise(
+      axios.post("/api/friends/respond", { requestId, action: "accept" }),
+      {
+        loading: 'Accepting request...',
+        success: () => {
+          fetchPendingRequests();
+          fetchUsers();
+          return "Friend request accepted!";
+        },
+        error: "Error accepting request.",
+      }
+    );
   };
 
   // reject friend request
   const handleRejectRequest = async (requestId: string) => {
-    try {
-      await axios.post("/api/friends/respond", { requestId, action: "reject" });
-      toast.success("Friend request rejected.");
-      fetchPendingRequests();
-    } catch (err) {
-      toast.error("Error rejecting request:");
-      console.log(err);
-    }
+    toast.promise(
+      axios.post("/api/friends/respond", { requestId, action: "reject" }),
+      {
+        loading: 'Rejecting request...',
+        success: () => {
+          fetchPendingRequests();
+          return "Friend request rejected.";
+        },
+        error: "Error rejecting request.",
+      }
+    );
   };
 
   return (
@@ -181,13 +184,13 @@ export default function FriendPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleAcceptRequest(req._id)}
-                    className="px-2 py-1 rounded-xl cursor-pointer"
+                    className="px-2 py-1 rounded-xl cursor-pointer hover:bg-neutral-800"
                   >
                     <img src={assets.tick} alt="accept" className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => handleRejectRequest(req._id)}
-                    className="px-2 py-1 rounded-xl cursor-pointer"
+                    className="px-2 py-1 rounded-xl cursor-pointer hover:bg-neutral-800"
                   >
                     <img src={assets.cross} alt="reject" className="h-6 w-6" />
                   </button>
@@ -247,7 +250,7 @@ export default function FriendPage() {
                   className={`px-2 py-1 rounded-xl transition ${
                     alreadySent
                       ? " cursor-not-allowed bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 opacity-50"
-                      : " cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700"
+                      : " cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 hover:bg-neutral-700"
                   }`}
                 >
                   {alreadySent ? <img src={assets.sentFriend} alt="request sent" className="h-6 w-6" /> : <img src={assets.addFriend} alt="add friend" className="h-6 w-6" />}
@@ -257,7 +260,7 @@ export default function FriendPage() {
           })}
         </div>
       ) : (
-        <p>No users found.</p>
+        <p className="text-center text-white/80">No users found.</p>
       )}
     </div>
   );
