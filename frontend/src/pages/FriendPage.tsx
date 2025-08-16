@@ -21,6 +21,7 @@ export default function FriendPage() {
   const [outgoingIds, setOutgoingIds] = useState<Set<string>>(new Set());
   const [searchCode, setSearchCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingPendingRequests, setLoadingPendingRequests] = useState(false);
   const [requestProcessing, setRequestProcessing] = useState<{
     send: boolean;
     accept: Record<string, boolean>;
@@ -47,6 +48,7 @@ export default function FriendPage() {
   // fetch incoming + outgoing pending requests
   const fetchPendingRequests = async () => {
     try {
+      setLoadingPendingRequests(true);
       const res = await axios.get("/api/friends/requests");
       const data = res.data || {};
       
@@ -68,6 +70,8 @@ export default function FriendPage() {
     } catch (err) {
       toast.error("error fetching pending requests:");
       console.log(err);
+    }finally {
+      setLoadingPendingRequests(false); 
     }
   };
 
@@ -220,7 +224,13 @@ export default function FriendPage() {
       {/* pending (incoming) requests */}
       <div className="mb-[10vh] flex flex-col justify-start items-center">
         <h2 className="text-xl font-medium mt-5 mb-2">Pending Requests</h2>
-        {pendingRequests.length > 0 ? (
+
+        {loadingPendingRequests ? (
+          <div className="flex w-full justify-center items-center mt-[5vh]">
+            <div className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+          </div>
+        ) :
+        pendingRequests.length > 0 ? (
           <div className="space-y-3 flex flex-col justify-start items-center w-full">
             {pendingRequests.map((req) => (
               <div
@@ -283,7 +293,9 @@ export default function FriendPage() {
 
       {/* users list */}
       {loading ? (
-        <p className="text-center text-white/80">Loading...</p>
+        <div className="flex w-full justify-center items-center mt-[10vh]">
+          <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+        </div>
       ) : users.length > 0 ? (
         <div className="space-y-3 flex flex-col justify-start items-center">
           {users.map((u) => {
@@ -321,7 +333,7 @@ export default function FriendPage() {
           })}
         </div>
       ) : (
-        <p className="text-center text-white/80">No users found.</p>
+        <p className="text-center text-sm text-white/80 mt-[10vh]">No users found</p>
       )}
     </div>
   );
