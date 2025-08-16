@@ -88,7 +88,7 @@ export const login = async (req: Request, res: Response) => {
         const isPasswordCorrect = await bcrypt.compare(password, userData.password);
 
         if(!isPasswordCorrect){
-            res.status(401).json({ success: false, message: "Invalid credentials!" });
+            res.status(401).json({ success: false, message: "Invalid email or password" });
             return;
         }
 
@@ -111,7 +111,7 @@ export const checkAuth = (req: AuthRequest, res: Response) => {
   res.json({ success: true, user: req.user });
 };
 
-// Controller to update user profile details
+// controller to update user profile details
 export const updateProfile = async (req: AuthRequest, res: Response) => {
   try {
     const { profilePic, bio, fullName } = req.body;

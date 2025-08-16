@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 toast.error(data.message);
             }
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error(error.response?.data?.message || "Login failed. Please try again later.");
         }
     }
 
