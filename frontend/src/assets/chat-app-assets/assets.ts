@@ -21,6 +21,7 @@ import seen from './seen.png';
 import google from './google.png';
 import bot from './bot.png';
 import verified from './verified.png';
+import pin from './pin.png';
 
 const assets: Record<string, string> = {
   avatar_icon,
@@ -45,7 +46,8 @@ const assets: Record<string, string> = {
   seen,
   google,
   bot,
-  verified
+  verified,
+  pin
 };
 
 export default assets;
