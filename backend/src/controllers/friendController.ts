@@ -16,7 +16,7 @@ export const sendFriendRequest = async (req: AuthRequest, res: Response) => {
 
     //can't send to self
     if (to === String(senderId)) {
-      res.status(400).json({ message: "can't send a request to yourself" });
+      res.status(400).json({ message: "Can't send a request to yourself" });
       return;
     }
 
@@ -29,13 +29,13 @@ export const sendFriendRequest = async (req: AuthRequest, res: Response) => {
     }
 
     if (!targetUser) {
-      res.status(404).json({ message: "user not found" });
+      res.status(404).json({ message: "User not found" });
       return;
     }
 
     //check if already friends
     if (targetUser.friends.includes(senderId)) {
-      res.status(400).json({ message: "user is already your friend" });
+      res.status(400).json({ message: "User is already your friend" });
       return;
     }
 
@@ -48,7 +48,7 @@ export const sendFriendRequest = async (req: AuthRequest, res: Response) => {
     });
 
     if (existingRequest) {
-      res.status(400).json({ message: "friend request already pending" });
+      res.status(400).json({ message: "Friend request already pending" });
       return;
     }
 
@@ -60,7 +60,7 @@ export const sendFriendRequest = async (req: AuthRequest, res: Response) => {
     });
     await newRequest.save();
 
-    res.status(201).json({ message: "friend request sent successfully" });
+    res.status(201).json({ message: "Friend request sent successfully" });
   } catch (error) {
     console.error("Error sending friend request:", error);
     res.status(500).json({ message: "Server error" });
@@ -105,21 +105,21 @@ export const respondToFriendRequest = async (req: AuthRequest, res: Response) =>
       friendRequest.status = "accepted";
       await friendRequest.save();
 
-      res.json({ message: "friend request accepted" });
+      res.json({ message: "Friend request accepted" });
       return;
     }
 
     if (action === "reject") {
       friendRequest.status = "rejected";
       await friendRequest.save();
-      res.json({ message: "friend request rejected" });
+      res.json({ message: "Friend request rejected" });
       return;
     }
 
     res.status(400).json({ message: "invalid action" });
     return;
   } catch (error) {
-    console.error("error responding to friend request:", error);
+    console.error("Error responding to friend request:", error);
     res.status(500).json({ message: "server error" });
   }
 };
@@ -143,7 +143,7 @@ export const getPendingFriendRequests = async (req: AuthRequest, res: Response) 
 
     res.json({ incoming, outgoing });
   } catch (error) {
-    console.error("error fetching pending requests:", error);
+    console.error("Error fetching pending requests:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -158,7 +158,7 @@ export const deleteFriend = async (req: AuthRequest, res: Response) => {
     //check if target user exists
     const targetUser = await User.findById(friendId);
     if (!targetUser) {
-      res.status(404).json({ message: "friend not found" });
+      res.status(404).json({ message: "Friend not found" });
       return;
     }
 
@@ -171,7 +171,7 @@ export const deleteFriend = async (req: AuthRequest, res: Response) => {
       $pull: { friends: userId }
     });
 
-    res.json({ message: "friend removed successfully" });
+    res.json({ message: "Friend removed successfully" });
   } catch (error) {
     console.error("Error deleting friend:", error);
     res.status(500).json({ message: "Server error" });
@@ -187,7 +187,7 @@ export const getFriendsList = async (req: AuthRequest, res: Response) => {
       .populate("friends", "fullName profilePic friendCode");
 
     if (!user) {
-      res.status(404).json({ message: "user not found" });
+      res.status(404).json({ message: "User not found" });
       return;
     }
 
@@ -204,7 +204,7 @@ export const searchByFriendCode = async (req: Request, res: Response) => {
     const { code } = req.body;
 
     if (!code || typeof code !== "string") {
-      res.status(400).json({ message: "friend code is required" });
+      res.status(400).json({ message: "Friend code is required" });
       return;
     }
 
@@ -213,7 +213,7 @@ export const searchByFriendCode = async (req: Request, res: Response) => {
     );
 
     if (!user) {
-      res.status(404).json({ message: "no user found with this code" });
+      res.status(404).json({ message: "No user found with this code" });
       return;
     }
 
