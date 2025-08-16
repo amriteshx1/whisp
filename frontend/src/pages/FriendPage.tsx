@@ -21,6 +21,15 @@ export default function FriendPage() {
   const [outgoingIds, setOutgoingIds] = useState<Set<string>>(new Set());
   const [searchCode, setSearchCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [requestProcessing, setRequestProcessing] = useState<{
+    send: boolean;
+    accept: Record<string, boolean>;
+    reject: Record<string, boolean>;
+  }>({
+    send: false,
+    accept: {},
+    reject: {},
+  });
 
   const fetchUsers = async () => {
     try {
@@ -98,10 +107,12 @@ export default function FriendPage() {
   // Send friend request
   const handleSendRequest = async (userIdOrCode: string) => {
   
-    if (outgoingIds.has(userIdOrCode)) {
+    if (outgoingIds.has(userIdOrCode)|| requestProcessing.send) {
       toast("Friend request already sent.");
       return;
     }
+
+    setRequestProcessing((prev) => ({ ...prev, send: true }));
 
     toast.promise(
       axios.post("/api/friends/request", { to: userIdOrCode }),
@@ -113,15 +124,30 @@ export default function FriendPage() {
             n.add(userIdOrCode);
             return n;
           });
+          setRequestProcessing((prev) => ({ ...prev, send: false }));
           return "Friend request sent!";
         },
-        error: (err: any) => err.response?.data?.message || "Failed to send friend request.",
+        error: (err: any) => {
+          setRequestProcessing((prev) => ({ ...prev, send: false }));
+          return (
+            err.response?.data?.message || "Failed to send friend request."
+          );
+        },
       }
     );
   };
 
   // accept friend request
   const handleAcceptRequest = async (requestId: string) => {
+    if (requestProcessing.accept[requestId]) {
+      return;
+    }
+
+    setRequestProcessing((prev) => ({
+      ...prev,
+      accept: { ...prev.accept, [requestId]: true },
+    }));
+
     toast.promise(
       axios.post("/api/friends/respond", { requestId, action: "accept" }),
       {
@@ -129,24 +155,57 @@ export default function FriendPage() {
         success: () => {
           fetchPendingRequests();
           fetchUsers();
+          setRequestProcessing((prev) => {
+            const newAccept = { ...prev.accept };
+            delete newAccept[requestId];
+            return { ...prev, accept: newAccept };
+          });
           return "Friend request accepted!";
         },
-        error: "Error accepting request.",
+        error: () => {
+          setRequestProcessing((prev) => {
+            const newAccept = { ...prev.accept };
+            delete newAccept[requestId];
+            return { ...prev, accept: newAccept };
+          });
+          return "Error accepting request.";
+        },
       }
     );
   };
 
   // reject friend request
   const handleRejectRequest = async (requestId: string) => {
+    if (requestProcessing.reject[requestId]) {
+      return;
+    }
+
+    setRequestProcessing((prev) => ({
+      ...prev,
+      reject: { ...prev.reject, [requestId]: true },
+    }));
+
     toast.promise(
       axios.post("/api/friends/respond", { requestId, action: "reject" }),
       {
         loading: 'Rejecting request...',
         success: () => {
           fetchPendingRequests();
+          setRequestProcessing((prev) => {
+            const newReject = { ...prev.reject };
+            delete newReject[requestId];
+            return { ...prev, reject: newReject };
+          });
           return "Friend request rejected.";
         },
-        error: "Error rejecting request.",
+        error: () => {
+          setRequestProcessing((prev) => {
+            const newReject = { ...prev.reject };
+            delete newReject[requestId];
+            return { ...prev, reject: newReject };
+          });
+          return "Error rejecting request.";
+        },
       }
     );
   };
@@ -184,13 +243,15 @@ export default function FriendPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleAcceptRequest(req._id)}
-                    className="px-2 py-1 rounded-xl cursor-pointer hover:bg-neutral-800"
+                    disabled={requestProcessing.accept[req._id] || requestProcessing.reject[req._id]}
+                    className="px-2 py-1 rounded-xl cursor-pointer hover:bg-neutral-800 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     <img src={assets.tick} alt="accept" className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => handleRejectRequest(req._id)}
-                    className="px-2 py-1 rounded-xl cursor-pointer hover:bg-neutral-800"
+                    disabled={requestProcessing.accept[req._id] || requestProcessing.reject[req._id]}
+                    className="px-2 py-1 rounded-xl cursor-pointer hover:bg-neutral-800 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     <img src={assets.cross} alt="reject" className="h-6 w-6" />
                   </button>
@@ -246,14 +307,14 @@ export default function FriendPage() {
 
                 <button
                   onClick={() => handleSendRequest(u._id)}
-                  disabled={alreadySent}
+                  disabled={alreadySent || requestProcessing.send}
                   className={`px-2 py-1 rounded-xl transition ${
-                    alreadySent
+                    alreadySent || requestProcessing.send
                       ? " cursor-not-allowed bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 opacity-50"
                       : " cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 hover:bg-neutral-700"
                   }`}
                 >
-                  {alreadySent ? <img src={assets.sentFriend} alt="request sent" className="h-6 w-6" /> : <img src={assets.addFriend} alt="add friend" className="h-6 w-6" />}
+                  {alreadySent || requestProcessing.send ? <img src={assets.sentFriend} alt="request sent" className="h-6 w-6" /> : <img src={assets.addFriend} alt="add friend" className="h-6 w-6" />}
                 </button>
               </div>
             );
