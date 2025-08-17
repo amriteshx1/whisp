@@ -1,5 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import FeatureMarquee from "../components/Marquee";
 import landing from "../assets/landing.jpg";
 import instagram from "../assets/instagram.png";
@@ -43,10 +44,26 @@ const LandingPage = () => {
                 <p>✔ End-to-End Encryption</p>
                 <p>✔ Crystal-Clear Calls</p>
               </div>
-                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent ">Conversations That Feel Close</p>
-                <p className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent ">Even From Afar</p>
-                <p className="text-[1.5vw] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent ">Stay connected — softly, silently, seamlessly.</p>
-                <button onClick={handleClick} className="text-[1.2vw] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-white/75 mt-[2.5vh] hover:text-white/90 ">Step into Whisp</button>
+                <motion.p 
+                  initial={{ y: 15, opacity: 0, scale: 0.9 }}
+                  animate={{ y: 0, opacity: 1, scale: 1 }}    
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Conversations That Feel Close</motion.p>
+                <motion.p 
+                  initial={{ y: 15, opacity: 0, scale: 0.9 }}
+                  animate={{ y: 0, opacity: 1, scale: 1 }}    
+                  transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+                  className="text-[4.5vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Even From Afar</motion.p>
+                <motion.p 
+                  initial={{ y: 15, opacity: 0, scale: 0.9 }}
+                  animate={{ y: 0, opacity: 1, scale: 1 }}    
+                  transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
+                  className="text-[1.5vw] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Stay connected — softly, silently, seamlessly.</motion.p>
+                <motion.button 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}    
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                  onClick={handleClick} className="text-[1.2vw] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 px-[2.5vh] py-[1vh] rounded-3xl cursor-pointer text-white/75 mt-5 hover:text-white/90 ">Step into Whisp</motion.button>
             </div>
 
             <div className="flex justify-center items-center w-screen  relative">
