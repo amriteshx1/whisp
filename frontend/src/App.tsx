@@ -1,6 +1,5 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
-import ObserverProvider from "./components/ObserverProvider";
 import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -15,7 +14,7 @@ const App = () => {
   const { authUser } = useContext(AuthContext);
 
   return (
-    <ObserverProvider>
+    <>
       <Toaster />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -24,7 +23,7 @@ const App = () => {
           <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to={"/"} />} />
           <Route path="/friends" element={authUser ? <FriendPage /> : <Navigate to={"/"} />} />
         </Routes>
-    </ObserverProvider>
+    </>
   );
 };
 
