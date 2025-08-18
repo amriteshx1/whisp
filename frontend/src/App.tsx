@@ -11,7 +11,11 @@ import { AuthContext } from "../context/AuthContext";
 
 const App = () => {
 
-  const { authUser } = useContext(AuthContext);
+  const { authUser, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <div className="h-screen w-screen bg-[radial-gradient(ellipse_at_bottom_left,#022c22,#000000,#000000)] bg-cover flex justify-center items-center"><p className="text-2xl text-neutral-700 animate-pulse">Taking u there in a moment, don't forget to take a breather!</p></div>;
+  }
 
   return (
     <>

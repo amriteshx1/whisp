@@ -33,6 +33,7 @@ interface AuthContextType {
   login: (state: string, credentials: Credentials) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (body: Partial<AuthUser> & { profilePic?: string }) => Promise<void>;
+  loading: boolean;
 }
 
 interface AuthProviderProps {
@@ -48,6 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [authUser, setAuthUser] = useState<AuthUser | null>(null);
     const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     //check user authentication and set user data & connect the socket
     const checkAuth = async () => {
@@ -59,6 +61,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             }
         } catch (error: any) {
             toast.error(error.message);
+        }finally {
+            setLoading(false);
         }
     }
 
@@ -145,6 +149,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           checkAuth();
         }
 
+        setLoading(true);
     }, [])
 
 
@@ -155,6 +160,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         onlineUsers,
         login,
         logout,
+        loading,
         updateProfile
     }
 
