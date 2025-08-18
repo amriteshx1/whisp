@@ -217,7 +217,7 @@ const startVideoCall = () => startCall(true);
         <img src={selectedUser.profilePic || assets.avatar_icon} alt="profile-pic" className="w-8 rounded-full"/>
         <p className="flex-1 text-lg font-medium text-white/80 flex items-center gap-2">
           {selectedUser.fullName}
-          {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-500"></span>}
+          {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-600"></span>}
           {peerTyping && <span className="text-xs text-neutral-400 animate-pulse">(typing…)</span>}
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="back-arrow" className="md:hidden max-w-7" />
@@ -230,7 +230,7 @@ const startVideoCall = () => startCall(true);
 
       {/* main chat arena */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
-        <p className="text-xs text-center text-neutral-500 flex justify-center items-center gap-1 mb-[2vh] mt-[1vh]"><img src={assets.lock} alt="locked" className="w-3 h-3" /> End-to-end encrypted</p>
+        <p className="text-xs font-medium text-center text-neutral-500 flex justify-center items-center gap-1 mb-[2vh] mt-[1vh]"><img src={assets.lock} alt="locked" className="w-3 h-3" /> End-to-end encrypted</p>
         {loadingMsgs ? (
           <div className="flex justify-center items-center h-full">
             <div className="w-7 h-7 border-3 border-gray-400 border-t-white rounded-full animate-spin"></div>
