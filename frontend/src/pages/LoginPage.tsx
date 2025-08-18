@@ -37,14 +37,14 @@ const LoginPage = () => {
             <motion.div 
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }} 
-              className="h-full bg-cover bg-center flex items-center justify-around max-sm:flex-col">
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }} 
+              className="h-full bg-cover bg-center flex lg:flex-row flex-col items-center lg:justify-around justify-center lg:gap-0 gap-[10vh]">
                 {/* left-half */}
-                <img src={appLogo} alt="whisp-logo" className="h-[70vh]" />
+                <img src={appLogo} alt="whisp-logo" className="lg:h-[70vh] h-[30vh]" />
         
                 {/* right-half */}
-                <form onSubmit={onSubmitHandler} className="border-t-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-4 rounded-4xl">
-                    <h2 className="font-medium text-3xl flex justify-between items-center">
+                <form onSubmit={onSubmitHandler} className="lg:border-t-2 lg:border-r-0 lg:border-b-0 border-b-2 border-r-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-4 lg:rounded-4xl rounded-2xl">
+                    <h2 className="font-medium lg:text-3xl text-2xl flex justify-between items-center">
                         {currentState}
                         {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="back-arrow" 
                         className="w-5 cursor-pointer" />}
