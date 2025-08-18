@@ -149,7 +149,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           checkAuth();
         }
 
-        setLoading(true);
+        setLoading(false);
     }, [])
 
 

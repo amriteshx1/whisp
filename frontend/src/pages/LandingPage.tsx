@@ -18,10 +18,7 @@ const LandingPage = () => {
 
   return (
       
-<div className="min-h-screen w-full relative overflow-auto bg-black">
-    <div
-      className="absolute inset-0 z-0"
-    >
+<div className="h-screen w-full relative overflow-auto bg-black">
         <div className="flex justify-between items-center text-neutral-500 py-[1.5vh] px-[3vh] mx-[15vh] rounded-[100px] border-b-2 border-b-neutral-800">
             <div className='w-[40%] flex justify-start items-center'>
                 <p className='text-[1.6vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent'>Whisp.</p>
@@ -94,10 +91,7 @@ const LandingPage = () => {
 
             </div>
 
-            <div className="min-h-screen w-full relative bg-black">
-              <div
-                className="absolute inset-0 z-0 h-screen w-full flex flex-col"
-              >
+            <div className="h-screen w-full overflow-auto relative bg-black">
               
               <div className="flex flex-col justify-center items-center mt-[10vh] w-full">
                 <h2 className="text-[3vw] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Let your conversations begin.</h2>
@@ -145,16 +139,10 @@ const LandingPage = () => {
                 </div>
 
               </div>
-
-              </div>
             </div>
 
-
-        </div>
-        
         </div>
       </div>
-
   )
 }
 
