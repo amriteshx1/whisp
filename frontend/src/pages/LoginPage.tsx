@@ -1,5 +1,6 @@
 
 import { useContext, useState } from "react";
+import { motion } from "framer-motion";
 import appLogo from "../assets/appLogo.jpg";
 import assets from "../assets/chat-app-assets/assets";
 import { AuthContext } from "../../context/AuthContext";
@@ -32,11 +33,12 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full relative bg-black overflow-auto">
-        <div
-          className="absolute inset-0 z-0 h-full w-full py-[5vh]"
-        >
-            <div className="h-full bg-cover bg-center flex items-center justify-center gap-32 sm:justify-evenly max-sm:flex-col">
+    <div className="h-screen w-full relative bg-black overflow-auto">
+            <motion.div 
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }} 
+              className="h-full bg-cover bg-center flex items-center justify-around max-sm:flex-col">
                 {/* left-half */}
                 <img src={appLogo} alt="whisp-logo" className="h-[70vh]" />
         
@@ -108,9 +110,7 @@ const LoginPage = () => {
 
                 </form>
       
-            </div>
-
-        </div>
+            </motion.div>
     </div>
   )
 }

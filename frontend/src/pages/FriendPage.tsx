@@ -215,7 +215,7 @@ export default function FriendPage() {
   };
 
   return (
-    <div className="p-4 bg-black h-screen overflow-auto text-white/80">
+    <div className="p-4 bg-[radial-gradient(ellipse_at_bottom_left,#022c22,#000000,#000000)] bg-cover h-screen overflow-auto text-white/80">
       <div className="flex flex-col justify-center items-center mt-[1vh] mb-[5vh] gap-2 p-2">
         <h1 className="text-3xl text-center font-semibold text-white/80">Friends</h1>
         <hr className="border-2 border-white/80 w-[15%]" />

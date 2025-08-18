@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import assets from "../assets/chat-app-assets/assets";
 import appLogo from "../assets/appLogo.jpg";
 import { AuthContext } from "../../context/AuthContext";
@@ -45,11 +46,12 @@ const ProfilePage = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-black relative overflow-auto">
-        <div
-          className="absolute inset-0 z-0 h-full w-full px-[5vh] py-[5vh]"
-        >
-            <div className="h-full bg-cover bg-no-repeat flex items-center justify-center">
+    <div className="h-screen w-full bg-[radial-gradient(ellipse_at_bottom_left,#022c22,#000000,#000000)] bg-cover relative overflow-auto px-[5vh] py-[5vh]">
+            <motion.div 
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }} 
+              className="h-full flex items-center justify-center">
                 <div className="w-5/6 max-w-2xl text-white/85 border-t-2 border-l-2 border-neutral-800  flex items-center justify-between max-sm:flex-col-reverse rounded-4xl">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-10 flex-1">
                         <h3 className="text-2xl font-medium">Profile details</h3>
@@ -78,9 +80,7 @@ const ProfilePage = () => {
                     </form>
                     <img src={authUser?.profilePic || appLogo} alt="user-profilePic" className={`max-w-48 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} />
                 </div>
-            </div>
-
-        </div>
+            </motion.div>
     </div>
   )
 }

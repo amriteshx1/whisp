@@ -1,5 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import applogo from "../assets/appLogo.jpg";
 import menuIcon from "../assets/menuIcon.png";
 import searchIcon from "../assets/searchIcon.png";
@@ -179,7 +180,11 @@ const Sidebar = () => {
       {/* BOT OVERLAY */}
       {botOpen && (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/60 backdrop-blur-sm">
-          <div className="bg-neutral-900 rounded-xl p-5 w-[90%] max-w-2xl h-[70vh] flex flex-col" ref={botRef}>
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }} 
+            className="bg-neutral-900 rounded-xl p-5 w-[90%] max-w-2xl h-[70vh] flex flex-col" ref={botRef}>
             <div className="flex justify-between items-center border-b border-neutral-700 pb-2">
               <h2 className="text-lg font-semibold text-sky-200 flex gap-2 items-center"><img src={assets.bot} alt="chat bot" className="w-[40px] aspect-[1/1] p-1 rounded-full" />Whisp Bot<img src={assets.verified} alt="whisp bot" className="h-4 w-4" /></h2>
               <button onClick={() => setBotOpen(false)} className="text-neutral-400 hover:text-white cursor-pointer">
@@ -222,7 +227,7 @@ const Sidebar = () => {
                 ) : ( "Send" )}
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>
