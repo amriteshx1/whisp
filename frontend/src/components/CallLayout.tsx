@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useCall } from "../../context/CallContext";
 import toast from "react-hot-toast";
 import assets from "../assets/chat-app-assets/assets";
 import videoCall from "../assets/videoCall.png";
+import { ChatContext } from "../../context/ChatContext";
 
 const CallLayout: React.FC = () => {
   const {
@@ -15,6 +16,7 @@ const CallLayout: React.FC = () => {
     endCall,
   } = useCall();
 
+  const {selectedUser} = useContext(ChatContext);
 
   const [muted, setMuted] = useState(false);
   const [cameraOff, setCameraOff] = useState(false);
@@ -136,41 +138,43 @@ if (callActive) {
       <div className="absolute inset-0 bg-black/60" />
 
       {/* centered call window */}
-      <div className="relative z-60 w-[640px] max-w-[90%] bg-neutral-900/95 rounded-xl shadow-lg p-4 flex flex-col items-center">
+      <div className="relative z-50 w-[50vw] max-w-[90%] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-xl shadow-lg p-4 flex flex-col items-center">
+        <p className="text-2xl font-medium text-neutral-200 mb-1">{selectedUser?.fullName}</p>
         {/* Top area: ringing or status */}
         <div className="w-full mb-3 text-center">
           {!remoteStream ? (
-            <div className="text-md font-medium text-neutral-300">Ringing…</div>
+            <div className="text-sm font-medium text-neutral-300 animate-pulse">Ringing…</div>
           ) : (
-            <div className="text-md font-medium text-neutral-300">{formatTime(callDuration)}</div>
+            <div className="text-sm font-medium text-neutral-300 animate-pulse">{formatTime(callDuration)}</div>
           )}
         </div>
 
         {/* video area */}
-        <div className="w-full flex gap-3">
+        <div className="w-full h-[40vh] flex gap-3">
           <div className="flex-1 bg-black rounded-lg overflow-hidden flex items-center justify-center">
             {/* Remote video - main */}
             <video
               ref={(el) => { if (el) el.srcObject = remoteStream;}}
               autoPlay
               playsInline
-              className="w-full h-64 object-cover bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700"
+              className="w-full h-full object-cover bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700"
             />
             {/* If remote not available, show placeholder */}
             {!remoteStream && (
-              <div className="absolute text-gray-400">Waiting for other user...</div>
+              <div className="absolute text-neutral-400"><img src={selectedUser?.profilePic} alt="" className="w-[80px] aspect-[1/1] rounded-full p-1 animate-pulse" /></div>
             )}
           </div>
 
           {/* local preview */}
-          <div className="w-40 h-32 bg-black rounded-lg overflow-hidden relative">
+          <div className="w-[30%] h-[60%] overflow-hidden relative">
             <video
               ref={(el) => { if (el) el.srcObject = localStream;}}
               autoPlay
               muted
               playsInline
-              className="w-full h-full object-cover bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-700"
+              className="w-full h-[85%] object-cover bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-700 rounded-lg"
             />
+            <p className="text-sm font-medium text-neutral-400 text-center mt-[1vh]">You</p>
             {!localStream && (
               <div className="absolute inset-0 flex items-center justify-center text-gray-400">
                 No camera
