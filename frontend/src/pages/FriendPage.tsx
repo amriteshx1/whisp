@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import assets from "../assets/chat-app-assets/assets";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   _id: string;
@@ -17,6 +18,7 @@ interface FriendRequest {
 
 export default function FriendPage() {
   const [users, setUsers] = useState<User[]>([]);
+  const navigate = useNavigate();
   const [pendingRequests, setPendingRequests] = useState<FriendRequest[]>([]);
   const [outgoingIds, setOutgoingIds] = useState<Set<string>>(new Set());
   const [searchCode, setSearchCode] = useState("");
@@ -217,13 +219,14 @@ export default function FriendPage() {
   return (
     <div className="p-4 bg-[radial-gradient(ellipse_at_bottom_left,#022c22,#000000,#000000)] bg-cover h-screen overflow-auto text-white/80">
       <div className="flex flex-col justify-center items-center mt-[1vh] mb-[5vh] gap-2 p-2">
-        <h1 className="text-3xl text-center font-semibold text-white/80">Friends</h1>
-        <hr className="border-2 border-white/80 w-[15%]" />
+        <img onClick={() => {navigate("/home")} } src={assets.arrow} alt="back-arrow" className="lg:hidden self-start w-6 h-6 ml-[1vh]" />
+        <h1 className="lg:text-3xl text-2xl text-center font-semibold text-white/80">Friends</h1>
+        <hr className="border-2 border-white/80 lg:w-[15%] w-[20%]" />
       </div>
 
       {/* pending (incoming) requests */}
       <div className="mb-[10vh] flex flex-col justify-start items-center">
-        <h2 className="text-xl font-medium mt-5 mb-2">Pending Requests</h2>
+        <h2 className="lg:text-xl text-lg font-medium mt-5 mb-2">Pending Requests</h2>
 
         {loadingPendingRequests ? (
           <div className="flex w-full justify-center items-center mt-[5vh]">
@@ -235,7 +238,7 @@ export default function FriendPage() {
             {pendingRequests.map((req) => (
               <div
                 key={req._id}
-                className="w-[30%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
+                className="lg:w-[30%] w-[50%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -270,7 +273,7 @@ export default function FriendPage() {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-neutral-500">No pending requests</p>
+          <p className="lg:text-sm text-xs text-neutral-500">No pending requests</p>
         )}
       </div>
 
@@ -281,7 +284,7 @@ export default function FriendPage() {
           placeholder="Enter friend code..."
           value={searchCode}
           onChange={(e) => setSearchCode(e.target.value)}
-          className="w-[35%] p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"
+          className="lg:w-[35%] w-[50%] p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"
         />
         <button
           type="submit"
@@ -303,7 +306,7 @@ export default function FriendPage() {
             return (
               <div
                 key={u._id}
-                className="w-[50%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
+                className="lg:w-[50%] w-[80%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
               >
                 <div className="flex items-center gap-3">
                   <img
