@@ -102,10 +102,10 @@ const Sidebar = () => {
     };
 
   return (
-    <div className={`h-full p-5 rounded-r-xl overflow-y-auto text-white/80 ${selectedUser ? "max-md:hidden" : ''}`}>
+    <div className={`h-full p-5 rounded-r-xl overflow-y-auto text-white/80 ${selectedUser ? "max-lg:hidden" : ''}`}>
       <div className="pb-5">
         <div className="flex justify-between items-center pl-[1vh]">
-            <img src={applogo} alt="whispLogo" className="h-[5vh]" />
+            <img src={applogo} alt="whispLogo" className="lg:h-[5vh] h-[4vh]" />
             <div className="relative py-2" ref={menuRef}>
                 <img src={menuIcon} alt="menu" className="max-h-6 cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)} />
                 {isMenuOpen && (
@@ -121,7 +121,7 @@ const Sidebar = () => {
         </div>
     
         <div className="bg-neutral-900 rounded-full flex items-center gap-2 py-3 px-4 mt-5">
-            <img src={searchIcon} alt="search" className="h-[2.2vh]" />
+            <img src={searchIcon} alt="search" className="lg:h-[2.2vh] h-[1.2vh]" />
             <input onChange={(e)=>setInput(e.target.value)} type="text" className="bg-transparent border-none outline-none text-white/80 text-xs flex-1 placeholder-neutral-500" placeholder="Search User..." />
         </div>
 

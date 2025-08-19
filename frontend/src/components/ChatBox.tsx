@@ -13,7 +13,7 @@ import videoCall from "../assets/videoCall.png";
 
 const ChatBox = () => {
 
-  const { messages, selectedUser, setSelectedUser, sendMsg, getMsgs }  = useContext(ChatContext);
+  const { messages, selectedUser, showUserBox, setSelectedUser, setShowUserBox, sendMsg, getMsgs }  = useContext(ChatContext);
   const { authUser, onlineUsers } = useContext(AuthContext);
 
   const scrollEnd = useRef<HTMLDivElement | null>(null);
@@ -209,11 +209,12 @@ const startVideoCall = () => startCall(true);
 
   
 
-  return selectedUser ? (
+  return selectedUser && !showUserBox ? (
     <div className="h-full overflow-scroll relative">
 
       {/* upper navbar type stuff */}
       <div className="flex items-center gap-3 py-3 mx-4 border-b-2 border-b-neutral-900">
+        <img onClick={() => setSelectedUser(null)} src={assets.arrow} alt="back-arrow" className="lg:hidden w-5 h-5" />
         <img src={selectedUser.profilePic || assets.avatar_icon} alt="profile-pic" className="w-8 rounded-full"/>
         <p className="flex-1 text-lg font-medium text-white/80 flex items-center gap-2">
           {selectedUser.fullName}
@@ -224,7 +225,7 @@ const startVideoCall = () => startCall(true);
         <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
         <img onClick={startVideoCall} src={videoCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
         
-        <img src={assets.help_icon} alt="info" className="max-md:hidden max-w-6" />
+        <img onClick={() => setShowUserBox(prevShowUserBox => !prevShowUserBox)} src={assets.help_icon} alt="info" className="lg:hidden block max-w-6" />
 
       </div>
 
@@ -298,7 +299,7 @@ const startVideoCall = () => startCall(true);
       </div>
     </div>
   ) : (
-    <div className="flex flex-col items-center justify-center gap-5 text-gray-500 max-md:hidden">
+    <div className="lg:flex hidden flex-col items-center justify-center gap-5 text-gray-500 max-md:hidden">
       <img src={applogo} alt="whisp-logo"  className="h-[45vh]"/>
       <p className="text-lg font-medium text-neutral-500">Stay connected - softly, silently, seamlessly.</p>
     </div>

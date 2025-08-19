@@ -36,6 +36,8 @@ interface ChatContextType {
   setSelectedUser: (user: ChatUser | null) => void;
   unseenMessages: Record<string, number>;
   setUnseenMessages: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  showUserBox: boolean;
+  setShowUserBox: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface ChatProviderProps {
@@ -51,6 +53,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     const [friends, setFriends] = useState<ChatUser[]>([]);
     const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null);
     const [unseenMessages, setUnseenMessages] = useState<Record<string, number>>({});
+    const [showUserBox, setShowUserBox] = useState(false);
 
     const {socket, axios} = useContext(AuthContext);
 
@@ -195,7 +198,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     }, [socket, selectedUser]);
 
     const value = {
-        messages, users, friends, selectedUser, getUsers, getFriends, unfriend, getMsgs, sendMsg, talkToBot, setSelectedUser, unseenMessages, setUnseenMessages 
+        messages, users, friends, selectedUser, getUsers, getFriends, unfriend, getMsgs, sendMsg, talkToBot, setSelectedUser, unseenMessages, setUnseenMessages, showUserBox, setShowUserBox
     }
 
     return (

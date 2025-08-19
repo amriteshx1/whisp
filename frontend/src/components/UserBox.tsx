@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 const UserBox = () => {
 
-  const {selectedUser, messages, unfriend} = useContext(ChatContext);
+  const {selectedUser, messages, unfriend, showUserBox, setShowUserBox} = useContext(ChatContext);
   const {onlineUsers} = useContext(AuthContext);
   const [msgImages, setMsgImages] = useState<string[]>([]);
 
@@ -33,10 +33,11 @@ const UserBox = () => {
 
 
   return selectedUser && (
-    <div className={`text-white/80 w-full relative overflow-y-scroll ${selectedUser ? "max-md:hidden" : ""}`}>
+    <div className={`text-white/80 w-full relative p-3 overflow-y-scroll ${selectedUser && !showUserBox ? "max-lg:hidden" : ""}`}>
+      <p onClick={() => setShowUserBox(false)} className="lg:hidden text-xs flex justify-start items-center gap-2"><img src={assets.arrow} alt="back-arrow" className="w-6 h-6" />Back to chat</p>
 
       <div className="pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto">
-        <img src={selectedUser?.profilePic || assets.avatar_icon} alt="profile-pic" 
+        <img src={selectedUser?.profilePic || assets.avatar_icon} alt="profile-pic"  
         className="w-20 aspect-[1/1] rounded-full"/>
         <h1 className="px-10 text-xl font-medium mx-auto flex items-center gap-2">
           {selectedUser.fullName}
@@ -45,7 +46,7 @@ const UserBox = () => {
         <p className="px-10 mx-auto text-xs">{selectedUser.bio}</p>
       </div>
 
-      <hr className="w-[80%] mx-auto border border-neutral-900 my-4" />
+      <hr className="lg:w-[80%] w-full mx-auto border border-neutral-900 my-4" />
 
       <div className="px-5 text-xs">
         <p>Media</p>
