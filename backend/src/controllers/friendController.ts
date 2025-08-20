@@ -184,7 +184,7 @@ export const getFriendsList = async (req: AuthRequest, res: Response) => {
     const userId = req.user!._id;
 
     const user = await User.findById(userId)
-      .populate("friends", "fullName profilePic friendCode");
+      .populate("friends", "fullName profilePic bio friendCode");
 
     if (!user) {
       res.status(404).json({ message: "User not found" });
