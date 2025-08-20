@@ -22,6 +22,7 @@ import google from './google.png';
 import bot from './bot.png';
 import verified from './verified.png';
 import pin from './pin.png';
+import arrow from './arrow.png';
 
 const assets: Record<string, string> = {
   avatar_icon,
@@ -47,7 +48,8 @@ const assets: Record<string, string> = {
   google,
   bot,
   verified,
-  pin
+  pin,
+  arrow
 };
 
 export default assets;
