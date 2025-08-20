@@ -11,12 +11,13 @@ const CallLayout: React.FC = () => {
     remoteStream,
     callActive,
     incomingCall,
+    remoteUserId,
     acceptCall,
     rejectCall,
     endCall,
   } = useCall();
 
-  const {selectedUser} = useContext(ChatContext);
+  const {selectedUser, friends} = useContext(ChatContext);
 
   const [muted, setMuted] = useState(false);
   const [cameraOff, setCameraOff] = useState(false);
@@ -24,6 +25,10 @@ const CallLayout: React.FC = () => {
   const [callingSound, setCallingSound] = useState<HTMLAudioElement | null>(null);
   const [incomingSound, setIncomingSound] = useState<HTMLAudioElement | null>(null);
   const [callDuration, setCallDuration] = useState(0);
+
+  const getCaller = (id: string) => {
+    return friends.find(f => f._id === id) || null;
+  };
 
   useEffect(() => {
     const callerAudio = new Audio("/sounds/callerSide.mp3");
@@ -117,14 +122,18 @@ const CallLayout: React.FC = () => {
   };
 
   if (incomingCall && !callActive) {
+    const caller = getCaller(incomingCall.from);
+    const callType = incomingCall.isVideo ? "Video Call" : "Audio Call";
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-      <div className="bg-neutral-900 p-5 rounded-xl text-white flex flex-col gap-4 items-center">
-        <p className="text-lg font-semibold">Incoming Call</p>
-        <p className="text-sm text-gray-400">User {incomingCall.from} is calling…</p>
-        <div className="flex gap-4 mt-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <div className="lg:w-[30vw] w-[45vw] bg-black bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 p-5 rounded-xl text-white flex flex-col gap-3 items-center">
+        <p className="text-sm font-medium text-neutral-300 animate-pulse">Incoming {callType}</p>
+        <p className="text-2xl text-neutral-200 font-medium">{caller?.fullName || "Unknown"}</p>
+        <img src={caller?.profilePic || assets.avatar_icon} alt="caller-profile pic" className="h-24 w-24 rounded-full m-[5vh] animate-pulse" />
+        <div className="flex lg:gap-[10vh] gap-[5vh] mt-4">
           <button onClick={rejectCall} className="bg-gradient-to-tl from-neutral-950 via-red-500/50 to-red-600 px-4 py-2 rounded-full cursor-pointer hover:bg-red-950"><img src={assets.reject} alt="reject" className="h-5 w-5" /></button>
-          <button onClick={acceptCall} className="bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-500 px-4 py-2 rounded-full cursor-pointer hover:bg-green-950"><img src={assets.accept} alt="accept" className="h-5 w-5" /></button>
+          <button onClick={acceptCall} className="bg-gradient-to-tl from-neutral-950 via-green-400/20 to-green-500 px-4 py-2 rounded-full cursor-pointer hover:bg-green-950 animate-bounce"><img src={assets.accept} alt="accept" className="h-5 w-5" /></button>
         </div>
       </div>
     </div>
@@ -132,14 +141,15 @@ const CallLayout: React.FC = () => {
 }
 
 if (callActive) {
+  const activeUser = remoteUserId ? getCaller(remoteUserId.id) : selectedUser;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* intentionally did this to block interaction with the app */}
       <div className="absolute inset-0 bg-black/60" />
 
       {/* centered call window */}
-      <div className="relative z-50 w-[50vw] max-w-[90%] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-xl shadow-lg p-4 flex flex-col items-center">
-        <p className="text-2xl font-medium text-neutral-200 mb-1">{selectedUser?.fullName}</p>
+      <div className="relative z-50 lg:w-[50vw] w-[70vw] max-w-[90%] bg-black bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-xl shadow-lg p-4 flex flex-col items-center">
+        <p className="text-2xl font-medium text-neutral-200 mb-1">{activeUser?.fullName}</p>
         {/* Top area: ringing or status */}
         <div className="w-full mb-3 text-center">
           {!remoteStream ? (
@@ -161,7 +171,7 @@ if (callActive) {
             />
             {/* If remote not available, show placeholder */}
             {!remoteStream && (
-              <div className="absolute text-neutral-400"><img src={selectedUser?.profilePic} alt="" className="w-[80px] aspect-[1/1] rounded-full p-1 animate-pulse" /></div>
+              <div className="absolute text-neutral-400"><img src={activeUser?.profilePic || assets.avatar_icon} alt="" className="w-[80px] aspect-[1/1] rounded-full p-1 animate-pulse" /></div>
             )}
           </div>
 

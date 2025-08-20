@@ -11,6 +11,8 @@ interface CallContextType {
   setLocalStream: React.Dispatch<React.SetStateAction<MediaStream | null>>;
   setRemoteStream: React.Dispatch<React.SetStateAction<MediaStream | null>>;
   setCallActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setRemoteUserId: React.Dispatch<React.SetStateAction<{ id: string } | null>>;
+  remoteUserId: { id: string } | null;
   otherUserSocketId: RefObject<string | null>;
   endCall: () => void;
   incomingCall: null | { from: string; offer: any; isVideo: boolean };
@@ -43,6 +45,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
 
   const peerConnection = useRef<RTCPeerConnection | null>(null);
   const otherUserSocketId = useRef<string | null>(null);
+  const [remoteUserId, setRemoteUserId] = useState<{ id: string } | null>(null);
 
   const [incomingCall, setIncomingCall] = useState<null | { from: string; offer: any; isVideo: boolean }>(null);
 
@@ -72,6 +75,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     }
     setCallActive(false);
     setIncomingCall(null);
+    setRemoteUserId(null);
     otherUserSocketId.current = null;
   };
 
@@ -121,6 +125,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     const answer = await pc.createAnswer();
     await pc.setLocalDescription(answer);
 
+    setRemoteUserId({ id: incomingCall.from });
     setCallActive(true);
     setIncomingCall(null);
 
@@ -206,6 +211,8 @@ export const CallProvider = ({ children }: CallProviderProps) => {
         remoteStream,
         callActive,
         peerConnection,
+        remoteUserId,
+        setRemoteUserId,
         setLocalStream,
         setRemoteStream,
         setCallActive,
