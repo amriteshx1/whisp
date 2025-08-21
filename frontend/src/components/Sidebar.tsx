@@ -114,7 +114,7 @@ const Sidebar = () => {
                     <hr className="my-2 border-t border-white/80" />
                     <p onClick={() => {navigate('/profile'); setIsMenuOpen(false); }} className="cursor-pointer text-sm">Edit Profile</p>
                     <hr className="my-2 border-t border-white/80" />
-                    <p onClick={() => {logout(); setIsMenuOpen(false);}} className="cursor-pointer text-sm">Logout</p>
+                    <p onClick={() => window.confirm("Are you sure you want to logout?") && (logout(), setIsMenuOpen(false))} className="cursor-pointer text-sm">Logout</p>
                 </div>
                 )}
             </div>

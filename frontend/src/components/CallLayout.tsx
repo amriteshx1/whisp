@@ -78,7 +78,7 @@ const CallLayout: React.FC = () => {
       const timer = setTimeout(() => {
         toast("Call ended, the recipient didn't answer.");
         endCall();
-      }, 120000);
+      }, 20000);
   
       return () => clearTimeout(timer);
     }
