@@ -78,7 +78,7 @@ const CallLayout: React.FC = () => {
       const timer = setTimeout(() => {
         toast("Call ended, the recipient didn't answer.");
         endCall();
-      }, 20000);
+      }, 120000);
   
       return () => clearTimeout(timer);
     }
@@ -133,7 +133,7 @@ const CallLayout: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="lg:w-[30vw] w-[45vw] bg-black bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 p-5 rounded-xl text-white flex flex-col gap-3 items-center">
+      <div className="lg:w-[30vw] md:w-[45vw] w-[70vw] bg-black bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 p-5 rounded-xl text-white flex flex-col gap-3 items-center">
         <p className="text-sm font-medium text-neutral-300 animate-pulse">Incoming {callType}</p>
         <p className="text-2xl text-neutral-200 font-medium">{caller?.fullName || "Unknown"}</p>
         <img src={caller?.profilePic || assets.avatar_icon} alt="caller-profile pic" className="h-24 w-24 rounded-full m-[5vh] animate-pulse" />
@@ -156,7 +156,7 @@ if (callActive) {
       <div className="absolute inset-0 bg-black/60" />
 
       {/* centered call window */}
-      <div className="relative z-50 lg:w-[50vw] w-[70vw] max-w-[90%] bg-black bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-xl shadow-lg p-4 flex flex-col items-center">
+      <div className="relative z-50 lg:w-[50vw] md:w-[70vw] w-[89%] max-w-[90%] bg-black bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-xl shadow-lg p-4 flex flex-col items-center">
         <p className="text-2xl font-medium text-neutral-200 mb-1">{activeUser?.fullName}</p>
         {/* Top area: ringing or status */}
         <div className="w-full mb-3 text-center">
@@ -194,7 +194,7 @@ if (callActive) {
           </div>
 
           {/* local preview */}
-          <div className="w-[30%] h-[60%] overflow-hidden relative">
+          <div className="md:w-[30%] w-[25%] h-[60%] overflow-hidden relative">
             <video
               ref={(el) => { if (el) el.srcObject = localStream;}}
               autoPlay

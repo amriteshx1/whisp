@@ -43,7 +43,7 @@ const LoginPage = () => {
                 <img src={appLogo} alt="whisp-logo" className="lg:h-[70vh] h-[30vh]" />
         
                 {/* right-half */}
-                <form onSubmit={onSubmitHandler} className="lg:border-t-2 lg:border-r-0 lg:border-b-0 border-b-2 border-r-2 border-l-2 border-neutral-800  text-white/85 p-6 flex flex-col gap-4 lg:rounded-4xl rounded-2xl">
+                <form onSubmit={onSubmitHandler} className="lg:border-t-2 lg:border-r-0 lg:border-b-0 border-b-2 border-r-2 border-l-2 border-neutral-800  text-white/85 md:p-6 p-3 flex flex-col md:gap-4 gap-3 lg:rounded-4xl rounded-2xl">
                     <h2 className="font-medium lg:text-3xl text-2xl flex justify-between items-center">
                         {currentState}
                         {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="back-arrow" 
@@ -53,29 +53,29 @@ const LoginPage = () => {
 
                     {currentState === "Sign up" && !isDataSubmitted && (
                         <input onChange={(e)=> setFullName(e.target.value)} value={fullName}
-                        type="text" className="p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500" placeholder="Full Name" required />
+                        type="text" className="md:p-2 p-1.5 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500" placeholder="Full Name" required />
                     )}
 
                     {!isDataSubmitted && (
                         <>
                         <input onChange={(e)=> setEmail(e.target.value)} value={email}
-                         type="email" placeholder="Email Address" required className="p-2 border border-neutral-700
+                         type="email" placeholder="Email Address" required className="md:p-2 p-1.5 border border-neutral-700
                          rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"  />
 
                          <input onChange={(e)=> setPassword(e.target.value)} value={password}
-                         type="password" placeholder="Password" required className="p-2 border border-neutral-700
+                         type="password" placeholder="Password" required className="md:p-2 p-1.5 border border-neutral-700
                          rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"  />
                         </>
                     )}
 
                     {currentState === "Sign up" && isDataSubmitted && (
                       <textarea onChange={(e)=>setBio(e.target.value)} value={bio}
-                       rows={4} className="p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400"
+                       rows={4} className="md:p-2 p-1.5 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400"
                       placeholder="Provide a short bio..." required></textarea>
                       )
                     }
 
-                    <button type="submit" disabled={loading} className="p-2 flex justify-center items-center bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed">
+                    <button type="submit" disabled={loading} className="md:p-2 p-1.5 flex justify-center items-center bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed">
                       {loading ? (
                         <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                       ) : currentState === "Sign up" ? (
@@ -89,7 +89,7 @@ const LoginPage = () => {
                     <button
                       type="button"
                       onClick={() => window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`}
-                      className="p-2 flex justify-center items-center gap-2 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer"
+                      className="md:p-2 p-1.5 flex justify-center items-center gap-2 bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl cursor-pointer"
                     >
                       <img src={assets.google} alt="google" className="w-5 h-5" />Continue with Google
                     </button>

@@ -221,7 +221,7 @@ export default function FriendPage() {
       <div className="flex flex-col justify-center items-center mt-[1vh] mb-[5vh] gap-2 p-2">
         <img onClick={() => {navigate("/home")} } src={assets.arrow} alt="back-arrow" className="lg:hidden self-start w-6 h-6 ml-[1vh]" />
         <h1 className="lg:text-3xl text-2xl text-center font-semibold text-white/80">Friends</h1>
-        <hr className="border-2 border-white/80 lg:w-[15%] w-[20%]" />
+        <hr className="border-2 border-white/80 lg:w-[15%] md:w-[20%] w-[40%]" />
       </div>
 
       {/* pending (incoming) requests */}
@@ -238,7 +238,7 @@ export default function FriendPage() {
             {pendingRequests.map((req) => (
               <div
                 key={req._id}
-                className="lg:w-[30%] w-[50%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
+                className="lg:w-[30%] md:w-[50%] w-[75%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -284,11 +284,11 @@ export default function FriendPage() {
           placeholder="Enter friend code..."
           value={searchCode}
           onChange={(e) => setSearchCode(e.target.value)}
-          className="lg:w-[35%] w-[50%] p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"
+          className="lg:w-[35%] md:w-[50%] w-[60%] p-2 border border-neutral-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-600 text-neutral-400 placeholder-neutral-500"
         />
         <button
           type="submit"
-          className="bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl py-2 px-4 cursor-pointer"
+          className="bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75 hover:text-white/90 rounded-xl py-2 md:px-4 px-2 cursor-pointer"
         >
           Search
         </button>
@@ -306,7 +306,7 @@ export default function FriendPage() {
             return (
               <div
                 key={u._id}
-                className="lg:w-[50%] w-[80%] flex items-center justify-between p-2 rounded-xl bg-neutral-900"
+                className="lg:w-[50%] md:w-[80%] w-full flex items-center justify-between p-2 rounded-xl bg-neutral-900"
               >
                 <div className="flex items-center gap-3">
                   <img

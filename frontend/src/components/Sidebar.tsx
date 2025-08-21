@@ -184,7 +184,7 @@ const Sidebar = () => {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }} 
-            className="bg-neutral-900 rounded-xl p-5 w-[70%] max-w-2xl lg:h-[70vh] h-[50vh] flex flex-col" ref={botRef}>
+            className="bg-neutral-900 rounded-xl p-5 md:w-[70%] w-[85%] max-w-2xl lg:h-[70vh] md:h-[50vh] h-[60vh] flex flex-col" ref={botRef}>
             <div className="flex justify-between items-center border-b border-neutral-700 pb-2">
               <h2 className="text-lg font-semibold text-sky-200 flex gap-2 items-center"><img src={assets.bot} alt="chat bot" className="w-[40px] aspect-[1/1] p-1 rounded-full" />Whisp Bot<img src={assets.verified} alt="whisp bot" className="h-4 w-4" /></h2>
               <button onClick={() => setBotOpen(false)} className="text-neutral-400 hover:text-white cursor-pointer">

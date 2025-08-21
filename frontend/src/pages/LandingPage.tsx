@@ -19,24 +19,24 @@ const LandingPage = () => {
   return (
       
 <div className="h-screen w-full relative overflow-auto bg-black">
-        <div className="flex justify-between items-center text-neutral-500 lg:py-[1.5vh] lg:px-[3vh] lg:mx-[15vh] py-[1vh] px-[3vh] mx-[5vh] rounded-[100px] border-b-2 border-b-neutral-800">
+        <div className="flex justify-between items-center text-neutral-500 lg:py-[1.5vh] lg:px-[3vh] lg:mx-[15vh] md:py-[1vh] md:px-[3vh] py-[1.5vh] px-[3vh] mx-[5vh] md:rounded-[100px] rounded-4xl border-b-2 border-b-neutral-800">
             <div className='lg:w-[40%] w-[20%] flex justify-start items-center'>
-                <p className='lg:text-[1.6vw] text-[1.5vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent'>Whisp.</p>
+                <p className='lg:text-[1.6vw] md:text-[1.5vh] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent'>Whisp.</p>
             </div>
 
-            <div className='lg:w-[50%] w-[70%] flex lg:gap-[4vh] gap-[3vh] justify-end items-center'>
-                <p className='lg:text-[1.05vw] text-[1.1vh] cursor-pointer font-medium hover:text-neutral-400'>About</p>
-                <p className='lg:text-[1.05vw] text-[1.1vh] font-medium cursor-pointer hover:text-neutral-400'>Features</p>
+            <div className='lg:w-[50%] w-[70%] flex lg:gap-[4vh] md:gap-[3vh] gap-[2vh] justify-end items-center'>
+                <p className='lg:text-[1.05vw] md:block hidden text-[1.1vh] cursor-pointer font-medium hover:text-neutral-400'>About</p>
+                <p className='lg:text-[1.05vw] md:block hidden text-[1.1vh] font-medium cursor-pointer hover:text-neutral-400'>Features</p>
                 <p className='lg:text-[1.05vw] lg:block hidden text-[1vh] font-medium cursor-pointer hover:text-neutral-400'>How it works</p>
-                <button onClick={handleClick} className='block lg:text-[1.05vw] text-[1.1vh] font-medium cursor-pointer hover:text-neutral-400'>Sign in</button>
+                <button onClick={handleClick} className='block lg:text-[1.05vw] md:text-[1.1vh] text-[1.2vh] font-medium cursor-pointer hover:text-neutral-400'>Sign in</button>
                 <button onClick={handleClick}
-                className='lg:text-[0.9vw] text-[0.95vh] text-white/75 font-medium lg:py-[0.5vh] lg:px-[1.5vh] py-[0.4vh] px-[1.2vh] rounded-4xl bg-neutral-900 cursor-pointer hover:text-white/90'>Get Started</button>
+                className='lg:text-[0.9vw] md:text-[0.95vh] text-[1vh] text-white/75 font-medium lg:py-[0.5vh] lg:px-[1.5vh] py-[0.4vh] px-[1.2vh] rounded-4xl bg-neutral-900 cursor-pointer hover:text-white/90'>Get Started</button>
             </div>
         </div>
 
         <div className="min-h-[85vh] flex flex-col justify-start items-center p-[1vh]">
             <div className="flex flex-col justify-center items-center mt-[6vh] pt-[1vh] text-zinc-700">
-              <div className="flex justify-center items-center gap-3 lg:py-[1vh] lg:px-[2vh] py-[0.7vh] px-[1vh] lg:text-[0.8vw] text-[0.85vh] border border-neutral-800 rounded-full text-white/75">
+              <div className="flex justify-center items-center gap-3 lg:py-[1vh] lg:px-[2vh] py-[0.7vh] px-[1vh] lg:text-[0.8vw] md:text-[0.85vh] text-[0.8vh] border border-neutral-800 rounded-full text-white/75">
                 <p>✔ Instant Messaging</p>
                 <p>✔ End-to-End Encryption</p>
                 <p>✔ Crystal-Clear Calls</p>
@@ -45,44 +45,44 @@ const LandingPage = () => {
                   initial={{ y: 15, opacity: 0, scale: 0.9 }}
                   animate={{ y: 0, opacity: 1, scale: 1 }}    
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="lg:text-[4.5vw] text-[3.5vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Conversations That Feel Close</motion.p>
+                  className="lg:text-[4.5vw] md:text-[3.5vh] text-[3vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Conversations That Feel Close</motion.p>
                 <motion.p 
                   initial={{ y: 15, opacity: 0, scale: 0.9 }}
                   animate={{ y: 0, opacity: 1, scale: 1 }}    
                   transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
-                  className="lg:text-[4.5vw] text-[3.5vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Even From Afar</motion.p>
+                  className="lg:text-[4.5vw] md:text-[3.5vh] text-[3vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Even From Afar</motion.p>
                 <motion.p 
                   initial={{ y: 15, opacity: 0, scale: 0.9 }}
                   animate={{ y: 0, opacity: 1, scale: 1 }}    
                   transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
-                  className="lg:text-[1.5vw] text-[1.3vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Stay connected — softly, silently, seamlessly.</motion.p>
+                  className="lg:text-[1.5vw] md:text-[1.3vh] text-[1.5vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Stay connected — softly, silently, seamlessly.</motion.p>
                 <motion.button 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}    
                   transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                  onClick={handleClick} className="lg:text-[1.2vw] text-[1vh] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 lg:px-[2.5vh] lg:py-[1vh] px-[1.3vh] py-[0.7vh] rounded-3xl cursor-pointer text-white/75 mt-5 hover:text-white/90 ">Step into Whisp</motion.button>
+                  onClick={handleClick} className="lg:text-[1.2vw] md:text-[1vh] text-[1.1vh] bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 lg:px-[2.5vh] lg:py-[1vh] px-[1.3vh] py-[0.7vh] rounded-3xl cursor-pointer text-white/75 md:mt-5 mt-3 hover:text-white/90 ">Step into Whisp</motion.button>
             </div>
 
             <div className="flex justify-center items-center w-screen  relative">
                 <img src={landing} alt="landingPage-image" className="w-full object-cover" />
-                <div className="absolute bottom-0 left-0 w-full h-44 bg-gradient-to-b from-transparent via-black/85 to-black pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-full lg:h-44 md:h-32 h-15 bg-gradient-to-b from-transparent via-black/85 to-black pointer-events-none"></div>
             </div>
 
             <FeatureMarquee />
 
             <div className="flex flex-col justify-center items-center lg:mt-[20vh] mt-[8vh] lg:mb-[10vh] mb-[5vh] w-full lg:mx-[15vh] mx-[5vh]">
                 <h2 className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
-                <div className="flex justify-around items-center lg:mt-[7vh] mt-[3vh] text-center">
+                <div className="flex md:flex-row flex-col justify-around items-center md:gap-0 gap-[2vh] lg:mt-[7vh] md:mt-[3vh] mt-[2vh] text-center">
 
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 w-[25%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">🔐 Private by Design</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Messages are end-to-end protected. Your convos stay yours.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 w-[25%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">⚡ Real-time, Always</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Send, receive, seen — all in a blink. Zero lag, no reloads.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 w-[25%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">☁️ Share Moments</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Effortlessly upload and view images. Cloudinary-powered.</p>
                     </div>
@@ -95,7 +95,7 @@ const LandingPage = () => {
               
               <div className="flex flex-col justify-center items-center lg:mt-[10vh] mt-[5vh] w-full">
                 <h2 className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Let your conversations begin.</h2>
-                <button onClick={handleClick} className="lg:text-[1.4vw] text-[1.05vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 lg:px-[7vh] px-[2vh] lg:py-[1vh] py-[0.6vh] rounded-xl cursor-pointer text-white/75 hover:text-white/90 lg:mt-[5vh] mt-[2vh]">Get Started</button>
+                <button onClick={handleClick} className="lg:text-[1.4vw] text-[1.05vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 lg:px-[7vh] px-[2vh] lg:py-[1vh] py-[0.6vh] md:rounded-xl rounded-lg cursor-pointer text-white/75 hover:text-white/90 lg:mt-[5vh] mt-[2vh]">Get Started</button>
               </div>
 
               <div className="flex flex-col w-full lg:mt-[20vh] mt-[10vh]">

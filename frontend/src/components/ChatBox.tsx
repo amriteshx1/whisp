@@ -221,9 +221,8 @@ const startVideoCall = () => startCall(true);
           {onlineUsers.includes(selectedUser._id) && <span className="w-2 h-2 rounded-full bg-green-600"></span>}
           {peerTyping && <span className="text-xs text-neutral-400 animate-pulse">(typing…)</span>}
         </p>
-        <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="back-arrow" className="md:hidden max-w-7" />
-        <img onClick={startVoiceCall} src={audioCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
-        <img onClick={startVideoCall} src={videoCall} className="w-8 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
+        <img onClick={startVoiceCall} src={audioCall} className="md:w-8 w-7 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="voice-call"/>
+        <img onClick={startVideoCall} src={videoCall} className="md:w-8 w-7 p-1 cursor-pointer bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 rounded-lg hover:bg-neutral-800" alt="video-call" />
         
         <img onClick={() => setShowUserBox(prevShowUserBox => !prevShowUserBox)} src={assets.help_icon} alt="info" className="lg:hidden block max-w-6" />
 
