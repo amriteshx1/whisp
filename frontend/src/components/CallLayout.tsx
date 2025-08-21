@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import assets from "../assets/chat-app-assets/assets";
 import videoCall from "../assets/videoCall.png";
 import { ChatContext } from "../../context/ChatContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const CallLayout: React.FC = () => {
   const {
@@ -18,6 +19,7 @@ const CallLayout: React.FC = () => {
   } = useCall();
 
   const {selectedUser, friends} = useContext(ChatContext);
+  const {authUser} = useContext(AuthContext);
 
   const [muted, setMuted] = useState(false);
   const [cameraOff, setCameraOff] = useState(false);
@@ -29,6 +31,10 @@ const CallLayout: React.FC = () => {
   const getCaller = (id: string) => {
     return friends.find(f => f._id === id) || null;
   };
+
+  const isAudioOnly =
+    ((localStream?.getVideoTracks()?.length ?? 0) === 0) &&
+    ((remoteStream?.getVideoTracks()?.length ?? 0) === 0);
 
   useEffect(() => {
     const callerAudio = new Audio("/sounds/callerSide.mp3");
@@ -142,6 +148,8 @@ const CallLayout: React.FC = () => {
 
 if (callActive) {
   const activeUser = remoteUserId ? getCaller(remoteUserId.id) : selectedUser;
+  const showAudioAvatars = callActive && isAudioOnly;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* intentionally did this to block interaction with the app */}
@@ -161,7 +169,7 @@ if (callActive) {
 
         {/* video area */}
         <div className="w-full h-[40vh] flex gap-3">
-          <div className="flex-1 bg-black rounded-lg overflow-hidden flex items-center justify-center">
+          <div className="flex-1 bg-black rounded-lg overflow-hidden flex items-center justify-center relative">
             {/* Remote video - main */}
             <video
               ref={(el) => { if (el) el.srcObject = remoteStream;}}
@@ -171,7 +179,17 @@ if (callActive) {
             />
             {/* If remote not available, show placeholder */}
             {!remoteStream && (
-              <div className="absolute text-neutral-400"><img src={activeUser?.profilePic || assets.avatar_icon} alt="" className="w-[80px] aspect-[1/1] rounded-full p-1 animate-pulse" /></div>
+              <div className="absolute text-neutral-400"><img src={activeUser?.profilePic || assets.avatar_icon} alt="remoteUser profilePic" className="w-[80px] h-[80px] aspect-[1/1] rounded-full p-1 animate-pulse" /></div>
+            )}
+
+            {showAudioAvatars && (
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <img
+                  src={activeUser?.profilePic || assets.avatar_icon}
+                  alt="remote avatar"
+                  className="w-[80px] h-[80px] aspect-[1/1] rounded-full p-1 animate-pulse"
+                />
+              </div>
             )}
           </div>
 
@@ -190,6 +208,16 @@ if (callActive) {
                 No camera
               </div>
             )}
+
+            {showAudioAvatars && (
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <img
+                  src={authUser?.profilePic || assets.avatar_icon}
+                  alt="your avatar"
+                  className="w-[50px] h-[50px] rounded-full p-1 animate-pulse"
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -204,8 +232,8 @@ if (callActive) {
           </button>
 
           <button
-            onClick={toggleCamera}
-            className={`px-3 py-2 rounded-full ${cameraOff ? "bg-neutral-700" : "bg-neutral-800"} text-white cursor-pointer`}
+            onClick={toggleCamera} disabled={isAudioOnly} title={isAudioOnly ? "Camera not available in audio calls" : "Toggle camera"} 
+            className={`px-3 py-2 rounded-full ${cameraOff ? "bg-neutral-700" : "bg-neutral-800"} text-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-70`}
             aria-label="Toggle camera"
           >
             {cameraOff ? <img src={assets.noVideo} alt="video" className="h-5 w-5" /> : <img src={videoCall} alt="no-video" className="h-5 w-5" />}
