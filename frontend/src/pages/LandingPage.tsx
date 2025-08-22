@@ -82,15 +82,15 @@ const LandingPage = () => {
                 <h2 className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
                 <div className="flex md:flex-row flex-col justify-around items-center md:gap-0 gap-[2vh] lg:mt-[7vh] md:mt-[3vh] mt-[2vh] text-center">
 
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-br from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] border-l border-t border-neutral-950 bg-gradient-to-br from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">🔐 Private by Design</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Messages are end-to-end protected. Your convos stay yours.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-b from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] border-l border-t border-r border-neutral-950 bg-gradient-to-b from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">⚡ Real-time, Always</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Send, receive, seen — all in a blink. Zero lag, no reloads.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-bl from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] border-r border-t border-neutral-950 bg-gradient-to-bl from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">📞 Calls Made Simple</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Crystal-clear audio & video calls. Connect in one tap, no hassle.</p>
                     </div>
