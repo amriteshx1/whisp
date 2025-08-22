@@ -146,7 +146,6 @@ export const CallProvider = ({ children }: CallProviderProps) => {
 
     // handle incoming call
     socket.on("incoming-call", async ({ from, offer, isVideo }) => {
-      console.log("Incoming call from", from);
       if (callActive) {
         socket.emit("call-rejected", { to: from });
       } else {
@@ -154,8 +153,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
       }
     });
 
-  socket.on("call-answered", async ({ from, answer }) => {
-    console.log("Call answered by", from);
+  socket.on("call-answered", async ({ from: _from, answer }) => {
     if (peerConnection.current) {
       await peerConnection.current.setRemoteDescription(
         new RTCSessionDescription(answer)
@@ -163,8 +161,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     }
   });
 
-  socket.on("ice-candidate", async ({to, from, candidate }) => {
-    console.log("Received ICE candidate from", from, "to", to);
+  socket.on("ice-candidate", async ({to: _to, from: _from, candidate }) => {
     try {
       if (peerConnection.current) {
         await peerConnection.current.addIceCandidate(
@@ -176,8 +173,7 @@ export const CallProvider = ({ children }: CallProviderProps) => {
     }
   });
 
-  socket.on("call-rejected", ({from}) => {
-    console.log("Call rejected by", from);
+  socket.on("call-rejected", ({from: _from}) => {
     toast("Call rejected!");
     endCall();
   });
@@ -188,7 +184,6 @@ export const CallProvider = ({ children }: CallProviderProps) => {
   });
 
   socket.on("call-ended", () => {
-      console.log("Call ended by other user.");
       toast("Call ended");
       endCall();
   });
