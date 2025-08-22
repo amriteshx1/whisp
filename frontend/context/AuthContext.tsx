@@ -49,11 +49,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [authUser, setAuthUser] = useState<AuthUser | null>(null);
     const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
     //check user authentication and set user data & connect the socket
     const checkAuth = async () => {
         try {
+            setLoading(true);
             const { data } = await axios.get("/api/auth/check");
             if(data.success){
                 setAuthUser(data.user);
