@@ -7,8 +7,16 @@ import instagram from "../assets/instagram.png";
 import discord from "../assets/discord.png";
 import github from "../assets/github.png";
 import twitter from "../assets/twitter.png";
+import { useRef } from "react";
 
 const LandingPage = () => {
+
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const howItWorksRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const navigate = useNavigate();
 
@@ -25,9 +33,9 @@ const LandingPage = () => {
             </div>
 
             <div className='lg:w-[50%] w-[70%] flex lg:gap-[4vh] md:gap-[3vh] gap-[2vh] justify-end items-center'>
-                <p className='lg:text-[1.05vw] md:block hidden text-[1.1vh] cursor-pointer font-medium hover:text-neutral-400'>About</p>
-                <p className='lg:text-[1.05vw] md:block hidden text-[1.1vh] font-medium cursor-pointer hover:text-neutral-400'>Features</p>
-                <p className='lg:text-[1.05vw] lg:block hidden text-[1vh] font-medium cursor-pointer hover:text-neutral-400'>How it works</p>
+                <p onClick={() => scrollToSection(featuresRef)} className='lg:text-[1.05vw] md:block hidden text-[1.1vh] cursor-pointer font-medium hover:text-neutral-400'>About</p>
+                <p onClick={() => scrollToSection(featuresRef)} className='lg:text-[1.05vw] md:block hidden text-[1.1vh] font-medium cursor-pointer hover:text-neutral-400'>Features</p>
+                <p onClick={() => scrollToSection(howItWorksRef)} className='lg:text-[1.05vw] lg:block hidden text-[1vh] font-medium cursor-pointer hover:text-neutral-400'>How it works</p>
                 <button onClick={handleClick} className='block lg:text-[1.05vw] md:text-[1.1vh] text-[1.2vh] font-medium cursor-pointer hover:text-neutral-400'>Sign in</button>
                 <button onClick={handleClick}
                 className='lg:text-[0.9vw] md:text-[0.95vh] text-[1vh] text-white/75 font-medium lg:py-[0.5vh] lg:px-[1.5vh] py-[0.4vh] px-[1.2vh] rounded-4xl bg-neutral-900 cursor-pointer hover:text-white/90'>Get Started</button>
@@ -68,7 +76,7 @@ const LandingPage = () => {
                 <div className="absolute bottom-0 left-0 w-full lg:h-44 md:h-32 h-15 bg-gradient-to-b from-transparent via-black/85 to-black pointer-events-none"></div>
             </div>
 
-            <FeatureMarquee />
+            <FeatureMarquee ref={featuresRef} />
 
             <div className="flex flex-col justify-center items-center lg:mt-[20vh] mt-[8vh] lg:mb-[10vh] mb-[0vh] w-full lg:mx-[15vh] mx-[5vh]">
                 <h2 className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
@@ -91,7 +99,7 @@ const LandingPage = () => {
 
             </div>
 
-            <div className="lg:min-h-[100vh] min-h-[70vh] w-full flex flex-col justify-start items-center mt-[10vh] lg:mb-[10vh] mb-[5vh] mx-[15vh]">
+            <div ref={howItWorksRef} className="lg:min-h-[100vh] min-h-[70vh] w-full flex flex-col justify-start items-center mt-[10vh] lg:mb-[10vh] mb-[5vh] mx-[15vh]">
               <p className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">How It Works</p>
 
               <div className="flex w-full lg:flex-row flex-col justify-around items-center relative lg:gap-0 gap-[5vh] lg:mt-[7vh] mt-[5vh]">

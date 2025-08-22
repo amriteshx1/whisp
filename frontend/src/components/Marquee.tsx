@@ -1,9 +1,13 @@
 
+import { forwardRef} from "react";
+import type { HTMLAttributes } from "react";
 import Marquee from "react-fast-marquee";
 
-const FeatureMarquee = () => {
+type FeatureMarqueeProps = HTMLAttributes<HTMLDivElement>;
+
+const FeatureMarquee = forwardRef<HTMLDivElement, FeatureMarqueeProps>((_, ref) => {
   return (
-    <div className="relative w-full bg-black p-[1vh] lg:px-[15vh] md:px-[5vh] px-[3vh] lg:mt-[15vh] mt-[5vh]">
+    <div ref={ref} className="relative w-full bg-black p-[1vh] lg:px-[15vh] md:px-[5vh] px-[3vh] lg:mt-[15vh] mt-[5vh]">
       <h2 className="text-center lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">
         What Powers Your Presence
       </h2>
@@ -31,6 +35,6 @@ const FeatureMarquee = () => {
       </Marquee>
     </div>
   );
-};
+});
 
 export default FeatureMarquee;
