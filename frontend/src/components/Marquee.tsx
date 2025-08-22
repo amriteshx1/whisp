@@ -19,12 +19,14 @@ const FeatureMarquee = () => {
         <div className="flex lg:gap-[7vh] md:gap-[3vh] gap-[2vh] px-[2.5vh] lg:text-[1.5vw] text-[1.15vh] lg:mt-[7vh] md:mt-[3vh] mt-[2vh] bg-gradient-to-tl from-neutral-950 via-white/70 to-neutral-700 bg-clip-text text-transparent hover:cursor-default">
           <span>⚡ Speed</span>
           <span>🔒 Privacy</span>
-          <span>☁️ Cloud Uploads</span>
-          <span>📱 Mobile-Ready</span>
           <span>💬 Real-time Chat</span>
           <span>📞 Audio/Video Calls</span>
+          <span>📷 Media Sharing</span>
+          <span>🤖 Built-in Chatbot</span>
+          <span>👥 Friend System</span>
+          <span>📱 Mobile-Ready</span>
           <span>🌐 Always Synced</span>
-          <span>🎯 Minimal UI</span>
+          <span>🎯 Minimal, Modern UI</span>
         </div>
       </Marquee>
     </div>

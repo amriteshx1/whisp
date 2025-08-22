@@ -70,53 +70,105 @@ const LandingPage = () => {
 
             <FeatureMarquee />
 
-            <div className="flex flex-col justify-center items-center lg:mt-[20vh] mt-[8vh] lg:mb-[10vh] mb-[5vh] w-full lg:mx-[15vh] mx-[5vh]">
+            <div className="flex flex-col justify-center items-center lg:mt-[20vh] mt-[8vh] lg:mb-[10vh] mb-[0vh] w-full lg:mx-[15vh] mx-[5vh]">
                 <h2 className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
                 <div className="flex md:flex-row flex-col justify-around items-center md:gap-0 gap-[2vh] lg:mt-[7vh] md:mt-[3vh] mt-[2vh] text-center">
 
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-br from-black via-transparent to-neutral-950 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-br from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">🔐 Private by Design</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Messages are end-to-end protected. Your convos stay yours.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-b from-black via-transparent to-neutral-950 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-b from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">⚡ Real-time, Always</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Send, receive, seen — all in a blink. Zero lag, no reloads.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-bl from-black via-transparent to-neutral-950 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
-                        <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">☁️ Share Moments</p>
-                        <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Effortlessly upload and view images. Cloudinary-powered.</p>
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-bl from-black via-transparent to-neutral-950 md:w-[25%] w-[75%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                        <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">📞 Calls Made Simple</p>
+                        <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Crystal-clear audio & video calls. Connect in one tap, no hassle.</p>
                     </div>
 
                 </div>
 
             </div>
 
-            <div className="min-h-[100vh] w-full flex flex-col justify-start items-center mt-[10vh] mb-[10vh] mx-[15vh]">
+            <div className="lg:min-h-[100vh] min-h-[70vh] w-full flex flex-col justify-start items-center mt-[10vh] lg:mb-[10vh] mb-[5vh] mx-[15vh]">
               <p className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">How It Works</p>
 
-              <div className="flex w-full justify-around items-center text-white mt-[7vh]">
-                <div className="w-[25%] flex flex-col items-center gap-6">
-                <div className="flex flex-col justify-around items-center gap-6 p-16 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
-                  <p className="text-[1.4vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Sign up & Get Your Friend Code</p>
-                  <p className="text-[1.1vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Create your free account and instantly receive your unique friend code on your profile.</p>
+              <div className="flex w-full lg:flex-row flex-col justify-around items-center relative lg:gap-0 gap-[5vh] lg:mt-[7vh] mt-[5vh]">
+                <div className="lg:w-[25%] w-[60%] flex flex-col items-center gap-6">
+                <div className="flex flex-col justify-around items-center gap-6 lg:p-16 p-9 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
+                  <p className="lg:text-[1.5vw] text-[1.15vh] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Sign up & Get Your Friend Code</p>
+                  <p className="lg:text-[1.1vw] text-[1vh] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Create your free account and instantly receive your unique friend code on your profile.</p>
                 </div>
-                <p className="text-[1.3vw] py-1 px-6 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">1</p>
-                </div>
-
-                <div className="w-[25%] flex flex-col items-center gap-6 translate-y-[35vh]">
-                <div className="flex flex-col justify-around items-center gap-6 p-16 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
-                  <p className="text-[1.4vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Connect with Friends</p>
-                  <p className="text-[1.1vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Share your code with friends or search theirs to send a request. Accept or reject requests right inside your Friends page.</p>
-                </div>
-                <p className="text-[1.3vw] py-1 px-6 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">2</p>
+                <p className="lg:text-[1.3vw] text-[1.05vh] py-1 lg:px-6 px-3 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">1</p>
                 </div>
 
-                <div className="w-[25%] flex flex-col items-center gap-6">
-                <div className="flex flex-col justify-around items-center gap-6 p-16 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
-                  <p className="text-[1.4vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Start Enjoying</p>
-                  <p className="text-[1.1vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Once connected, enjoy real-time chat, audio/video calls & a lot - all in one smooth experience.</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 200 100"
+                  className="absolute hidden lg:block left-[25%] top-[15vh] w-[200px] h-[100px] text-white/40"
+                >
+                  <path
+                    d="M 10 80 Q 100 10 190 80"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    markerEnd="url(#arrowhead)"
+                  />
+                  <defs>
+                    <marker
+                      id="arrowhead"
+                      markerWidth="10"
+                      markerHeight="10"
+                      refX="5"
+                      refY="5"
+                      orient="auto"
+                    >
+                      <path d="M0,0 L10,5 L0,10 Z" fill="currentColor" />
+                    </marker>
+                  </defs>
+                </svg>
+
+                <div className="lg:w-[25%] w-[60%] flex flex-col items-center gap-6 lg:translate-y-[35vh]">
+                <div className="flex flex-col justify-around items-center gap-6 lg:p-16 p-9 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
+                  <p className="lg:text-[1.5vw] text-[1.15vh] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Connect with Friends</p>
+                  <p className="lg:text-[1.1vw] text-[1vh] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Share your code with friends or search theirs to send a request. Accept or reject requests right inside your Friends page.</p>
                 </div>
-                <p className="text-[1.3vw] py-1 px-6 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">3</p>
+                <p className="lg:text-[1.3vw] text-[1.05vh] py-1 lg:px-6 px-3 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">2</p>
+                </div>
+
+                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 200 100"
+                  className="absolute hidden lg:block left-[60%] top-[50vh] w-[200px] h-[100px] text-white/40"
+                >
+                  <path
+                    d="M 10 20 Q 100 90 190 20"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    markerEnd="url(#arrowhead)"
+                  />
+                  <defs>
+                    <marker
+                      id="arrowhead"
+                      markerWidth="10"
+                      markerHeight="10"
+                      refX="5"
+                      refY="5"
+                      orient="auto"
+                    >
+                      <path d="M0,0 L10,5 L0,10 Z" fill="currentColor" />
+                    </marker>
+                  </defs>
+                </svg>
+
+                <div className="lg:w-[25%] w-[60%] flex flex-col items-center gap-6">
+                <div className="flex flex-col justify-around items-center gap-6 lg:p-16 p-9 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
+                  <p className="lg:text-[1.5vw] text-[1.15vh] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Start Enjoying</p>
+                  <p className="lg:text-[1.1vw] text-[1.1vh] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Once connected, enjoy real-time chat, audio/video calls & a lot - all in one smooth experience.</p>
+                </div>
+                <p className="lg:text-[1.3vw] text-[1.05vh] py-1 lg:px-6 px-3 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">3</p>
                 </div>
 
               </div>
