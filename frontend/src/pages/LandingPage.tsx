@@ -74,21 +74,53 @@ const LandingPage = () => {
                 <h2 className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Why Whisp?</h2>
                 <div className="flex md:flex-row flex-col justify-around items-center md:gap-0 gap-[2vh] lg:mt-[7vh] md:mt-[3vh] mt-[2vh] text-center">
 
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-br from-black via-transparent to-neutral-950 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">🔐 Private by Design</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Messages are end-to-end protected. Your convos stay yours.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-b from-black via-transparent to-neutral-950 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">⚡ Real-time, Always</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Send, receive, seen — all in a blink. Zero lag, no reloads.</p>
                     </div>
-                    <div className="flex lg:h-[30vh] h-[15vh] bg-neutral-900 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
+                    <div className="flex lg:h-[30vh] h-[15vh] bg-gradient-to-bl from-black via-transparent to-neutral-950 md:w-[25%] w-[60%] flex-col justify-around items-center lg:p-[4vh] p-[1.5vh] rounded-3xl">
                         <p className="lg:text-[1.5vw] text-[1.15vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">☁️ Share Moments</p>
                         <p className="lg:text-[1.2vw] text-[1vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Effortlessly upload and view images. Cloudinary-powered.</p>
                     </div>
 
                 </div>
 
+            </div>
+
+            <div className="min-h-[100vh] w-full flex flex-col justify-start items-center mt-[10vh] mb-[10vh] mx-[15vh]">
+              <p className="lg:text-[3vw] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">How It Works</p>
+
+              <div className="flex w-full justify-around items-center text-white mt-[7vh]">
+                <div className="w-[25%] flex flex-col items-center gap-6">
+                <div className="flex flex-col justify-around items-center gap-6 p-16 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
+                  <p className="text-[1.4vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Sign up & Get Your Friend Code</p>
+                  <p className="text-[1.1vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Create your free account and instantly receive your unique friend code on your profile.</p>
+                </div>
+                <p className="text-[1.3vw] py-1 px-6 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">1</p>
+                </div>
+
+                <div className="w-[25%] flex flex-col items-center gap-6 translate-y-[35vh]">
+                <div className="flex flex-col justify-around items-center gap-6 p-16 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
+                  <p className="text-[1.4vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Connect with Friends</p>
+                  <p className="text-[1.1vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Share your code with friends or search theirs to send a request. Accept or reject requests right inside your Friends page.</p>
+                </div>
+                <p className="text-[1.3vw] py-1 px-6 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">2</p>
+                </div>
+
+                <div className="w-[25%] flex flex-col items-center gap-6">
+                <div className="flex flex-col justify-around items-center gap-6 p-16 rounded-full bg-gradient-to-br from-neutral-950 via-transparent to-neutral-900">
+                  <p className="text-[1.4vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Start Enjoying</p>
+                  <p className="text-[1.1vw] text-center font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent">Once connected, enjoy real-time chat, audio/video calls & a lot - all in one smooth experience.</p>
+                </div>
+                <p className="text-[1.3vw] py-1 px-6 rounded-4xl bg-gradient-to-tl from-neutral-950 via-white/10 to-neutral-700 text-white/75">3</p>
+                </div>
+
+              </div>
+              
             </div>
 
             <div className="lg:h-screen h-[55vh] w-full overflow-auto relative bg-black">
