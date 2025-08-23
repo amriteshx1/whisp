@@ -9,6 +9,7 @@ interface User {
   fullName: string;
   profilePic?: string;
   friendCode: string;
+  bio?: string;
 }
 
 interface FriendRequest {
@@ -248,8 +249,8 @@ export default function FriendPage() {
                   />
                   <div>
                     <p className="font-medium text-white/80">{req.from.fullName}</p>
-                    <p className="text-xs text-neutral-500">
-                      Code: {req.from.friendCode}
+                    <p className="text-xs text-white/50">
+                      {req.from.bio || "Hey there, I'm using Whisp!"}
                     </p>
                   </div>
                 </div>
@@ -312,11 +313,11 @@ export default function FriendPage() {
                   <img
                     src={u.profilePic || assets.avatar_icon}
                     alt={u.fullName}
-                    className="w-10 h-10 rounded-full object-cover"
+                    className="w-11 h-11 rounded-full object-cover"
                   />
                   <div>
                     <p className="font-medium text-white/80">{u.fullName}</p>
-                    <p className="text-xs text-neutral-500">Code: {u.friendCode}</p>
+                    <p className="text-[11px] text-white/50 font-medium">{u.bio || "Hey there, I'm using Whisp!"}</p>
                   </div>
                 </div>
 

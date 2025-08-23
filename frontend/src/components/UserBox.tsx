@@ -43,7 +43,7 @@ const UserBox = () => {
           {selectedUser.fullName}
           {onlineUsers.includes(selectedUser._id) && <p className="w-2 h-2 rounded-full bg-green-600"></p>}
         </h1>
-        <p className="px-10 mx-auto text-xs">{selectedUser.bio}</p>
+        <p className="px-10 mx-auto text-xs text-center">{selectedUser.bio}</p>
       </div>
 
       <hr className="lg:w-[80%] w-full mx-auto border border-neutral-900 my-4" />

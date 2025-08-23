@@ -27,7 +27,7 @@ const LandingPage = () => {
   return (
       
 <div className="h-screen w-full relative overflow-auto bg-black">
-        <div className="flex justify-between items-center text-neutral-500 lg:py-[1.5vh] lg:px-[3vh] lg:mx-[15vh] md:py-[1vh] md:px-[3vh] py-[1.5vh] px-[3vh] mx-[5vh] md:rounded-[100px] rounded-4xl border-b-2 border-b-neutral-800">
+        <div className="flex justify-between items-center text-neutral-500 lg:py-[1.5vh] lg:px-[3vh] lg:mx-[15vh] md:py-[1vh] md:px-[3vh] py-[1.5vh] px-[3vh] mx-[2vh] md:rounded-[100px] rounded-4xl border-b-2 border-b-neutral-800">
             <div className='lg:w-[40%] w-[20%] flex justify-start items-center'>
                 <p className='lg:text-[1.6vw] md:text-[1.5vh] text-[1.8vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent'>Whisp.</p>
             </div>

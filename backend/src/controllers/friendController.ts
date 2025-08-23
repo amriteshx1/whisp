@@ -209,7 +209,7 @@ export const searchByFriendCode = async (req: Request, res: Response) => {
     }
 
     const user = await User.findOne({ friendCode: code.toUpperCase() }).select(
-      "fullName profilePic friendCode"
+      "fullName bio profilePic friendCode"
     );
 
     if (!user) {
