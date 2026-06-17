@@ -195,37 +195,37 @@ const LandingPage = () => {
 
                 <div className=" w-full flex justify-around items-center">
                     <div className="w-[30%] flex flex-col justify-start items-center">
-                        <p className="lg:text-[1.2vw] text-[0.95vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1.5vh]">Company</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">About Us</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Our Services</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Privacy Policy</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Affiliate Program</p>
+                        <p className="lg:text-lg md:text-sm text-[11px] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1.5vh]">Company</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">About Us</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Our Services</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Privacy Policy</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Affiliate Program</p>
                     </div>
 
                     <div className="w-[30%] flex flex-col justify-start items-center">
-                        <p className="lg:text-[1.2vw] text-[0.95vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1.5vh]">Product</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Web</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Mobile</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Premium</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Starter Kit</p>
+                        <p className="lg:text-lg md:text-sm text-[11px] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1.5vh]">Product</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Web</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Whisp Mobile</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Premium</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Starter Kit</p>
                     </div>
 
                     <div className="w-[30%] flex flex-col justify-start items-center">
-                        <p className="lg:text-[1.2vw] text-[0.95vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1.5vh]">Support</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">FAQ</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Feedback</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Terms of Use</p>
-                        <p className="lg:text-[0.9vw] text-[0.8vh] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Contact</p>
+                        <p className="lg:text-lg md:text-sm text-[11px] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1.5vh]">Support</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">FAQ</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Feedback</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Terms of Use</p>
+                        <p className="lg:text-[13px] md:text-xs text-[10px] bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent mb-[0.5vh]">Contact</p>
                     </div>
                 </div>
 
                 <div className="w-full flex flex-col justify-center items-center lg:mt-[10vh] mt-[5vh]">
-                    <p className="lg:text-[1.2vw] text-[0.95vh] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1vh]">Follow Us</p>
+                    <p className="lg:text-lg md:text-sm text-[11px] font-medium bg-gradient-to-tl from-neutral-950 via-white/80 to-neutral-700 bg-clip-text text-transparent lg:mb-[2vh] mb-[1vh]">Follow Us</p>
                     <div className="flex justify-center items-center lg:gap-[4vh] gap-[2vh] lg:mt-[1vh] mt-[0.5vh]">
-                        <img src={instagram} alt="insta-logo" className="lg:h-[3vh] h-[1.5vh] object-cover" />
-                        <img src={discord} alt="discord-logo" className="lg:h-[3vh] h-[1.5vh] object-cover" />
-                        <img src={github} alt="github-logo" className="lg:h-[3vh] h-[1.5vh] object-cover" />
-                        <img src={twitter} alt="twitter-logo" className="lg:h-[3vh] h-[1.5vh] object-cover" />
+                        <img src={instagram} alt="insta-logo" className="lg:h-[2.5vh] h-[1.5vh] object-cover" />
+                        <img src={discord} alt="discord-logo" className="lg:h-[2.5vh] h-[1.5vh] object-cover" />
+                        <img src={github} alt="github-logo" className="lg:h-[2.5vh] h-[1.5vh] object-cover" />
+                        <img src={twitter} alt="twitter-logo" className="lg:h-[2.5vh] h-[1.5vh] object-cover" />
 
                     </div>
 
